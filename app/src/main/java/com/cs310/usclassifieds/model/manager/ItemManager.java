@@ -9,16 +9,16 @@ public class ItemManager {
 
     // Puts Item i in the database of available deals
     public void createListing(Item i) {
-
+        dataManager.addListing(i);
     }
 
     // Marks Item i as sold
     public void markSold(Item i) {
-
+        dataManager.resolveSale(i);
     }
 
     // Replace current itemID with new Item i 
-    public void replaceItem(Integer itemID, Item i) {
-
+    public void updateItem(Integer itemID, Item i) {
+        dataManager.updateItem(itemID, i)l
     }
 }

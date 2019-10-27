@@ -9,5 +9,6 @@ public class Item {
     public String description;
     public List<String> tags;
     public Location location;
-    public int userID;
+    public int userId;
+    public int itemId;
 }
