@@ -50,7 +50,7 @@ public class AuthenticationManager {
         }
 
         User user = new User(username, passwordHash);
-        dataManager.setUser(user);
+        dataManager.addUser(user);
 
         return AuthError.NO_ERROR;
     }
