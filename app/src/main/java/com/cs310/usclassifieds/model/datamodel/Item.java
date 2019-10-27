@@ -10,4 +10,5 @@ public class Item {
     public List<String> tags;
     public Location location;
     public int userId;
+    public int itemId;
 }
