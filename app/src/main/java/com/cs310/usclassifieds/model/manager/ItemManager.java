@@ -19,6 +19,6 @@ public class ItemManager {
 
     // Replace current itemID with new Item i 
     public void updateItem(Integer itemID, Item i) {
-        dataManager.updateItem(itemID, i)l
+        dataManager.updateItem(itemID, i);
     }
 }
