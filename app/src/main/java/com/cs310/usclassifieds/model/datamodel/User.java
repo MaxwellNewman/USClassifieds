@@ -19,4 +19,5 @@ public class User {
         this.passwordHash = null;
         this.username = null;
     }
+
 }
