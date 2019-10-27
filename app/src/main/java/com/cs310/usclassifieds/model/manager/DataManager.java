@@ -18,12 +18,22 @@ public class DataManager {
 
     }
     
-    // Returns a user, given the userID 
-    public User getUser(Integer userID) {
+    // Returns a user, given the userId
+    public User getUser(int userId) {
         User user = new User();
-        user.userID = userID;
+        user.userId = userID;
 
         return user;
     }
     
+    // Returns a user, given the username
+    public User getUser(String username) {
+        return new User();
+    }
+
+    // Returns true if a user is in the database, false otherwise
+    public boolean userExists(String username) {
+        return getUser(username) != null;
+    }
+
 }
