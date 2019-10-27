@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "268970013919",
+    "firebase_url": "https://usclassifieds-4ae04.firebaseio.com",
+    "project_id": "usclassifieds-4ae04",
+    "storage_bucket": "usclassifieds-4ae04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268970013919:android:a77bd05f271e76e08be56a",
+        "android_client_info": {
+          "package_name": "com.cs310.usclassifieds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268970013919-sukas77f1jrtaphiiqa7bj2l1io5e1li.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2BvfVabweO3MS2fGEyjTBmMaEF58OjnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268970013919-sukas77f1jrtaphiiqa7bj2l1io5e1li.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
