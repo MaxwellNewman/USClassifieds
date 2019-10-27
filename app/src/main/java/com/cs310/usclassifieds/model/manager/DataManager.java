@@ -7,6 +7,10 @@ class DataManager {
         return new User();
     }
 
+    boolean setUser(User user) {
+        return true;
+    }
+
     User getUser(String username) {
         return new User();
     }
