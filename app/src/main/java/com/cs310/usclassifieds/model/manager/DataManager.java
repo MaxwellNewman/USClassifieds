@@ -1,5 +1,6 @@
 package com.cs310.usclassifieds.model.manager;
 import com.cs310.usclassifieds.model.datamodel.Item;
+import com.cs310.usclassifieds.model.datamodel.Query;
 import com.cs310.usclassifieds.model.datamodel.User;
 
 import java.util.ArrayList;
@@ -45,13 +46,13 @@ public class DataManager {
         return getUser(username) != null;
     }
 
-    public List<User> searchUsers(String query) {
+    public List<User> searchUsers(Query query) {
         List<User> users = new ArrayList<User>();
         // add logic to search users
         return users;
     }
 
-    public List<Item> searchItems(String query) {
+    public List<Item> searchItems(Query query) {
         List<Item> items = new ArrayList<Item>();
         // add logic to search items
         return items;
