@@ -3,22 +3,23 @@ import com.cs310.usclassifieds.model.datamodel.User;
 
 public class DataManager {
 
-    // Create friend request from user1 to user2
-    public void createFriendRequest(String user1, String user2) {
-
+    // Create friend request from user1 to user2, returns false if unsuccessful
+    public boolean createFriendRequest(String user1, String user2) {
+        return true;
     }
     
-    // Remove friend request from user1 to user2
-    public void resolveFriendRequest(String user1, String user2) {
-
+    // Remove friend request from user1 to user2, returns false if unsuccessful
+    public boolean resolveFriendRequest(String user1, String user2) {
+        return true;
     }
 
-    // Adds user1 to user2's friend list and vice versa
-    public void addFriend(String user1, String user2) {
-
+    // Adds user1 to user2's friend list and vice versa, returns false if unsuccessful
+    public boolean addFriend(String user1, String user2) {
+        return true;
     }
 
-    boolean setUser(User user) {
+    // Adds user to the database
+    public boolean addUser(User user) {
         return true;
     }
     
