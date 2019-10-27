@@ -1,5 +1,7 @@
 package com.cs310.usclassifieds.model.manager;
 
+import com.cs310.usclassifieds.model.datamodel.Item;
+
 public class ItemManager {
     private DataManager dataManager;
 
@@ -17,8 +19,8 @@ public class ItemManager {
         dataManager.resolveSale(i);
     }
 
-    // Replace current itemID with new Item i 
-    public void updateItem(Integer itemID, Item i) {
-        dataManager.updateItem(itemID, i);
+    // Replace current itemId with new Item i
+    public void updateItem(int itemId, Item i) {
+        dataManager.updateItem(itemId, i);
     }
 }
