@@ -1,5 +1,9 @@
 package com.cs310.usclassifieds.model.manager;
+import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataManager {
 
@@ -39,6 +43,30 @@ public class DataManager {
     // Returns true if a user is in the database, false otherwise
     public boolean userExists(String username) {
         return getUser(username) != null;
+    }
+
+    public List<User> searchUsers(String query) {
+        List<User> users = new ArrayList<User>();
+        // add logic to search users
+        return users;
+    }
+
+    public List<Item> searchItems(String query) {
+        List<Item> items = new ArrayList<Item>();
+        // add logic to search items
+        return items;
+    }
+
+    public boolean addListing(Item i) {
+        return true;
+    }
+
+    public boolean resolveSale(Item i) {
+        return true;
+    }
+
+    public boolean updateItem(int itemId, Item i) {
+        return true;
     }
 
 }
