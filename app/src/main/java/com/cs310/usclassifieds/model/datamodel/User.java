@@ -20,4 +20,8 @@ public class User {
         this.username = null;
     }
 
+    public String getPassword() {
+        return passwordHash;
+    }
+
 }
