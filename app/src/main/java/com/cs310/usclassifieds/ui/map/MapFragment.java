@@ -25,7 +25,20 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.map_fragment, container, false);
+        mViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+        View view = inflater.inflate(R.layout.map_fragment, container, false);
+
+//        Button loadListingButton = (Button) view.findViewById(R.id.placeholder_load_listing_button);
+//        loadListingButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                //TODO call the database and pass data
+//                //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
+//                Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+//            }
+//        });
+
+        return view;
     }
 
     @Override
@@ -36,3 +49,4 @@ public class MapFragment extends Fragment {
     }
 
 }
+

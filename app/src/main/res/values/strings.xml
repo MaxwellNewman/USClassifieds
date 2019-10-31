@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">USClassifieds</string>
-    <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -9,4 +8,22 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="title_profile">Profile</string>
+    <string name="title_search">Search</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_friend_results">Friend Results</string>
+    <string name="title_create_listing">Create Listing</string>
+    <string name="title_view_listing">View Listing</string>
+    <string name="title_advanced_search">Advanced Search</string>
+    <string name="title_results">Results</string>
+    <string name="title_map">Map</string>
+    <string name="title_contact">Contact</string>
+
+    <string name="username">Username:</string>
+    <string name="search_hint">Search</string>
 </resources>

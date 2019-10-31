@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -107,14 +109,33 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+//        loginButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadingProgressBar.setVisibility(View.VISIBLE);
+//                loginViewModel.login(usernameEditText.getText().toString(),
+//                        passwordEditText.getText().toString());
+//            }
+//        });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+            public void onClick(View view) {
+                String UserName = usernameEditText.getText().toString();
+                String Pwd = passwordEditText.getText().toString();
+
+                //this will need to be redone with our authorizationManager
+                if(UserName.equalsIgnoreCase("username") && Pwd.equals("password")){
+                    Intent MainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(MainIntent);
+                    Toast.makeText(LoginActivity.this,"You signed in successfuly.", Toast.LENGTH_LONG).show();
+                }else
+                {
+                    Toast.makeText(LoginActivity.this,"Sorry, User Name or Password is incorrect.", Toast.LENGTH_LONG).show();
+                }
             }
         });
+
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

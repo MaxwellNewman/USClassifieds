@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_search">
+
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.cs310.usclassifieds.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_search2"
+            app:destination="@id/navigation_search" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_create_listing"
+            app:destination="@id/navigation_create_listing" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_results2"
+            app:destination="@id/navigation_results" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_friends"
+            app:destination="@id/navigation_friends" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_friend_results2"
+            app:destination="@id/navigation_friend_results" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.cs310.usclassifieds.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_create_listing"
+            app:destination="@id/navigation_create_listing" />
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_profile2"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_advanced_search"
+            app:destination="@id/navigation_advanced_search" />
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_map2"
+            app:destination="@id/navigation_map" />
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_results"
+            app:destination="@id/navigation_results" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_friends"
+        android:name="com.cs310.usclassifieds.ui.friends.FriendsFragment"
+        android:label="@string/title_friends"
+        tools:layout="@layout/friends_fragment" >
+        <action
+            android:id="@+id/action_navigation_friends_to_navigation_friend_results"
+            app:destination="@id/navigation_friend_results" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_friend_results"
+        android:name="com.cs310.usclassifieds.ui.friendResults.FriendResultsFragment"
+        android:label="@string/title_friend_results"
+        tools:layout="@layout/friend_results_fragment" >
+        <action
+            android:id="@+id/action_navigation_friend_results_to_navigation_profile2"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_listing"
+        android:name="com.cs310.usclassifieds.ui.createListing.CreateListingFragment"
+        android:label="@string/title_create_listing"
+        tools:layout="@layout/create_listing_fragment" >
+        <action
+            android:id="@+id/action_navigation_create_listing_to_navigation_search"
+            app:destination="@id/navigation_search" />
+        <action
+            android:id="@+id/action_navigation_create_listing_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_create_listing_to_navigation_view_listing"
+            app:destination="@id/navigation_view_listing" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_view_listing"
+        android:name="com.cs310.usclassifieds.ui.viewListing.ViewListingFragment"
+        android:label="@string/title_view_listing"
+        tools:layout="@layout/view_listing_fragment" >
+        <action
+            android:id="@+id/action_navigation_view_listing_to_navigation_contact"
+            app:destination="@id/navigation_contact" />
+        <action
+            android:id="@+id/action_navigation_view_listing_to_navigation_map"
+            app:destination="@id/navigation_map" />
+        <action
+            android:id="@+id/action_navigation_view_listing_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_advanced_search"
+        android:name="com.cs310.usclassifieds.ui.advancedSearch.AdvancedSearchFragment"
+        android:label="@string/title_advanced_search"
+        tools:layout="@layout/advanced_search_fragment" >
+        <action
+            android:id="@+id/action_navigation_advanced_search_to_navigation_results"
+            app:destination="@id/navigation_results" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_results"
+        android:name="com.cs310.usclassifieds.ui.results.ResultsFragment"
+        android:label="@string/title_results"
+        tools:layout="@layout/results_fragment" >
+        <action
+            android:id="@+id/action_navigation_results_to_navigation_view_listing"
+            app:destination="@id/navigation_view_listing" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.cs310.usclassifieds.ui.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/map_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_contact"
+        android:name="com.cs310.usclassifieds.ui.contact.ContactFragment"
+        android:label="@string/title_contact"
+        tools:layout="@layout/contact_fragment" />
+
+</navigation>
