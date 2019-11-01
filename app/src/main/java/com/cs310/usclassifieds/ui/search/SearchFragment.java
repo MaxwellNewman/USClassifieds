@@ -15,15 +15,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.ImageView;
+import android.view.View.OnClickListener;
 import com.cs310.usclassifieds.R;
 
-public class SearchFragment extends Fragment {
+import com.cs310.usclassifieds.model.manager.SearchManager;
+import com.cs310.usclassifieds.model.datamodel.Item;
+
+import java.util.List;
+
+public class SearchFragment extends Fragment implements View.OnClickListener {
 
     private SearchViewModel mViewModel;
-
+    private EditText searchText;
+    private SearchManager searchManager;
     public static SearchFragment newInstance() {
         return new SearchFragment();
+    }
+
+    @Override
+    public void onClick(View view) {
+        //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
+//                Log.v("Tag", searchText.toString());
+        String searchText = this.searchText.getText().toString();
+        List<Item> items = searchManager.searchItems(searchText);
+
+        //TODO: put the items in the display
+
+        Navigation.findNavController(view).navigate(R.id.navigation_results);
     }
 
     @Override
@@ -32,20 +51,9 @@ public class SearchFragment extends Fragment {
 
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         View view = inflater.inflate(R.layout.search_fragment, container, false);
-
-
-
         Button searchButton = (Button) view.findViewById(R.id.search_button);
-        searchButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                //TODO call the database and pass data
-                //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
-                EditText searchText = (EditText) view.findViewById(R.id.searchbar2);
-//                Log.v("Tag", searchText.toString());
-                Navigation.findNavController(view).navigate(R.id.navigation_results);
-            }
-        });
+        this.searchText = (EditText) view.findViewById(R.id.searchbar2);
+        searchButton.setOnClickListener(this);
 
         Button advancedSearchButton = (Button) view.findViewById(R.id.advanced_search_button);
         advancedSearchButton.setOnClickListener(new View.OnClickListener(){

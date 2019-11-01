@@ -8,18 +8,22 @@ import java.util.List;
 
 public class SearchManager {
     private DataManager dataManager;
-    protected List<Item> items;
-    protected List<User> users;
 
     public SearchManager(DataManager dm) {
         this.dataManager = dm;
     }
 
-    public void searchItems(Query query) {
-        items = dataManager.searchItems(query);
+    public List<Item> searchItems(String searchString) {
+        Query query = new Query();
+        //TODO: Create query given the searchString
+        
+        return dataManager.searchItems(query);
     }
 
-    public void searchUsers(Query query) {
-        users = dataManager.searchUsers(query);
+    public List<User> searchUsers(String searchString) {
+        Query query = new Query();
+        //TODO: Create query given the searchString
+
+        return dataManager.searchUsers(query);
     }
 }
