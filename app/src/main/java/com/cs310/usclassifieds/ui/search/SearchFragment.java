@@ -9,10 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.cs310.usclassifieds.R;
 
@@ -31,12 +33,16 @@ public class SearchFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         View view = inflater.inflate(R.layout.search_fragment, container, false);
 
+
+
         Button searchButton = (Button) view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //TODO call the database and pass data
                 //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
+                EditText searchText = (EditText) view.findViewById(R.id.searchbar2);
+//                Log.v("Tag", searchText.toString());
                 Navigation.findNavController(view).navigate(R.id.navigation_results);
             }
         });
