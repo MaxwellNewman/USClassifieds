@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.cs310.usclassifieds.R;
 
@@ -29,6 +30,8 @@ public class ResultsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(ResultsViewModel.class);
         View view = inflater.inflate(R.layout.results_fragment, container, false);
+        TextView item1textView = (TextView) view.findViewById(R.id.item1_name);
+        item1textView.setText("Item1");
 
         Button loadListingButton = (Button) view.findViewById(R.id.placeholder_load_listing_button);
         loadListingButton.setOnClickListener(new View.OnClickListener(){
