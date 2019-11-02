@@ -25,7 +25,7 @@ public class UserManager {
     }
 
     // Returns a profile given a user ID
-    public User loadProfile(Integer userId) {
+    public User loadProfile(String userId) {
         return dataManager.getUser(userId);
     }
 }

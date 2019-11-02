@@ -6,31 +6,38 @@ import androidx.annotation.NonNull;
 import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.SearchQuery;
 import com.cs310.usclassifieds.model.datamodel.User;
-import com.google.firebase.database.ChildEventListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataManager {
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    // private final FirebaseFirestore firstore; Use instead?
-    private final DatabaseReference reference = database.getReference();
+    public static final String USERS_PATH = "users";
+    public static final String USER_ID = "userId";
+    private final FirebaseFirestore database;
 
-    private static final String us`erDatabaseName = "Users";
+    private static final String userDatabaseName = "Users";
     private static final String itemDatabaseName = "Items";
 
     private static final String userIdTrait = "userId";
     User user;
 
+    public DataManager() {
+        database = FirebaseFirestore.getInstance();
+    }
+
     private boolean modifyUser(User user) {
-        final DatabaseReference userRef = reference.child(userDatabaseName);
-        userRef.child(user.contactInfo.email).setValue(user.toMap());
+        database.collection(USERS_PATH)
+                .add(user);
 
         return true;
     }
@@ -70,26 +77,22 @@ public class DataManager {
             System.out.println(databaseError.getMessage());
         }
     }
-    
-    // Returns a user, given the userId
-    User getUserByEmail(final String email) {
-        final Query resultRef = reference.child(userDatabaseName)
-                .child(email)
-                .limitToFirst(1);
 
-        resultRef.addListenerForSingleValueEvent(new Val());
+    User getUser(String userId) {
+        CollectionReference userRef = database.collection(USERS_PATH);
+        Task<QuerySnapshot> query = userRef.whereEqualTo(USER_ID, userId).get();
+        QuerySnapshot snapshot = query.getResult();
 
-        return user;
-    }
-    
-    // Returns a user, given the username
-    User getUserByUsername(String username) {
-        return new User();
-    }
+        final List<DocumentSnapshot> documents;
+        try {
+            documents = snapshot.getDocuments();
+        } catch(NullPointerException e) {
+            return null;
+        }
 
-    // Returns true if a user is in the database, false otherwise
-    public boolean userExists(String email) {
-        return getUserByEmail(email) != null;
+        return documents.isEmpty() ?
+                null :
+                documents.get(0).toObject(User.class);
     }
 
     List<User> searchUsers(SearchQuery query) {

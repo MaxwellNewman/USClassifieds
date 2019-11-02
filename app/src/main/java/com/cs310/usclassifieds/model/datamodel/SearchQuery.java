@@ -9,7 +9,7 @@ public class SearchQuery {
     public int radius;
     public Location origin;
 
-    SearchQuery() {
+    public SearchQuery() {
         this.sellerIds = null;
         this.searchTerms = null;
         this.radius = -1;

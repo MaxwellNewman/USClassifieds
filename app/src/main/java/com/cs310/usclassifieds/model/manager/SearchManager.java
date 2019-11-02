@@ -13,11 +13,13 @@ public class SearchManager {
         this.dataManager = dm;
     }
 
-    public void searchItems(SearchQuery query) {
-        items = dataManager.searchItems(query);
+    public List<Item> searchItems(String text) {
+        SearchQuery query = new SearchQuery();
+        return dataManager.searchItems(query);
     }
 
-    public void searchUsers(SearchQuery query) {
-        users = dataManager.searchUsers(query);
+    public List<User> searchUsers(String text) {
+        SearchQuery query = new SearchQuery();
+        return dataManager.searchUsers(query);
     }
 }

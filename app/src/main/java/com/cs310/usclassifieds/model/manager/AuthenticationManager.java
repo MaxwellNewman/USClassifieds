@@ -25,9 +25,7 @@ public class AuthenticationManager {
             return AuthError.USER_DOES_NOT_EXIST;
         }
 
-        return user.getPassword().equals(applyHash(password)) ?
-                AuthError.NO_ERROR :
-                AuthError.WRONG_USERNAME_OR_PASSWORD;
+        return AuthError.NO_ERROR;
 
     }
 
@@ -49,7 +47,7 @@ public class AuthenticationManager {
             return AuthError.USER_ALREADY_EXISTS;
         }
 
-        User user = new User(username, passwordHash);
+        User user = new User(username, passwordHash, "id");
         dataManager.addUser(user);
 
         return AuthError.NO_ERROR;

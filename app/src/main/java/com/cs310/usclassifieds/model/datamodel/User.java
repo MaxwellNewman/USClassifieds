@@ -1,32 +1,27 @@
 package com.cs310.usclassifieds.model.datamodel;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.HashMap;
 import java.util.List;
 
 public class User {
-    public String passwordHash;
     public String username;
     public Contact contactInfo;
     public List<String> friends; // userIDs
     public List<Item> items;
     public String userId;
 
-    public User(String username, String passwordHash, String email) {
-        this.passwordHash = passwordHash;
+    public User(String username, String email, String userId) {
         this.username = username;
-        this.contactInfo = null;
+        this.contactInfo = new Contact(email);
         this.friends = null;
         this.items = null;
-        this.userId = email;
+        this.userId = userId;
     }
 
     public User() {
-        this.passwordHash = null;
         this.username = null;
-    }
-
-    public String getPassword() {
-        return passwordHash;
     }
 
     // Returns the user as a map, excluding any members that are null
@@ -36,7 +31,6 @@ public class User {
         final HashMap<String, Object> map = new HashMap<>();
 
         map.put("username", username);
-        map.put("passwordHash", passwordHash);
         if(contactInfo != null) {
             map.put("contactInfo", contactInfo);
         }
