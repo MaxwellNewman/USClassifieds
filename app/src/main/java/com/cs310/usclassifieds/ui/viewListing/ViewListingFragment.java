@@ -28,7 +28,7 @@ public class ViewListingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(ViewListingViewModel.class);
-        View view = inflater.inflate(R.layout.map_fragment, container, false);
+        View view = inflater.inflate(R.layout.view_listing_fragment, container, false);
 
         Button contactButton = (Button) view.findViewById(R.id.contact_button);
         contactButton.setOnClickListener(new View.OnClickListener(){
