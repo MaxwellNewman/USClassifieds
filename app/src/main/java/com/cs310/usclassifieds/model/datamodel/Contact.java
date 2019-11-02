@@ -5,4 +5,11 @@ public class Contact {
     public String email;
     public String instagram;
     public String snapchat;
+
+    public Contact(String email) {
+        this.email = email;
+        this.phone = null;
+        this.instagram = null;
+        this.snapchat = null;
+    }
 }

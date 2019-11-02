@@ -3,13 +3,13 @@ package com.cs310.usclassifieds.model.datamodel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Query {
+public class SearchQuery {
     public List<Integer> sellerIds;
     public List<String> searchTerms;
     public int radius;
     public Location origin;
 
-    Query() {
+    SearchQuery() {
         this.sellerIds = null;
         this.searchTerms = null;
         this.radius = -1;
