@@ -4,4 +4,10 @@ public class Location {
     public String address;
     public double latitude;
     public double longitude;
+
+    public Location(String add, double lat, double lon) {
+        this.address = add;
+        this.latitude = lat;
+        this.longitude = lon;
+    }
 }

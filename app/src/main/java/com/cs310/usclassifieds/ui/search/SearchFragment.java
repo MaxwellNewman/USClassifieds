@@ -19,8 +19,8 @@ import android.widget.ImageView;
 import android.view.View.OnClickListener;
 import com.cs310.usclassifieds.R;
 
-import com.cs310.usclassifieds.model.manager.SearchManager;
-import com.cs310.usclassifieds.model.datamodel.Item;
+import com.cs310.usclassifieds.model.manager.*;
+import com.cs310.usclassifieds.model.datamodel.*;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     private SearchViewModel mViewModel;
     private EditText searchText;
-    private SearchManager searchManager;
+    private SearchManager searchManager = new SearchManager(new DataManager());
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -36,12 +36,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
-//                Log.v("Tag", searchText.toString());
         String searchText = this.searchText.getText().toString();
         List<Item> items = searchManager.searchItems(searchText);
 
         //TODO: put the items in the display
-
         Navigation.findNavController(view).navigate(R.id.navigation_results);
     }
 
