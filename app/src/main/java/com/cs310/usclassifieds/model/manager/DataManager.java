@@ -24,16 +24,20 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class DataManager {
     public static final String USERS_PATH = "users";
     public static final String USER_ID = "userId";
     public static final String USERNAME = "username";
     public static final String ITEMS_PATH = "items";
+    public static final String TAGS = "tags";
     private FirebaseFirestore database;
 
     public DataManager() {
@@ -130,19 +134,89 @@ public class DataManager {
         return users;
     }
 
-    List<User> searchUsers(SearchQuery query) {
-        List<User> users = new ArrayList<User>();
+    List<User> searchUsers(String searchTerm) {
+        List<User> users = new ArrayList<>();
         // add logic to search users
         return users;
     }
 
-    List<Item> searchItems(SearchQuery query) {
-        List<Item> items = new ArrayList<Item>();
-        // add logic to search items
+    public List<Item> getAllItems() {
+        final List<Item> items = new ArrayList<>();
+        final Task<QuerySnapshot> query = database.collection(ITEMS_PATH).get();
+
+        while(!query.isComplete()) {
+            // waiting for query to finish
+        }
+
+        final List<DocumentSnapshot> documents;
+        try {
+            documents = query.getResult().getDocuments();
+        } catch(Exception e) {
+            Log.e("error get item", e.getMessage());
+            return null;
+        }
+
+        for(final DocumentSnapshot doc : documents) {
+            try {
+                items.add(doc.toObject(Item.class));
+            } catch (Exception e) {
+                Log.e("error adding item: " + doc.getId(), e.getMessage());
+            }
+        }
+
+        return items;
+    }
+
+    public List<Item> searchItemsByTags(List<String> searchTerms) {
+        final List<Task<QuerySnapshot> > queries = new ArrayList<>();
+        final Set<String> itemsIncluded = new HashSet<>();
+        final List<Item> items = new ArrayList<>();
+
+        for(int i=0; i<searchTerms.size(); ++i) {
+            searchTerms.set(i, searchTerms.get(i).toLowerCase());
+        }
+
+        // start the queries for all the search terms
+        for(final String searchTerm : searchTerms) {
+            queries.add(database.collection(ITEMS_PATH)
+                    .whereArrayContains(TAGS, searchTerm)
+                    .get()
+            );
+        }
+
+        for(final Task<QuerySnapshot> query : queries) {
+            while (!query.isComplete()) {
+                // waiting for query to complete
+            }
+
+            List<DocumentSnapshot> documents = new ArrayList<>();
+            try {
+                documents = query.getResult().getDocuments();
+            } catch (Exception e) {
+                Log.e("error getting items", e.getMessage());
+                return null;
+            }
+
+            for (final DocumentSnapshot doc : documents) {
+                try {
+                    if (!itemsIncluded.contains(doc.getId())) {
+                        items.add(doc.toObject(Item.class));
+                        itemsIncluded.add(doc.getId());
+                    }
+                } catch (Exception e) {
+                    Log.e("Error getting item: " + doc.getId(), e.getMessage());
+                }
+            }
+        }
+
         return items;
     }
 
     private String modifyListing(Item item) {
+        for(int i=0; i<item.tags.size(); ++i) {
+            item.tags.set(i, item.tags.get(i).toLowerCase());
+        }
+
         DocumentReference document;
         if(item.itemId == null) {
             document = database.collection(ITEMS_PATH).document();
