@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.view.View.OnClickListener;
+
+import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 
 import com.cs310.usclassifieds.model.manager.*;
@@ -29,6 +31,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private SearchViewModel mViewModel;
     private EditText searchText;
     private SearchManager searchManager = new SearchManager(new DataManager());
+
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -39,7 +42,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         String searchText = this.searchText.getText().toString();
         List<Item> items = searchManager.searchItems(searchText);
 
-        //TODO: put the items in the display
+        MainActivity activity = (MainActivity) getActivity();
+        activity.passItems(items);
+
         Navigation.findNavController(view).navigate(R.id.navigation_results);
     }
 
