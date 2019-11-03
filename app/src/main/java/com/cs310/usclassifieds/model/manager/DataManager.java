@@ -32,6 +32,8 @@ import java.util.Map;
 public class DataManager {
     public static final String USERS_PATH = "users";
     public static final String USER_ID = "userId";
+    public static final String USERNAME = "username";
+    public static final String ITEMS_PATH = "items";
     private FirebaseFirestore database;
 
     public DataManager() {
@@ -78,22 +80,54 @@ public class DataManager {
             // waiting for query to finish
         }
 
-        QuerySnapshot snapshot = query.getResult();
-
+        final QuerySnapshot snapshot = query.getResult();
         final List<DocumentSnapshot> documents;
         try {
             documents = snapshot.getDocuments();
-        } catch(NullPointerException e) {
-            return null;
-        }
 
-        try {
             return documents.isEmpty() ?
                     null :
                     documents.get(0).toObject(User.class);
-        } catch (Exception e) {
+        } catch(Exception e) {
+            Log.e("exception get user: " + userId, e.getMessage());
             return null;
         }
+    }
+
+    // Gets a list of users by making queries simultaneously instead of waiting for each
+    // query to completely finish before starting the next one
+    public List<User> getUsers(List<String> userIds) {
+        final List<Task<QuerySnapshot> > queries = new ArrayList<>();
+        final List<User> users = new ArrayList<>();
+
+        for(int i=0; i<userIds.size(); ++i) {
+            queries.add(database.collection(USERS_PATH)
+                            .whereEqualTo(USER_ID, userIds.get(i))
+                            .get()
+            );
+        }
+
+        for(int i=0; i<queries.size(); ++i) {
+            while(!queries.get(i).isComplete()) {
+                //waiting for ith query to finish
+            }
+
+            final QuerySnapshot snapshot = queries.get(i).getResult();
+            final List<DocumentSnapshot> documents;
+            try {
+                documents = snapshot.getDocuments();
+
+                users.add(documents.isEmpty() ?
+                        null :
+                        documents.get(0).toObject(User.class)
+                );
+            } catch(Exception e) {
+                Log.e("error get users: " + userIds.get(i), e.getMessage());
+                users.add(null);
+            }
+        }
+
+        return users;
     }
 
     List<User> searchUsers(SearchQuery query) {
@@ -108,8 +142,21 @@ public class DataManager {
         return items;
     }
 
-    boolean addListing(Item i) {
-        return true;
+    private String modifyListing(Item item) {
+        DocumentReference document;
+        if(item.itemId == null) {
+            document = database.collection(ITEMS_PATH).document();
+            item.itemId = document.getId();
+        } else {
+            document = database.collection(ITEMS_PATH).document(item.itemId);
+        }
+
+        document.set(item);
+        return document.getId();
+    }
+
+    public String addListing(Item item) {
+        return modifyListing(item);
     }
 
     boolean resolveSale(Item i) {
@@ -120,19 +167,15 @@ public class DataManager {
         return true;
     }
 
-    public List<User> getFriendsOf(String username) {
-        List<User> users = new ArrayList<User>();
-
-        //Put PLACEHOLDER values for now
-        User user1 = new User();
-        user1.username = username + "'s Friend1";
-        users.add(user1);
-
-        User user2 = new User();
-        user2.username = username + "'s Friend2";
-        users.add(user2);
-
-        return users;
+    // Returns a list of Users that are friends of the userId passed in
+    // If there is an error retrieving an individual user, that user will be returned as null
+    public List<User> getFriendsOf(String userId) {
+        try {
+            final User user = getUser(userId);
+            return getUsers(user.friends);
+        } catch(Exception e) {
+            return null;
+        }
     }
 
 }

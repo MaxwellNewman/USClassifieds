@@ -27,6 +27,7 @@ public class SignInActivity extends AppCompatActivity {
 
         this.mAuth = FirebaseAuth.getInstance();
 
+        // Set up stuff so that keyboard goes away when user clicks away
         EditText usernameEditText = (EditText)findViewById(R.id.username);
         EditText passwordEditText = (EditText)findViewById(R.id.password);
 
@@ -67,7 +68,6 @@ public class SignInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, give toast, redirect to Main Activity
                             Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
-                            mainIntent.putExtra("USERNAME", username);
                             startActivity(mainIntent);
                         } else {
                             // If sign in fails, display an error toast to the user.
@@ -81,8 +81,10 @@ public class SignInActivity extends AppCompatActivity {
 
     /** Hides keyboard **/
     private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
      /** Setup so that clicking on editText results in keyboard appearing **/
