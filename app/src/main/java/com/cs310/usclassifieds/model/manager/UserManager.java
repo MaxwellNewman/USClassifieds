@@ -32,7 +32,7 @@ public class UserManager {
     }
 
     // Gets the friends of a specific user
-    public List<User> getFriendsOf(String username) {
-        return dataManager.getFriendsOf(username);
+    public List<User> getFriendsOf(String userId) {
+        return dataManager.getFriendsOf(userId);
     }
 }
