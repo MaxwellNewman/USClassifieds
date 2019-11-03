@@ -1,6 +1,8 @@
 package com.cs310.usclassifieds.model.manager;
 
 import com.cs310.usclassifieds.model.datamodel.*;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class SearchManager {
@@ -10,8 +12,39 @@ public class SearchManager {
         this.dataManager = dm;
     }
 
-    public List<Item> searchItems(String searchString) {
-        SearchQuery query = new SearchQuery();
+    public List<Item> searchByDistance(double lat, double lon) {
+        // TODO
+        return new ArrayList<>();
+    }
+
+    public List<Item> searchByPrice(double price, boolean cheapestFirst) {
+        // TODO
+        return new ArrayList<>();
+    }
+
+    public List<Item> searchByTags(String searchString) {
+        final List<String> searchTerms = Arrays.asList(searchString.split("\\s+"));
+        return dataManager.searchItemsByTags(searchTerms);
+    }
+
+    public List<Item> searchItemsByTitle(String searchString) {
+        final List<Item> items = dataManager.getAllItems();
+        final List<String> searchTerms = Arrays.asList(searchString.split("\\s+"));
+        final List<Item> results = new ArrayList<>();
+
+        for(int i=0; i<items.size(); ++i) {
+            boolean itemAdded = false;
+            for(int j=0; j<searchTerms.size() && !itemAdded; ++j) {
+                if(items.get(i).title.contains(searchTerms.get(i))) {
+                    results.add(items.get(i));
+                    itemAdded = true;
+                }
+            }
+        }
+
+        return results;
+/*        // return dataManager.searchItems(searchTerms);
+        // SearchQuery query = new SearchQuery();
         //TODO: Create query given the searchString
         //return dataManager.searchItems(query);
 
@@ -47,7 +80,7 @@ public class SearchManager {
         item2.itemId = "2";
         placeHolder.add(item2);
 
-        return placeHolder;
+        return placeHolder;*/
     }
 
     public List<User> searchUsers(String searchString) {
