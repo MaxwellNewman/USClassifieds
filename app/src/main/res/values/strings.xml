@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">USClassifieds</string>
-    <string name="prompt_email">Email (Optional)</string>
+    <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_username">Username</string>
     <string name="action_sign_in">Sign in</string>
@@ -17,7 +17,7 @@
 
     <!--Create User Page Specific Labels-->
     <string name="prompt_phone_number">Phone Number (Optional)</string>
-    <string name="prompt_profile_description">Profile Description</string>
+    <string name="prompt_profile_description">Profile Description (Optional)</string>
     <string name="create_account_button">Create Account</string>
     <string name="sign_in_clickable_text">Already have an Account? Sign in</string>
 
