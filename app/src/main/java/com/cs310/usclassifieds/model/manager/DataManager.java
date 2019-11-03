@@ -58,7 +58,7 @@ public class DataManager {
     }
 
     // Adds user to the database
-    boolean addUser(User user) {
+    public boolean addUser(User user) {
         return modifyUser(user);
     }
 
@@ -78,7 +78,7 @@ public class DataManager {
         }
     }
 
-    User getUser(String userId) {
+    public User getUser(String userId) {
         CollectionReference userRef = database.collection(USERS_PATH);
         Task<QuerySnapshot> query = userRef.whereEqualTo(USER_ID, userId).get();
         QuerySnapshot snapshot = query.getResult();
