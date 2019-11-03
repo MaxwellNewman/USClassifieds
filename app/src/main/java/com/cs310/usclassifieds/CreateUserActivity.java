@@ -69,4 +69,6 @@ public class CreateUserActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
+
+    private void createUser()
 }
