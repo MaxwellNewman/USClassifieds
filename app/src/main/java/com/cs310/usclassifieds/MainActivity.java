@@ -17,16 +17,16 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements DataPassListener {
 
     private List<Item> items = new ArrayList<Item>();
     private List<User> users = new ArrayList<User>();
-    private String currentUsername;
 
-    public String getCurrentUsername(){
-        return currentUsername;
+    public String getCurrentUser(){
+
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     @Override
@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.currentUsername = getIntent().getStringExtra("USERNAME");
-        Log.v("MainActivity", currentUsername);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

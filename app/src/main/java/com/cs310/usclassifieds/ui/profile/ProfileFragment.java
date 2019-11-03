@@ -34,7 +34,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         MainActivity activity = (MainActivity) getActivity();
-        List<User> friends = userManager.getFriendsOf(activity.getCurrentUsername());
+        List<User> friends = userManager.getFriendsOf(activity.getCurrentUser());
         activity.passUsers(friends);
 
         Navigation.findNavController(view).navigate(R.id.navigation_friend_results);
