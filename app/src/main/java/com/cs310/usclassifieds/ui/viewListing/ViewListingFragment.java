@@ -1,5 +1,7 @@
 package com.cs310.usclassifieds.ui.viewListing;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;

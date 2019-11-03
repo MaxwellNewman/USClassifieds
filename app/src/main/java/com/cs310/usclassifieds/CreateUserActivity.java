@@ -48,6 +48,7 @@ public class CreateUserActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Intent mainIntent = new Intent(CreateUserActivity.this, MainActivity.class);
+                            mainIntent.putExtra("USERNAME", username);
                             startActivity(mainIntent);
                             //updateUI(user);
                         } else {

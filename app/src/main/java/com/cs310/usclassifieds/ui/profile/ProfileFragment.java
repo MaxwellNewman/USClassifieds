@@ -9,21 +9,36 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
+import com.cs310.usclassifieds.model.datamodel.User;
+import com.cs310.usclassifieds.model.manager.DataManager;
+import com.cs310.usclassifieds.model.manager.UserManager;
 
-public class ProfileFragment extends Fragment {//} implements View.OnClickListener {
+import java.util.List;
+
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ProfileViewModel mViewModel;
-
+    private UserManager userManager = new UserManager(new DataManager());
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
 
+    @Override
+    public void onClick(View view) {
+        MainActivity activity = (MainActivity) getActivity();
+        List<User> friends = userManager.getFriendsOf(activity.getCurrentUsername());
+        activity.passUsers(friends);
+
+        Navigation.findNavController(view).navigate(R.id.navigation_friend_results);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -33,12 +48,7 @@ public class ProfileFragment extends Fragment {//} implements View.OnClickListen
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
         Button viewFriendsButton = (Button) view.findViewById(R.id.view_friends_button);
-        viewFriendsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_friend_results);
-            }
-        });
+        viewFriendsButton.setOnClickListener(this);
 
         Button listingsButton = (Button) view.findViewById(R.id.listings_button);
         listingsButton.setOnClickListener(new View.OnClickListener(){
@@ -52,7 +62,7 @@ public class ProfileFragment extends Fragment {//} implements View.OnClickListen
         findFriendsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_friends);
+                Navigation.findNavController(view).navigate(R.id.navigation_find_friends);
             }
         });
         return view;

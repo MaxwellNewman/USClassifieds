@@ -50,6 +50,7 @@ public class SignInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, give toast, redirect to Main Activity
                             Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
+                            mainIntent.putExtra("USERNAME", username);
                             startActivity(mainIntent);
                             Toast.makeText(SignInActivity.this, "Hello, " + username,
                                     Toast.LENGTH_SHORT).show();

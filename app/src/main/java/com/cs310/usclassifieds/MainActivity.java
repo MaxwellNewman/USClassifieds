@@ -5,8 +5,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
+import android.view.View;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.cs310.usclassifieds.ui.DataPassListener;
 import com.cs310.usclassifieds.model.datamodel.Item;
@@ -18,11 +19,15 @@ import java.util.ArrayList;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-
 public class MainActivity extends AppCompatActivity implements DataPassListener {
 
     private List<Item> items = new ArrayList<Item>();
     private List<User> users = new ArrayList<User>();
+    private String currentUsername;
+
+    public String getCurrentUsername(){
+        return currentUsername;
+    }
 
     @Override
     public void passItems(List<Item> items) {
@@ -47,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.currentUsername = getIntent().getStringExtra("USERNAME");
+        Log.v("MainActivity", currentUsername);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -60,18 +66,18 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    @Override
+    public void onBackPressed() {
+        Log.v("MainActivity", "Back Button Pressed");
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
 
-
-
-//    @Override
-//    public void onBackPressed(){
-//        FragmentManager fm = getSupportFragmentManager();
-//        if (fm.getBackStackEntryCount() > 0) {
-//            Log.i("MainActivity", "popping backstack");
-//            fm.popBackStack();
-//        } else {
-//            Log.i("MainActivity", "nothing on backstack, calling super");
-//            super.onBackPressed();
-//        }
-//    }
+    public void backPressed(View view) {
+        this.onBackPressed();
+    }
 }

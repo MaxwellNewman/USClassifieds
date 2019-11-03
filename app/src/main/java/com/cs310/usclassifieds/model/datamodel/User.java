@@ -7,6 +7,7 @@ import java.util.List;
 
 public class User {
     public String username;
+    public String profilePicture;
     public Contact contactInfo;
     public List<String> friends; // userIDs
     public List<Item> items;
