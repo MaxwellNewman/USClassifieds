@@ -32,14 +32,14 @@ public class User {
 
         map.put("username", username);
         if(contactInfo != null) {
-            map.put("contactInfo", contactInfo);
+            map.put("email", contactInfo.email);
         }
-        if(friends != null) {
+/*        if(friends != null) {
             map.put("friends", friends);
         }
         if(items != null) {
             map.put("items", items);
-        }
+        }*/
 
         return map;
     }

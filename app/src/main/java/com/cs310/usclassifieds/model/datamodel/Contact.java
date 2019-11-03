@@ -12,4 +12,11 @@ public class Contact {
         this.instagram = null;
         this.snapchat = null;
     }
+
+    public Contact() {
+        this.email = null;
+        this.phone = null;
+        this.instagram = null;
+        this.snapchat = null;
+    }
 }

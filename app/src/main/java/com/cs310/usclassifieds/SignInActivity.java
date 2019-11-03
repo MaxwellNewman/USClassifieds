@@ -16,6 +16,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -36,8 +43,6 @@ public class SignInActivity extends AppCompatActivity {
         this.username = ((EditText)findViewById(R.id.username)).getText().toString();
         this.password = ((EditText)findViewById(R.id.password)).getText().toString();
 
-        System.out.println("in sign in ");
-
         mAuth.signInWithEmailAndPassword(username + "@usclassifieds.com", password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -52,15 +57,6 @@ public class SignInActivity extends AppCompatActivity {
                             // If sign in fails, display an error toast to the user.
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
-                            final DataManager manager = new DataManager();
-
-                            final User user = new User("user", "email", "myId");
-                            manager.addUser(user);
-
-                            final User returnUser = manager.getUser("myId");
-
-                            System.out.println("return: " + returnUser.username);
                         }
                     }
                 });
