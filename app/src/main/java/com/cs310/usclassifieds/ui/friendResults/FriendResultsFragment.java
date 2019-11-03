@@ -8,18 +8,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
+import com.cs310.usclassifieds.model.datamodel.Item;
+import com.cs310.usclassifieds.model.datamodel.User;
+import com.cs310.usclassifieds.ui.results.ResultsViewModel;
+import com.cs310.usclassifieds.ui.UserAdapter;
+
+import java.util.List;
 
 public class FriendResultsFragment extends Fragment {
 
     private FriendResultsViewModel mViewModel;
-
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     public static FriendResultsFragment newInstance() {
         return new FriendResultsFragment();
     }
@@ -31,15 +42,16 @@ public class FriendResultsFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(FriendResultsViewModel.class);
         View view = inflater.inflate(R.layout.friend_results_fragment, container, false);
 
-        Button loadProfileButton = (Button) view.findViewById(R.id.placeholder_load_profile_button);
-        loadProfileButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                //TODO call the database and pass data
-                //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
-                Navigation.findNavController(view).navigate(R.id.navigation_profile);
-            }
-        });
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.users_view);
+        this.layoutManager = new LinearLayoutManager(getActivity());
+
+        this.recyclerView.setLayoutManager(this.layoutManager);
+
+        // Get item list
+        MainActivity activity = (MainActivity) getActivity();
+        List<User> users = activity.getUsers();
+        this.mAdapter = new UserAdapter(users.toArray(new User[users.size()]));
+        recyclerView.setAdapter(mAdapter);
         return view;
     }
 

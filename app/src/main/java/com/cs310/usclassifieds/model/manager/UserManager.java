@@ -1,6 +1,8 @@
 package com.cs310.usclassifieds.model.manager;
 import com.cs310.usclassifieds.model.datamodel.User;
 
+import java.util.List;
+
 public class UserManager {
     private DataManager dataManager;
 
@@ -27,5 +29,10 @@ public class UserManager {
     // Returns a profile given a user ID
     public User loadProfile(Integer userId) {
         return dataManager.getUser(userId);
+    }
+
+    // Gets the friends of a specific user
+    public List<User> getFriendsOf(String username) {
+        return dataManager.getFriendsOf(username);
     }
 }

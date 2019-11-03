@@ -70,4 +70,19 @@ public class DataManager {
         return true;
     }
 
+    public List<User> getFriendsOf(String username) {
+        List<User> users = new ArrayList<User>();
+
+        //Put PLACEHOLDER values for now
+        User user1 = new User();
+        user1.username = username + "'s Friend1";
+        users.add(user1);
+
+        User user2 = new User();
+        user2.username = username + "'s Friend2";
+        users.add(user2);
+
+        return users;
+    }
+
 }

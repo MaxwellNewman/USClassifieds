@@ -22,7 +22,7 @@
             app:destination="@id/navigation_results" />
         <action
             android:id="@+id/action_navigation_profile_to_navigation_friends"
-            app:destination="@id/navigation_friends" />
+            app:destination="@id/navigation_find_friends" />
         <action
             android:id="@+id/action_navigation_profile_to_navigation_friend_results2"
             app:destination="@id/navigation_friend_results" />
@@ -51,10 +51,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_friends"
-        android:name="com.cs310.usclassifieds.ui.friends.FriendsFragment"
+        android:id="@+id/navigation_find_friends"
+        android:name="com.cs310.usclassifieds.ui.findFriends.FindFriendsFragment"
         android:label="@string/title_friends"
-        tools:layout="@layout/friends_fragment" >
+        tools:layout="@layout/find_friends_fragment" >
         <action
             android:id="@+id/action_navigation_friends_to_navigation_friend_results"
             app:destination="@id/navigation_friend_results" />

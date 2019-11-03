@@ -53,8 +53,22 @@ public class SearchManager {
     public List<User> searchUsers(String searchString) {
         Query query = new Query();
         //TODO: Create query given the searchString
-        return dataManager.searchUsers(query);
+        //return dataManager.searchUsers(query);
 
-        //PLACEHOLDER: Return dummy values for UI
+        // PLACEHOLDER: Return dummy values for UI
+        List<User> placeHolder =  new ArrayList<User>();
+        User user1 = new User();
+        user1.username = searchString + "1";
+        user1.profilePicture = "image1.png";
+        user1.userId = 1;
+        placeHolder.add(user1);
+
+        User user2 = new User();
+        user2.username = searchString + "2";
+        user2.profilePicture = "image1.png";
+        user2.userId = 2;
+        placeHolder.add(user2);
+
+        return placeHolder;
     }
 }

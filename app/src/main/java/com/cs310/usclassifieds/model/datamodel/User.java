@@ -5,6 +5,7 @@ import java.util.List;
 public class User {
     public String passwordHash;
     public String username;
+    public String profilePicture;
     public Contact contactInfo;
     public List<Integer> friends; // userIDs
     public List<Item> items;
