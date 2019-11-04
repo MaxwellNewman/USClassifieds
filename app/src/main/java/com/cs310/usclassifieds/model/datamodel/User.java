@@ -2,6 +2,7 @@ package com.cs310.usclassifieds.model.datamodel;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +18,9 @@ public class User {
     public User(String username, String email, String userId) {
         this.username = username;
         this.contactInfo = new Contact(email);
-        this.friends = null;
-        this.items = null;
+        this.friends = new ArrayList<>();
+        this.items = new ArrayList<>();
+        this.profilePicture = null;
         this.userId = userId;
     }
 

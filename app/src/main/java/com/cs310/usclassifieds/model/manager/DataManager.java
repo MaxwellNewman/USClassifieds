@@ -20,9 +20,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -42,6 +44,10 @@ public class DataManager {
 
     public DataManager() {
         database = FirebaseFirestore.getInstance();
+/*        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        database.setFirestoreSettings(settings);*/
     }
 
     private boolean modifyUser(User user) {
@@ -165,6 +171,33 @@ public class DataManager {
         }
 
         return items;
+    }
+
+    public List<User> getAllUsers() {
+        final List<User> users = new ArrayList<>();
+        final Task<QuerySnapshot> query = database.collection(USERS_PATH).get();
+
+        while(!query.isComplete()) {
+            // waiting for query
+        }
+
+        final List<DocumentSnapshot> documents;
+        try {
+            documents = query.getResult().getDocuments();
+        } catch(Exception e) {
+            Log.e("Error getting all users", e.getMessage());
+            return null;
+        }
+
+        for(final DocumentSnapshot doc : documents) {
+            try {
+                users.add(doc.toObject(User.class));
+            } catch (Exception e) {
+                Log.e("error adding all user: " + doc.getId(), e.getMessage());
+            }
+        }
+
+        return users;
     }
 
     public List<Item> searchItemsByTags(List<String> searchTerms) {
