@@ -23,10 +23,32 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
 
     private List<Item> items = new ArrayList<Item>();
     private List<User> users = new ArrayList<User>();
+    private Item viewedItem = new Item();
+    private User viewedUser = new User();
 
     public String getCurrentUser(){
 
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    @Override
+    public void setViewedItem(Item item) {
+        this.viewedItem = item;
+    }
+
+    @Override
+    public void setViewedUser(User user) {
+        this.viewedUser = user;
+    }
+
+    @Override
+    public Item getViewedItem() {
+        return this.viewedItem;
+    }
+
+    @Override
+    public User getViewedUser() {
+        return this.viewedUser;
     }
 
     @Override

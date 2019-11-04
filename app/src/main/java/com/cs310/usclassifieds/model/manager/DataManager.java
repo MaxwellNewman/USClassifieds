@@ -237,8 +237,9 @@ public class DataManager {
         return true;
     }
 
-    boolean updateItem(int itemId, Item i) {
-        return true;
+    String updateItem(String itemId, Item item) {
+        item.itemId = itemId;
+        return modifyListing(item);
     }
 
     // Returns a list of Users that are friends of the userId passed in
