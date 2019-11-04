@@ -16,6 +16,7 @@
     <string name="title_notifications">Notifications</string>
 
     <!--Create User Page Specific Labels-->
+    <string name="prompt_name">Full Name</string>
     <string name="prompt_phone_number">Phone Number (Optional)</string>
     <string name="prompt_profile_description">Profile Description (Optional)</string>
     <string name="create_account_button">Create Account</string>

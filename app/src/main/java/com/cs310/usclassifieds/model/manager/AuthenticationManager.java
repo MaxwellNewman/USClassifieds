@@ -47,8 +47,8 @@ public class AuthenticationManager {
             return AuthError.USER_ALREADY_EXISTS;
         }
 
-        User user = new User(username, passwordHash, "id");
-        dataManager.addUser(user);
+//        User user = new User(username, passwordHash, "id");
+//        dataManager.addUser(user);
 
         return AuthError.NO_ERROR;
     }
