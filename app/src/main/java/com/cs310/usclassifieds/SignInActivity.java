@@ -81,6 +81,13 @@ public class SignInActivity extends AppCompatActivity {
                             // If sign in fails, display an error toast to the user.
                             Toast.makeText(SignInActivity.this, "Username and password incorrect. Try again.",
                                     Toast.LENGTH_SHORT).show();
+
+                            final DataManager dataManager = new DataManager();
+                            final SearchManager searchManager = new SearchManager(dataManager);
+                            final List<Item> items = searchManager.searchByPrice(true);
+
+                            System.out.println("something");
+
                         }
                     }
                 });

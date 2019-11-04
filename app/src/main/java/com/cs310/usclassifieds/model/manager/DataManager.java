@@ -59,6 +59,10 @@ public class DataManager {
                 .document(user.userId)
                 .set(user);
 
+        while(!ref.isComplete()) {
+            // waiting for task to complete
+        }
+
         return true;
     }
 
@@ -177,6 +181,10 @@ public class DataManager {
         return items;
     }
 
+    public List<User> searchItemByUser(String username) {
+
+    }
+
     public List<User> getAllUsers() {
         final List<User> users = new ArrayList<>();
         final Task<QuerySnapshot> query = database.collection(USERS_PATH).get();
@@ -249,12 +257,12 @@ public class DataManager {
         return items;
     }
 
-    private String modifyListing(Item item) {
+    private String modifyListing(final Item item) {
         for(int i=0; i<item.tags.size(); ++i) {
             item.tags.set(i, item.tags.get(i).toLowerCase());
         }
 
-        DocumentReference document;
+        final DocumentReference document;
         if(item.itemId == null) {
             document = database.collection(ITEMS_PATH).document();
             item.itemId = document.getId();
@@ -262,16 +270,10 @@ public class DataManager {
             document = database.collection(ITEMS_PATH).document(item.itemId);
         }
 
-        document.set(item);
-        return document.getId();
-    }
-
-
-    public void addListing(final Item item) {
-        StorageReference storageRef = storage.getReference();
-        Uri imageUri = Uri.parse(item.image);
+        final StorageReference storageRef = storage.getReference();
+        final Uri imageUri = item.imageUri;
         final StorageReference imageRef = storageRef.child(imageUri.getLastPathSegment());
-        UploadTask uploadTask = imageRef.putFile(imageUri);
+        final UploadTask uploadTask = imageRef.putFile(imageUri);
 
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
@@ -287,41 +289,20 @@ public class DataManager {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
-                    String downloadUrl = task.getResult().toString();
-
-                    // Todo: Talk to Raghav about this.  Should the image uri be stored in the image field?
-                    // In that case, what is it that we're parsing above?
-                    // We should just set the value of item.image to the uri if that's what we want to store
-                    // Plus, is an image required?  If not, we should do a null check above
-                    Map<String,Object> location = new HashMap<>();
-                    location.put("address", item.location.address);
-                    location.put("latitude", item.location.latitude);
-                    location.put("longitude", item.location.longitude);
-
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("title", item.title);
-                    data.put("description", item.description);
-                    data.put("image", downloadUrl);
-                    data.put("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    data.put("location", location);
-
-                    database.collection(ITEMS_PATH).document()
-                            .set(data)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-
-                                }
-                            });
+                    item.imageUrl = task.getResult().toString();
+                    document.set(item);
+                } else {
+                    Log.e("error adding item: " + item.itemId, "exception");
                 }
             }
         });
+
+        return document.getId();
+    }
+
+
+    public void addListing(final Item item) {
+        modifyListing(item);
     }
 
     boolean resolveSale(Item i) {

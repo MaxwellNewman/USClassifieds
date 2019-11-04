@@ -88,7 +88,9 @@ public class CreateListingFragment extends Fragment {
         item.description = descText.getText().toString().equals("") ? "Test Description" : descText.getText().toString();
 //        item.location.address = locText.getText().toString();
         item.price = priceText.getText().toString().equals("") ? Float.valueOf("0.0") : Float.valueOf(priceText.getText().toString());
-        item.image = mImageUri.toString();
+        item.imageUri = mImageUri;
+
+        // Todo: Add user Id and username to item
 
         itemManager.createListing(item);
     }
