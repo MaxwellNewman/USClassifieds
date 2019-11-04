@@ -13,6 +13,13 @@ public class Contact {
         this.snapchat = null;
     }
 
+    public Contact(String email, String phoneNumber) {
+        this.email = email;
+        this.phone = phoneNumber;
+        this.instagram = null;
+        this.snapchat = null;
+    }
+
     public Contact() {
         this.email = null;
         this.phone = null;
