@@ -10,7 +10,7 @@ public class SearchManager {
         this.dataManager = dm;
     }
 
-    public List<Item> searchItems(String searchString) {
+    public List<Item> searchItemsByTitle(String searchString) {
         SearchQuery query = new SearchQuery();
         //TODO: Create query given the searchString
         //return dataManager.searchItems(query);
