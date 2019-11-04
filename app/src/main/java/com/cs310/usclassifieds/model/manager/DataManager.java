@@ -1,4 +1,5 @@
 package com.cs310.usclassifieds.model.manager;
+import android.net.Uri;
 import android.renderscript.Sampler;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,10 +10,12 @@ import com.cs310.usclassifieds.SignInActivity;
 import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.SearchQuery;
 import com.cs310.usclassifieds.model.datamodel.User;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -23,6 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -39,9 +45,11 @@ public class DataManager {
     public static final String ITEMS_PATH = "items";
     public static final String TAGS = "tags";
     private FirebaseFirestore database;
+    private FirebaseStorage storage;
 
     public DataManager() {
         database = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
     }
 
     private boolean modifyUser(User user) {
@@ -229,8 +237,58 @@ public class DataManager {
         return document.getId();
     }
 
-    public String addListing(Item item) {
-        return modifyListing(item);
+
+    public void addListing(final Item item) {
+        StorageReference storageRef = storage.getReference();
+        Uri imageUri = Uri.parse(item.image);
+        final StorageReference imageRef = storageRef.child(imageUri.getLastPathSegment());
+        UploadTask uploadTask = imageRef.putFile(imageUri);
+
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return imageRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    String downloadUrl = task.getResult().toString();
+
+                    Map<String,Object> location = new HashMap<>();
+                    location.put("address", item.location.address);
+                    location.put("latitude", item.location.latitude);
+                    location.put("longitude", item.location.longitude);
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("title", item.title);
+                    data.put("description", item.description);
+                    data.put("image", downloadUrl);
+                    data.put("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    data.put("location", location);
+
+                    database.collection(ITEMS_PATH).document()
+                            .set(data)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                }
+            }
+        });
     }
 
     boolean resolveSale(Item i) {

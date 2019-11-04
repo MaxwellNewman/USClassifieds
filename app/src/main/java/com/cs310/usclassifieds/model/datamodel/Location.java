@@ -12,8 +12,8 @@ public class Location {
     }
 
     public Location() {
-        this.address = null;
-        this.latitude = -1;
-        this.longitude = -1;
+        this.address = "3607 Trousdale Pkwy, Los Angeles, CA 90089";
+        this.latitude = 34.018360;
+        this.longitude = -118.286331;
     }
 }
