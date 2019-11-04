@@ -11,4 +11,8 @@ public class Item {
     public Location location;
     public String userId;
     public String itemId;
+
+    public Item() {
+        location = new Location();
+    }
 }

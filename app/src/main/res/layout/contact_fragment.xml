@@ -8,12 +8,17 @@
     tools:context=".ui.contact.ContactFragment">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="This will just have the user's email/phone, idk if we need it"
+        android:text="Patrick"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

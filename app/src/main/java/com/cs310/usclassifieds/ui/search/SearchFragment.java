@@ -83,5 +83,4 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         // TODO: Use the ViewModel
     }
-
 }
