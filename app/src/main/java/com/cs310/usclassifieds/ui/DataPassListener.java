@@ -13,6 +13,10 @@ public interface DataPassListener {
 
     void passItems(List<Item> items);
     void passUsers(List<User> users);
+    void setViewedItem(Item item);
+    void setViewedUser(User user);
     List<Item> getItems();
     List<User> getUsers();
+    Item getViewedItem();
+    User getViewedUser();
 }

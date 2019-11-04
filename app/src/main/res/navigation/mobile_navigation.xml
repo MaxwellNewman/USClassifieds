@@ -87,6 +87,7 @@
     </fragment>
 
     <fragment
+        class="com.google.android.gms.maps.MapFragment"
         android:id="@+id/navigation_view_listing"
         android:name="com.cs310.usclassifieds.ui.viewListing.ViewListingFragment"
         android:label="@string/title_view_listing"

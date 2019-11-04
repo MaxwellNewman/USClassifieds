@@ -3,8 +3,6 @@ package com.cs310.usclassifieds.model.manager;
 import android.util.Pair;
 
 import com.cs310.usclassifieds.model.datamodel.*;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class SearchManager {

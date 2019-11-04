@@ -5,34 +5,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.viewListing.ViewListingFragment">
+    tools:context=".ui.viewListing.ViewListingFragment"
+    android:id="@+id/item_with_map">
 
-    <Button
-        android:id="@+id/contact_button"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/viewed_item_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Contact Seller"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="@+id/item_with_map"/>
 
-    <Button
-        android:id="@+id/view_on_map_button"
-        android:layout_width="0dp"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map_view_listing"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="View on Map"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contact_button" />
+        app:layout_constraintTop_toBottomOf="@+id/viewed_item_name" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
