@@ -3,6 +3,7 @@ package com.cs310.usclassifieds;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.datamodel.Contact;
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
@@ -22,33 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.cs310.usclassifieds.model.manager.UserManager;
 
 
-public class CreateUserActivity extends AppCompatActivity implements OnCompleteListener<AuthResult>{
+public class CreateUserActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private String username;
-    private String email;
-    private String phoneNumber;
     private UserManager userManager = new UserManager(new DataManager()); // Used for saving create account info
-
-    @Override
-    public void onComplete(@NonNull Task<AuthResult> task) {
-        if (task.isSuccessful()) {
-            // Sign in success, go to app (MainActivity)
-            User user = new User();
-            user.username = this.username;
-            user.contactInfo = new Contact();
-            user.contactInfo.email = this.email;
-            user.contactInfo.phone = this.phoneNumber;
-            this.userManager.addUser(user);
-            Intent mainIntent = new Intent(CreateUserActivity.this, MainActivity.class);
-            startActivity(mainIntent);
-        } else {
-            // If sign in fails, display a message to the user.
-            Toast.makeText(CreateUserActivity.this, "That username already exists.",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +37,14 @@ public class CreateUserActivity extends AppCompatActivity implements OnCompleteL
         mAuth = FirebaseAuth.getInstance();
 
         // Set up stuff so that keyboard goes away when user clicks away
+        EditText fullNameEditText = (EditText)findViewById(R.id.createName);
         EditText usernameEditText = (EditText)findViewById(R.id.createUsername);
         EditText passwordEditText = (EditText)findViewById(R.id.createPassword);
         EditText emailEditText = (EditText)findViewById(R.id.createEmail);
         EditText phoneNumberEditText = (EditText)findViewById(R.id.createPhoneNumber);
         EditText profileDescriptionEditText = (EditText)findViewById(R.id.createProfileDescription);
 
+        this.editTextFocusChangeSetup(fullNameEditText);
         this.editTextFocusChangeSetup(usernameEditText);
         this.editTextFocusChangeSetup(passwordEditText);
         this.editTextFocusChangeSetup(emailEditText);
@@ -73,13 +54,17 @@ public class CreateUserActivity extends AppCompatActivity implements OnCompleteL
 
     /** Called when user presses Create User Button **/
     public void createUserButtonPressed(View view) {
-        this.username = ((EditText)findViewById(R.id.createUsername)).getText().toString();
+        String fullName = ((EditText)findViewById(R.id.createName)).getText().toString();
+        String username = ((EditText)findViewById(R.id.createUsername)).getText().toString();
         String password = ((EditText)findViewById(R.id.createPassword)).getText().toString();
-        this.email = ((EditText)findViewById(R.id.createEmail)).getText().toString();
-        this.phoneNumber = ((EditText)findViewById(R.id.createPhoneNumber)).getText().toString();
+        String email = ((EditText)findViewById(R.id.createEmail)).getText().toString();
+        String phoneNumber = ((EditText)findViewById(R.id.createPhoneNumber)).getText().toString();
         String profileDescription = ((EditText)findViewById(R.id.createProfileDescription)).getText().toString();
 
-        if (username == null || username.equals("")) {
+        if (fullName == null || fullName.equals("")) {
+            Toast.makeText(this, "You need to type in a name.",
+                    Toast.LENGTH_SHORT).show();
+        } else if (username == null || username.equals("")) {
             Toast.makeText(this, "You need to type in a username.",
                     Toast.LENGTH_SHORT).show();
         } else if (password == null || password.equals("")) {
@@ -89,7 +74,7 @@ public class CreateUserActivity extends AppCompatActivity implements OnCompleteL
             Toast.makeText(this, "You need to type in a valid @usc.edu email.",
                     Toast.LENGTH_SHORT).show();
         } else {
-            this.createUser(username, password, email, phoneNumber, profileDescription);
+            this.createUser(fullName, username, password, email, phoneNumber, profileDescription);
         }
     }
 
@@ -106,11 +91,28 @@ public class CreateUserActivity extends AppCompatActivity implements OnCompleteL
         return parts.length == 2 && parts[1].equals("usc.edu");
     }
 
-    private void createUser(String username, String password, String email,
-                            String phoneNumber, String profileDescription) {
-
+    private void createUser(final String fullName, final String username, final String password, final String email,
+                            final String phoneNumber, final String profileDescription) {
         mAuth.createUserWithEmailAndPassword(username + "@usclassifieds.com", password)
-                .addOnCompleteListener(this, this);
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Save user to database
+                            String userId = task.getResult().getUser().getUid();
+                            User newUser = new User(userId, fullName, username, email, phoneNumber, profileDescription);
+                            userManager.addUser(newUser);
+
+                            // Go to app (MainActivity)
+                            Intent mainIntent = new Intent(CreateUserActivity.this, MainActivity.class);
+                            startActivity(mainIntent);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(CreateUserActivity.this, "That username already exists.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
 
