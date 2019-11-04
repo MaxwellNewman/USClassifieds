@@ -98,7 +98,10 @@ public class SearchManager {
         for(int i=0; i<users.size(); ++i) {
             boolean userAdded = false;
             for(int j=0; j<searchTerms.size() && !userAdded; ++j) {
-                if(users.get(i).username.contains(searchTerms.get(i))) {
+                if(users.get(i)
+                        .username
+                        .toLowerCase()
+                        .contains(searchTerms.get(i).toLowerCase())) {
                     results.add(users.get(i));
                     userAdded = true;
                 }
