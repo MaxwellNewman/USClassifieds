@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         MainActivity activity = (MainActivity) getActivity();
-        List<User> friends = userManager.getFriendsOf(activity.getCurrentUser());
+        List<User> friends = userManager.getFriendsOf(activity.getCurrentUserId());
         if(friends == null) {
             friends = new ArrayList<User>();
         }

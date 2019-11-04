@@ -270,32 +270,37 @@ public class DataManager {
             document = database.collection(ITEMS_PATH).document(item.itemId);
         }
 
-        final StorageReference storageRef = storage.getReference();
-        final Uri imageUri = item.imageUri;
-        final StorageReference imageRef = storageRef.child(imageUri.getLastPathSegment());
-        final UploadTask uploadTask = imageRef.putFile(imageUri);
+        if(item.imageUri != null) {
+            final StorageReference storageRef = storage.getReference();
+            final Uri imageUri = item.imageUri;
+            final StorageReference imageRef = storageRef.child(imageUri.getLastPathSegment());
+            final UploadTask uploadTask = imageRef.putFile(imageUri);
 
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
 
-                // Continue with the task to get the download URL
-                return imageRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    item.imageUrl = task.getResult().toString();
-                    document.set(item);
-                } else {
-                    Log.e("error adding item: " + item.itemId, "exception");
+                    // Continue with the task to get the download URL
+                    return imageRef.getDownloadUrl();
                 }
-            }
-        });
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        item.imageUrl = task.getResult().toString();
+                        document.set(item);
+                    } else {
+                        Log.e("error adding item: " + item.itemId, "exception");
+                    }
+                }
+            });
+        } else {
+            item.imageUrl = null;
+            document.set(item);
+        }
 
         return document.getId();
     }
