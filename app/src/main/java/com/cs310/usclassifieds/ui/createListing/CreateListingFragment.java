@@ -24,6 +24,7 @@ import android.widget.EditText;
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.Item;
+import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.ItemManager;
 
@@ -89,7 +90,8 @@ public class CreateListingFragment extends Fragment {
 //        item.location.address = locText.getText().toString();
         item.price = priceText.getText().toString().equals("") ? Float.valueOf("0.0") : Float.valueOf(priceText.getText().toString());
         item.imageUri = mImageUri;
-
+        MainActivity activity =(MainActivity) getActivity();
+        User currentUser = activity.getCurrentUser();
         // Todo: Add user Id and username to item
 
         itemManager.createListing(item);
