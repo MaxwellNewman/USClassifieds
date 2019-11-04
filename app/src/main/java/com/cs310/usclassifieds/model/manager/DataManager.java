@@ -289,6 +289,10 @@ public class DataManager {
                 if (task.isSuccessful()) {
                     String downloadUrl = task.getResult().toString();
 
+                    // Todo: Talk to Raghav about this.  Should the image uri be stored in the image field?
+                    // In that case, what is it that we're parsing above?
+                    // We should just set the value of item.image to the uri if that's what we want to store
+                    // Plus, is an image required?  If not, we should do a null check above
                     Map<String,Object> location = new HashMap<>();
                     location.put("address", item.location.address);
                     location.put("latitude", item.location.latitude);
