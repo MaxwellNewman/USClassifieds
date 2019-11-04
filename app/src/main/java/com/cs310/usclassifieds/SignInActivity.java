@@ -11,10 +11,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cs310.usclassifieds.model.datamodel.Item;
+import com.cs310.usclassifieds.model.datamodel.Location;
+import com.cs310.usclassifieds.model.manager.DataManager;
+import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -76,7 +84,6 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     /** Hides keyboard **/
