@@ -27,7 +27,7 @@ public class SearchManager {
         item1Tags.add("1");
         item1Tags.add("example");
         item1.tags = item1Tags;
-        item1.location = new Location("651 W 35th St, Los Angeles, CA 90089", 34.0231334, -118.2930887); // Leavey
+        item1.location = new Location("651 W 35th St, Los Angeles, CA 90089", 34.021638, -118.282806); // Leavey
         item1.userId = 1;
         item1.itemId = 1;
         placeHolder.add(item1);
@@ -42,7 +42,7 @@ public class SearchManager {
         item2Tags.add("2");
         item2Tags.add("example");
         item2.tags = item1Tags;
-        item2.location = new Location("3550 Trousdale PKWY , Los Angeles, CA 90089", 34.0201426, -118.2859196); // Doheny
+        item2.location = new Location("3550 Trousdale PKWY , Los Angeles, CA 90089", 34.020247, -118.283874); // Doheny
         item2.userId = 2;
         item2.itemId = 2;
         placeHolder.add(item2);
