@@ -18,9 +18,6 @@ import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.Item;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
     private Item[] mDataset;
