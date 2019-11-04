@@ -24,14 +24,20 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class DataManager {
     public static final String USERS_PATH = "users";
     public static final String USER_ID = "userId";
+    public static final String USERNAME = "username";
+    public static final String ITEMS_PATH = "items";
+    public static final String TAGS = "tags";
     private FirebaseFirestore database;
 
     public DataManager() {
@@ -78,38 +84,153 @@ public class DataManager {
             // waiting for query to finish
         }
 
-        QuerySnapshot snapshot = query.getResult();
-
+        final QuerySnapshot snapshot = query.getResult();
         final List<DocumentSnapshot> documents;
         try {
             documents = snapshot.getDocuments();
-        } catch(NullPointerException e) {
-            return null;
-        }
 
-        try {
             return documents.isEmpty() ?
                     null :
                     documents.get(0).toObject(User.class);
-        } catch (Exception e) {
+        } catch(Exception e) {
+            Log.e("exception get user: " + userId, e.getMessage());
             return null;
         }
     }
 
-    List<User> searchUsers(SearchQuery query) {
-        List<User> users = new ArrayList<User>();
+    // Gets a list of users by making queries simultaneously instead of waiting for each
+    // query to completely finish before starting the next one
+    public List<User> getUsers(List<String> userIds) {
+        final List<Task<QuerySnapshot> > queries = new ArrayList<>();
+        final List<User> users = new ArrayList<>();
+
+        for(int i=0; i<userIds.size(); ++i) {
+            queries.add(database.collection(USERS_PATH)
+                            .whereEqualTo(USER_ID, userIds.get(i))
+                            .get()
+            );
+        }
+
+        for(int i=0; i<queries.size(); ++i) {
+            while(!queries.get(i).isComplete()) {
+                //waiting for ith query to finish
+            }
+
+            final QuerySnapshot snapshot = queries.get(i).getResult();
+            final List<DocumentSnapshot> documents;
+            try {
+                documents = snapshot.getDocuments();
+
+                users.add(documents.isEmpty() ?
+                        null :
+                        documents.get(0).toObject(User.class)
+                );
+            } catch(Exception e) {
+                Log.e("error get users: " + userIds.get(i), e.getMessage());
+                users.add(null);
+            }
+        }
+
+        return users;
+    }
+
+    List<User> searchUsers(String searchTerm) {
+        List<User> users = new ArrayList<>();
         // add logic to search users
         return users;
     }
 
-    List<Item> searchItems(SearchQuery query) {
-        List<Item> items = new ArrayList<Item>();
-        // add logic to search items
+    public List<Item> getAllItems() {
+        final List<Item> items = new ArrayList<>();
+        final Task<QuerySnapshot> query = database.collection(ITEMS_PATH).get();
+
+        while(!query.isComplete()) {
+            // waiting for query to finish
+        }
+
+        final List<DocumentSnapshot> documents;
+        try {
+            documents = query.getResult().getDocuments();
+        } catch(Exception e) {
+            Log.e("error get item", e.getMessage());
+            return null;
+        }
+
+        for(final DocumentSnapshot doc : documents) {
+            try {
+                items.add(doc.toObject(Item.class));
+            } catch (Exception e) {
+                Log.e("error adding item: " + doc.getId(), e.getMessage());
+            }
+        }
+
         return items;
     }
 
-    boolean addListing(Item i) {
-        return true;
+    public List<Item> searchItemsByTags(List<String> searchTerms) {
+        final List<Task<QuerySnapshot> > queries = new ArrayList<>();
+        final Set<String> itemsIncluded = new HashSet<>();
+        final List<Item> items = new ArrayList<>();
+
+        for(int i=0; i<searchTerms.size(); ++i) {
+            searchTerms.set(i, searchTerms.get(i).toLowerCase());
+        }
+
+        // start the queries for all the search terms
+        for(final String searchTerm : searchTerms) {
+            queries.add(database.collection(ITEMS_PATH)
+                    .whereArrayContains(TAGS, searchTerm)
+                    .get()
+            );
+        }
+
+        for(final Task<QuerySnapshot> query : queries) {
+            while (!query.isComplete()) {
+                // waiting for query to complete
+            }
+
+            List<DocumentSnapshot> documents = new ArrayList<>();
+            try {
+                documents = query.getResult().getDocuments();
+            } catch (Exception e) {
+                Log.e("error getting items", e.getMessage());
+                return null;
+            }
+
+            for (final DocumentSnapshot doc : documents) {
+                try {
+                    if (!itemsIncluded.contains(doc.getId())) {
+                        items.add(doc.toObject(Item.class));
+                        itemsIncluded.add(doc.getId());
+                    }
+                } catch (Exception e) {
+                    Log.e("Error getting item: " + doc.getId(), e.getMessage());
+                }
+            }
+        }
+
+        return items;
+    }
+
+    private String modifyListing(Item item) {
+        for(int i=0; i<item.tags.size(); ++i) {
+            item.tags.set(i, item.tags.get(i).toLowerCase());
+        }
+
+        DocumentReference document;
+        if(item.itemId == null) {
+            document = database.collection(ITEMS_PATH).document();
+            item.itemId = document.getId();
+        } else {
+            document = database.collection(ITEMS_PATH).document(item.itemId);
+        }
+
+        document.set(item);
+        return document.getId();
+    }
+
+    public String addListing(Item item) {
+        return modifyListing(item);
     }
 
     boolean resolveSale(Item i) {
@@ -120,19 +241,15 @@ public class DataManager {
         return true;
     }
 
+    // Returns a list of Users that are friends of the userId passed in
+    // If there is an error retrieving an individual user, that user will be returned as null
     public List<User> getFriendsOf(String userId) {
-        List<User> users = new ArrayList<User>();
-
-        //Put PLACEHOLDER values for now
-        User user1 = new User();
-        user1.username = userId + "'s Friend1";
-        users.add(user1);
-
-        User user2 = new User();
-        user2.username = userId + "'s Friend2";
-        users.add(user2);
-
-        return users;
+        try {
+            final User user = getUser(userId);
+            return getUsers(user.friends);
+        } catch(Exception e) {
+            return null;
+        }
     }
 
 }

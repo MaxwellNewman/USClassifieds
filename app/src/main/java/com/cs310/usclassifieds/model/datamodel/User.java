@@ -2,6 +2,7 @@ package com.cs310.usclassifieds.model.datamodel;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +26,14 @@ public class User {
         this.username = null;
     }
 
+    public void addFriend(String friendId) {
+        if(friends == null) {
+            friends = new ArrayList<>();
+        }
+
+        friends.add(friendId);
+    }
+
     // Returns the user as a map, excluding any members that are null
     // Can be used to update a user in the database by filling in only
     // the values that need to be updated
@@ -35,12 +44,12 @@ public class User {
         if(contactInfo != null) {
             map.put("email", contactInfo.email);
         }
-/*        if(friends != null) {
+        if(friends != null) {
             map.put("friends", friends);
         }
         if(items != null) {
             map.put("items", items);
-        }*/
+        }
 
         return map;
     }
