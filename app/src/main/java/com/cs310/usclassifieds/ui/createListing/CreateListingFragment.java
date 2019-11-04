@@ -92,6 +92,8 @@ public class CreateListingFragment extends Fragment {
         item.imageUri = mImageUri;
         MainActivity activity =(MainActivity) getActivity();
         User currentUser = activity.getCurrentUser();
+        item.userId = currentUser.userId;
+        item.username = currentUser.username;
         // Todo: Add user Id and username to item
 
         itemManager.createListing(item);

@@ -76,13 +76,7 @@ public class SearchManager {
     }
 
     public List<Item> searchItemsByUser(String searchString) {
-        final List<User> users = dataManager.getUsers()
-        final List<Item> items = dataManager.getAllItems();
-        final List<Item> result = new ArrayList<>();
-
-        for(final Item item : items) {
-            if(item.userId.con)
-        }
+        return dataManager.searchItemByUser(searchString);
     }
 
     public List<Item> searchItemsByTitle(String searchString) {

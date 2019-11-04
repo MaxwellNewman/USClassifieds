@@ -181,8 +181,8 @@ public class DataManager {
         return items;
     }
 
-    public List<User> searchItemByUser(String username) {
-
+    public List<Item> searchItemByUser(String username) {
+        return new ArrayList<>();
     }
 
     public List<User> getAllUsers() {
