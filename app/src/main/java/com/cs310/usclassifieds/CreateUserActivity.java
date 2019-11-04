@@ -3,6 +3,7 @@ package com.cs310.usclassifieds;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -12,14 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cs310.usclassifieds.model.datamodel.User;
+import com.cs310.usclassifieds.model.datamodel.Contact;
+import com.cs310.usclassifieds.model.datamodel.User;
+import com.cs310.usclassifieds.model.manager.DataManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.cs310.usclassifieds.model.manager.UserManager;
+
+
 public class CreateUserActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private UserManager userManager = new UserManager(new DataManager()); // Used for saving create account info
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,15 +93,17 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private void createUser(final String fullName, final String username, final String password, final String email,
                             final String phoneNumber, final String profileDescription) {
-
         mAuth.createUserWithEmailAndPassword(username + "@usclassifieds.com", password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, go to app (MainActivity)
+                            // Save user to database
                             String userId = task.getResult().getUser().getUid();
                             User newUser = new User(userId, fullName, username, email, phoneNumber, profileDescription);
+                            userManager.addUser(newUser);
+
+                            // Go to app (MainActivity)
                             Intent mainIntent = new Intent(CreateUserActivity.this, MainActivity.class);
                             startActivity(mainIntent);
                         } else {

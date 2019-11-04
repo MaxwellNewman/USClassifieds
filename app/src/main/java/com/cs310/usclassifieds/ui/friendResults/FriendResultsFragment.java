@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class FriendResultsFragment extends Fragment {
         // Get item list
         MainActivity activity = (MainActivity) getActivity();
         List<User> users = activity.getUsers();
+        Log.v("FriendResultsFragment", users.toString());
         this.mAdapter = new UserAdapter(users.toArray(new User[users.size()]));
         recyclerView.setAdapter(mAdapter);
         return view;

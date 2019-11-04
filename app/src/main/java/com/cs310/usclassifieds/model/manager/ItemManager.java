@@ -20,7 +20,7 @@ public class ItemManager {
     }
 
     // Replace current itemId with new Item i
-    public void updateItem(int itemId, Item i) {
+    public void updateItem(String itemId, Item i) {
         dataManager.updateItem(itemId, i);
     }
 }
