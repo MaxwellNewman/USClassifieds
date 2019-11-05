@@ -5,15 +5,7 @@ public class Location {
     public double latitude;
     public double longitude;
 
-    public Location(String add, double lat, double lon) {
-        this.address = add;
-        this.latitude = lat;
-        this.longitude = lon;
-    }
-
     public Location() {
-        this.address = "3607 Trousdale Pkwy, Los Angeles, CA 90089";
-        this.latitude = 34.018360;
-        this.longitude = -118.286331;
+
     }
 }

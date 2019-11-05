@@ -1,8 +1,7 @@
 package com.cs310.usclassifieds.model.datamodel;
 
-import com.google.firebase.auth.FirebaseAuth;
+import android.net.Uri;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,16 +13,19 @@ public class User {
     public String username;
     public Contact contactInfo;
     public String profileDescription;
+    public Uri imageUri;
+    public String imageUrl;
 
     public List<String> friends; // userIDs
 
-    public User(String userId, String fullName, String username, String email, String phoneNumber, String profileDescription) {
+    public User(String userId, String fullName, String username, String email, String phoneNumber, String profileDescription, Uri uri) {
         this.username = username;
         this.userId = userId;
         this.username = username;
         this.fullName = fullName;
         this.contactInfo = new Contact(email);
         this.profileDescription = profileDescription;
+        this.imageUri = uri;
 
         this.friends = new ArrayList<>();
     }

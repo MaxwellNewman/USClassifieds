@@ -28,10 +28,9 @@
         android:text="View Friends"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.73" />
 
     <Button
         android:id="@+id/notifcations_button"
@@ -48,7 +47,7 @@
         android:text="View Listings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="406dp" />
+        tools:layout_editor_absoluteY="547dp" />
 
     <Button
         android:id="@+id/find_friends_button"
@@ -58,5 +57,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listings_button" />
+
+    <ImageView
+        android:id="@+id/profile_image_view"
+        android:layout_width="232dp"
+        android:layout_height="178dp"
+        android:src="@android:drawable/alert_dark_frame"
+        tools:layout_editor_absoluteX="89dp"
+        tools:layout_editor_absoluteY="221dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

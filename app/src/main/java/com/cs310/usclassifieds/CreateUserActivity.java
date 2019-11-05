@@ -2,10 +2,12 @@ package com.cs310.usclassifieds;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +31,11 @@ public class CreateUserActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private UserManager userManager = new UserManager(new DataManager()); // Used for saving create account info
 
+    private Button uploadButton;
+
+    private Uri mImageUri;
+    private static final int PICK_IMAGE_REQUEST = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +50,14 @@ public class CreateUserActivity extends AppCompatActivity {
         EditText emailEditText = (EditText)findViewById(R.id.createEmail);
         EditText phoneNumberEditText = (EditText)findViewById(R.id.createPhoneNumber);
         EditText profileDescriptionEditText = (EditText)findViewById(R.id.createProfileDescription);
+        uploadButton = findViewById(R.id.upload_profile_picture_button);
+
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectFile();
+            }
+        });
 
         this.editTextFocusChangeSetup(fullNameEditText);
         this.editTextFocusChangeSetup(usernameEditText);
@@ -50,6 +65,23 @@ public class CreateUserActivity extends AppCompatActivity {
         this.editTextFocusChangeSetup(emailEditText);
         this.editTextFocusChangeSetup(phoneNumberEditText);
         this.editTextFocusChangeSetup(profileDescriptionEditText);
+    }
+
+    private void selectFile() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == -1 && data != null
+                && data.getData() != null) {
+            mImageUri = data.getData();
+        }
     }
 
     /** Called when user presses Create User Button **/
@@ -100,7 +132,7 @@ public class CreateUserActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Save user to database
                             String userId = task.getResult().getUser().getUid();
-                            User newUser = new User(userId, fullName, username, email, phoneNumber, profileDescription);
+                            User newUser = new User(userId, fullName, username, email, phoneNumber, profileDescription, mImageUri);
                             userManager.addUser(newUser);
 
                             // Go to app (MainActivity)
