@@ -59,15 +59,13 @@ public class DataManager {
                 .document(user.userId)
                 .set(user);
 
-        while(!ref.isComplete()) {
-            // waiting for task to complete
-        }
-
         return true;
     }
 
     // Create friend request from user1 to user2, returns false if unsuccessful
     boolean createFriendRequest(String user1, String user2) {
+
+
         return true;
     }
     
@@ -78,6 +76,22 @@ public class DataManager {
 
     // Adds user1 to user2's friend list and vice versa, returns false if unsuccessful
     boolean addFriend(String user1, String user2) {
+        final List<String> userIds = new ArrayList<>();
+        userIds.add(user1);
+        userIds.add(user2);
+
+        final List<User> users = getUsers(userIds);
+
+        if(users.size() != 2) {
+            return false;
+        }
+
+        users.get(0).addFriend(users.get(1).userId);
+        users.get(1).addFriend(users.get(0).userId);
+
+        modifyUser(users.get(0));
+        modifyUser(users.get(1));
+
         return true;
     }
 
@@ -183,9 +197,31 @@ public class DataManager {
 
     public List<Item> searchItemsByUser(String username) {
         final List<Item> items = new ArrayList<>();
-        final Task<QuerySnapshot> query = database.collection(USERS_PATH).get();
+        final Task<QuerySnapshot> query = database.collection(ITEMS_PATH)
+                .whereEqualTo(USERNAME, username.toLowerCase())
+                .get();
 
-        return new ArrayList<>();
+        while(!query.isComplete()) {
+            // wait for query
+        }
+
+        final List<DocumentSnapshot> documents;
+        try {
+            documents = query.getResult().getDocuments();
+        } catch(Exception e) {
+            Log.e("Error getting all users", e.getMessage());
+            return null;
+        }
+
+        for(final DocumentSnapshot doc : documents) {
+            try {
+                items.add(doc.toObject(Item.class));
+            } catch (Exception e) {
+                Log.e("error adding all user: " + doc.getId(), e.getMessage());
+            }
+        }
+
+        return items;
     }
 
     public List<User> getAllUsers() {
@@ -264,6 +300,8 @@ public class DataManager {
         for(int i=0; i<item.tags.size(); ++i) {
             item.tags.set(i, item.tags.get(i).toLowerCase());
         }
+
+        item.username = item.username.toLowerCase();
 
         final DocumentReference document;
         if(item.itemId == null) {

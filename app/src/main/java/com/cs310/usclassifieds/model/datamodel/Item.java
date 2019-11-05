@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Item {
     public String title;
+    public String description;
+    public double price;
     public Uri imageUri;
     public String imageUrl;
-    public double price;
-    public String description;
     public List<String> tags;
     public Location location;
     public String userId;
