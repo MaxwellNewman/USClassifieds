@@ -136,7 +136,8 @@ public class CreateListingFragment extends Fragment {
                 if (validInputs) {
                     MainActivity activity = (MainActivity) getActivity();
                     activity.setViewedItem(uploadListing());
-                    Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+                    // Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+                    Navigation.findNavController(view).navigate(R.id.action_navigation_create_listing_to_navigation_view_listing);
                 }
             }
         });

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.view.View.OnClickListener;
 
@@ -47,7 +48,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         MainActivity activity = (MainActivity) getActivity();
         activity.passItems(items);
 
-        Navigation.findNavController(view).navigate(R.id.navigation_results);
+//        Navigation.findNavController(view).navigate(R.id.navigation_results);
+        Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_navigation_results);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         View view = inflater.inflate(R.layout.search_fragment, container, false);
-        Button searchButton = (Button) view.findViewById(R.id.search_button);
+        ImageButton searchButton = view.findViewById(R.id.search_button);
         this.searchText = (EditText) view.findViewById(R.id.searchbar2);
         searchButton.setOnClickListener(this);
 
@@ -64,7 +66,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         advancedSearchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_advanced_search);
+//                Navigation.findNavController(view).navigate(R.id.navigation_advanced_search);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_navigation_advanced_search);
             }
         });
 
@@ -72,7 +75,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         mapButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_map);
+//                Navigation.findNavController(view).navigate(R.id.navigation_map);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_navigation_map2);
             }
         });
         return view;

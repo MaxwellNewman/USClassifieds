@@ -83,7 +83,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         item.location.longitude) {
                     MainActivity activity = (MainActivity) getActivity();
                     activity.setViewedItem(item);
-                    Navigation.findNavController(this.view).navigate(R.id.navigation_view_listing);
+//                    Navigation.findNavController(this.view).navigate(R.id.navigation_view_listing);
+                    Navigation.findNavController(this.view).navigate(R.id.action_navigation_map_to_navigation_view_listing);
                     return true;
                 }
 
