@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements DataPassListener {
     public static final String DEFAULT_URL = "https://en.wikipedia.org/wiki/Sublime_Porte#/media/File:Imperial_Gate_Topkapi_Istanbul_2007_002.jpg";
@@ -98,9 +99,15 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
         return this.items;
     }
 
+    private void populateCurrentUser() {
+        /*final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        final User user = database.collection(DataManager.USERS_PATH)*/
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        populateCurrentUser();
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

@@ -23,6 +23,7 @@ import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         MainActivity activity = (MainActivity) getActivity();
         final User currentUser = activity.getCurrentUser();
 
@@ -85,8 +85,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 MainActivity.DEFAULT_URL :
                 currentUser.imageUrl;
 
-        final Drawable drawable = MainActivity.LoadImageFromWebOperations(url);
-        imageView.setImageDrawable(drawable);
+        Picasso.with(getContext()).load(url).into(imageView);
 
         return view;
     }

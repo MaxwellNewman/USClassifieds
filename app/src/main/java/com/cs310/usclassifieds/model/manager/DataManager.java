@@ -78,6 +78,7 @@ public class DataManager {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         user.imageUrl = task.getResult().toString();
+                        user.imageUri = null;
                         document.set(user);
                     } else {
                         Log.e("error adding user: " + user.userId, "exception");
@@ -342,6 +343,7 @@ public class DataManager {
         if(item.imageUri != null) {
             final StorageReference storageRef = storage.getReference();
             final Uri imageUri = item.imageUri;
+            item.imageUri = null;
             final StorageReference imageRef = storageRef.child(imageUri.getLastPathSegment());
             final UploadTask uploadTask = imageRef.putFile(imageUri);
 
@@ -368,6 +370,7 @@ public class DataManager {
             });
         } else {
             item.imageUrl = null;
+            item.imageUri = null;
             document.set(item);
         }
 
