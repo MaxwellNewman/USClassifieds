@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import com.cs310.usclassifieds.model.manager.UserManager;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
+import java.util.Locale;
 
 public class CreateListingFragment extends Fragment {
 
@@ -112,19 +114,8 @@ public class CreateListingFragment extends Fragment {
         return true;
     }
 
-    private void uploadListing() {
+    private String uploadListing() {
         Item item = new Item();
-        // Todo: Allow the user to add tags to their item
-        // Todo: allow the user to drop a pin to get latitutde and longitude
-/*        String addressStr = "";
-        Geocoder coder = new Geocoder(new Context());
-        List<Address> address = coder.getFromLocationName(addressStr,5);
-        if (address==null) {
-            return null;
-        }
-        Address location=address.get(0);
-        location.getLatitude();
-        location.getLongitude();*/
         item.title = titleText.getText().toString();
         item.description = descText.getText().toString();
         item.location.address = locText.getText().toString();
@@ -136,6 +127,8 @@ public class CreateListingFragment extends Fragment {
         item.userId = currentUser.userId;
         item.username = currentUser.username;
         itemManager.createListing(item);
+
+        return "success";
     }
 
     private void selectFile() {
