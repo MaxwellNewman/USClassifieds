@@ -38,15 +38,14 @@ public class SearchManager {
         return c * EARTH_RADIUS;
     }
 
-    public List<Item> searchByDistance(double lat, double lon) {
-        final List<Item> items = dataManager.getAllItems();
+    public List<Item> sortByDistance(double lat, double lon, List<Item> items) {
         final List<Item> result = new ArrayList<>();
         List<Pair<Double, Item> > pairs = new ArrayList<>();
         DistanceComparator distanceComp = new DistanceComparator();
 
         for(final Item item : items) {
             double distance = halversine(lat, lon, item.location.latitude, item.location.longitude);
-            pairs.add(new Pair<Double, Item>(distance, item));
+            pairs.add(new Pair<>(distance, item));
         }
 
         Collections.sort(pairs, distanceComp);
@@ -58,8 +57,7 @@ public class SearchManager {
         return result;
     }
 
-    public List<Item> searchByPrice(boolean cheapestFirst) {
-        final List<Item> items = dataManager.getAllItems();
+    public List<Item> sortByPrice(boolean cheapestFirst, List<Item> items) {
         final PriceComparator priceComp = new PriceComparator();
 
         Collections.sort(items, priceComp);

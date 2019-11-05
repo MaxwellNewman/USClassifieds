@@ -54,7 +54,7 @@
 
     <Button
         android:id="@+id/view_friends_button"
-        android:layout_width="121dp"
+        android:layout_width="140dp"
         android:layout_height="36dp"
         android:layout_marginTop="20dp"
         android:text="View Friends"
@@ -65,8 +65,8 @@
 
     <Button
         android:id="@+id/listings_button"
-        android:layout_width="121dp"
-        android:layout_height="36dp"
+        android:layout_width="140dp"
+        android:layout_height="39dp"
         android:layout_marginTop="20dp"
         android:text="View Listings"
         app:layout_constraintEnd_toEndOf="parent"
