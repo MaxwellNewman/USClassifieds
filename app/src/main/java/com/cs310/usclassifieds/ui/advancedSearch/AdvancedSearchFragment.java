@@ -112,7 +112,8 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
             public void onClick(View view) {
                 //TODO call the database and pass data
                 //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
-                Navigation.findNavController(view).navigate(R.id.navigation_results);
+//                Navigation.findNavController(view).navigate(R.id.navigation_results);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_advanced_search_to_navigation_results);
             }
         });
 

@@ -48,6 +48,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -64,6 +65,7 @@ public class CreateListingFragment extends Fragment {
     private Button uploadButton;
     private Button submitButton;
     private TextView locationText;
+    private EditText tagsText;
 
     private Uri mImageUri;
     private Place locationInfo;
@@ -91,6 +93,7 @@ public class CreateListingFragment extends Fragment {
         uploadButton = view.findViewById(R.id.upload_photos_button);
         submitButton = view.findViewById(R.id.submit_listing_button);
         locationText = view.findViewById(R.id.location_text);
+        tagsText = view.findViewById(R.id.tags_input);
 
         final String apiKey = getApiKey();
 
@@ -128,12 +131,13 @@ public class CreateListingFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                boolean validInputs = checkInputs(titleText, priceText);
+                boolean validInputs = checkInputValidity();
 
                 if (validInputs) {
                     MainActivity activity = (MainActivity) getActivity();
                     activity.setViewedItem(uploadListing());
-                    Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+                    // Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+                    Navigation.findNavController(view).navigate(R.id.action_navigation_create_listing_to_navigation_view_listing);
                 }
             }
         });
@@ -145,36 +149,55 @@ public class CreateListingFragment extends Fragment {
         return "AIzaSyCSTWld6jstN2eosUB6MYCTgjs8qYK-lm8";
     }
 
-    private boolean checkInputs(EditText titleText, EditText priceText) {
+    private boolean checkInputValidity() {
         if (titleText.getText().toString().matches("")) {
             Toast.makeText(getActivity(), "You did not enter an item title", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (priceText.getText().toString().matches("")) {
-            Toast.makeText(getActivity(), "You did not enter an item price", Toast.LENGTH_SHORT).show();
+        if (mImageUri == null) {
+            Toast.makeText(getActivity(), "You did not select an image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (locationInfo == null) {
+            Toast.makeText(getActivity(), "You did not select a location", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         return true;
     }
 
+    private List<String> getTags() {
+        List<String> tagsList = new ArrayList<>();
+        String tagsTextString = tagsText.getText().toString().replaceAll("\\s+","");
+        String[] tags = tagsTextString.split(",");
+
+        for (String s : tags) {
+            tagsList.add(s.toLowerCase());
+        }
+
+        return tagsList;
+    }
+
     private Item uploadListing() {
         Item item = new Item();
         item.title = titleText.getText().toString();
         item.description = descText.getText().toString();
-        item.price = Float.valueOf(priceText.getText().toString());
+        if (!priceText.getText().toString().matches("")) {
+            item.price = Float.valueOf(priceText.getText().toString());
+        }
         item.imageUri = mImageUri;
         item.imageUrl = null;
         MainActivity activity =(MainActivity) getActivity();
-        User currentUser = userManager.loadProfile(activity.getCurrentUserId());
+        User currentUser = activity.getCurrentUser();
         item.userId = currentUser.userId;
         item.username = currentUser.username;
-        if (locationInfo != null) {
-            item.location.address = locationInfo.getAddress();
-            item.location.latitude = locationInfo.getLatLng().latitude;
-            item.location.longitude = locationInfo.getLatLng().longitude;
-        }
+        item.location.address = locationInfo.getAddress();
+        item.location.latitude = locationInfo.getLatLng().latitude;
+        item.location.longitude = locationInfo.getLatLng().longitude;
+
+        item.tags = getTags();
 
         itemManager.createListing(item);
         return item;

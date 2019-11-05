@@ -12,20 +12,29 @@
         android:label="@string/title_profile"
         tools:layout="@layout/profile_fragment" >
         <action
-            android:id="@+id/action_navigation_profile_to_navigation_search2"
-            app:destination="@id/navigation_search" />
-        <action
-            android:id="@+id/action_navigation_profile_to_navigation_create_listing"
-            app:destination="@id/navigation_create_listing" />
-        <action
             android:id="@+id/action_navigation_profile_to_navigation_results2"
-            app:destination="@id/navigation_results" />
+            app:destination="@id/navigation_results"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_profile" />
         <action
             android:id="@+id/action_navigation_profile_to_navigation_friends"
-            app:destination="@id/navigation_find_friends" />
+            app:destination="@id/navigation_find_friends"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_profile" />
         <action
             android:id="@+id/action_navigation_profile_to_navigation_friend_results2"
-            app:destination="@id/navigation_friend_results" />
+            app:destination="@id/navigation_friend_results"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_profile" />
     </fragment>
 
     <fragment
@@ -34,20 +43,29 @@
         android:label="@string/title_search"
         tools:layout="@layout/search_fragment" >
         <action
-            android:id="@+id/action_navigation_search_to_navigation_create_listing"
-            app:destination="@id/navigation_create_listing" />
-        <action
-            android:id="@+id/action_navigation_search_to_navigation_profile2"
-            app:destination="@id/navigation_profile" />
-        <action
             android:id="@+id/action_navigation_search_to_navigation_advanced_search"
-            app:destination="@id/navigation_advanced_search" />
+            app:destination="@id/navigation_advanced_search"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_search" />
         <action
             android:id="@+id/action_navigation_search_to_navigation_map2"
-            app:destination="@id/navigation_map" />
+            app:destination="@id/navigation_map"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_search" />
         <action
             android:id="@+id/action_navigation_search_to_navigation_results"
-            app:destination="@id/navigation_results" />
+            app:destination="@id/navigation_results"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_search" />
     </fragment>
 
     <fragment
@@ -57,7 +75,12 @@
         tools:layout="@layout/find_friends_fragment" >
         <action
             android:id="@+id/action_navigation_friends_to_navigation_friend_results"
-            app:destination="@id/navigation_friend_results" />
+            app:destination="@id/navigation_friend_results"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_find_friends" />
     </fragment>
 
     <fragment
@@ -67,7 +90,12 @@
         tools:layout="@layout/friend_results_fragment" >
         <action
             android:id="@+id/action_navigation_friend_results_to_navigation_profile2"
-            app:destination="@id/navigation_profile" />
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_friend_results" />
     </fragment>
 
     <fragment
@@ -76,14 +104,13 @@
         android:label="@string/title_create_listing"
         tools:layout="@layout/create_listing_fragment" >
         <action
-            android:id="@+id/action_navigation_create_listing_to_navigation_search"
-            app:destination="@id/navigation_search" />
-        <action
-            android:id="@+id/action_navigation_create_listing_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
-        <action
             android:id="@+id/action_navigation_create_listing_to_navigation_view_listing"
-            app:destination="@id/navigation_view_listing" />
+            app:destination="@id/navigation_view_listing"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_create_listing" />
     </fragment>
 
     <fragment
@@ -94,13 +121,28 @@
         tools:layout="@layout/view_listing_fragment" >
         <action
             android:id="@+id/action_navigation_view_listing_to_navigation_contact"
-            app:destination="@id/navigation_contact" />
+            app:destination="@id/navigation_contact"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_view_listing" />
         <action
             android:id="@+id/action_navigation_view_listing_to_navigation_map"
-            app:destination="@id/navigation_map" />
+            app:destination="@id/navigation_map"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_view_listing" />
         <action
             android:id="@+id/action_navigation_view_listing_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_view_listing" />
     </fragment>
 
     <fragment
@@ -110,7 +152,12 @@
         tools:layout="@layout/advanced_search_fragment" >
         <action
             android:id="@+id/action_navigation_advanced_search_to_navigation_results"
-            app:destination="@id/navigation_results" />
+            app:destination="@id/navigation_results"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_advanced_search" />
     </fragment>
 
     <fragment
@@ -120,14 +167,28 @@
         tools:layout="@layout/results_fragment" >
         <action
             android:id="@+id/action_navigation_results_to_navigation_view_listing"
-            app:destination="@id/navigation_view_listing" />
+            app:destination="@id/navigation_view_listing"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_results" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_map"
         android:name="com.cs310.usclassifieds.ui.map.MapFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/map_fragment" />
+        tools:layout="@layout/map_fragment" >
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_view_listing"
+            app:destination="@id/navigation_view_listing"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_map" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_contact"
