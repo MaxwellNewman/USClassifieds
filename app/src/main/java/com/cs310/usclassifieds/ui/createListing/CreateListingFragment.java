@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -90,6 +94,17 @@ public class CreateListingFragment extends Fragment {
         item.title = titleText.getText().toString().equals("") ? "Test Title" : titleText.getText().toString();
         item.description = descText.getText().toString().equals("") ? "Test Description" : descText.getText().toString();
 //        item.location.address = locText.getText().toString();
+        // Todo: Allow the user to add tags to their item
+        // Todo: allow the user to drop a pin to get latitutde and longitude
+/*        String addressStr = "";
+        Geocoder coder = new Geocoder(new Context());
+        List<Address> address = coder.getFromLocationName(addressStr,5);
+        if (address==null) {
+            return null;
+        }
+        Address location=address.get(0);
+        location.getLatitude();
+        location.getLongitude();*/
         item.price = priceText.getText().toString().equals("") ? Float.valueOf("0.0") : Float.valueOf(priceText.getText().toString());
         item.imageUri = mImageUri;
         item.imageUrl = null;

@@ -11,10 +11,10 @@ public class Item {
     public Uri imageUri;
     public String imageUrl;
     public List<String> tags;
-    public Location location;
     public String userId;
     public String itemId;
     public String username;
+    public Location location;
 
     public Item() {
         location = new Location();
