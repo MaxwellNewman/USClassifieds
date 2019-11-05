@@ -59,10 +59,6 @@ public class DataManager {
                 .document(user.userId)
                 .set(user);
 
-        while(!ref.isComplete()) {
-            // waiting for task to complete
-        }
-
         return true;
     }
 
