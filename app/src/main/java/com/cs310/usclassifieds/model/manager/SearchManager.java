@@ -76,7 +76,7 @@ public class SearchManager {
     }
 
     public List<Item> searchItemsByUser(String searchString) {
-        return dataManager.searchItemByUser(searchString);
+        return dataManager.searchItemsByUser(searchString);
     }
 
     public List<Item> searchItemsByTitle(String searchString) {

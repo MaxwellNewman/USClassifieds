@@ -28,13 +28,7 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     private List<User> users = new ArrayList<User>();
     private Item viewedItem = new Item();
     private User viewedUser = new User();
-    private User currentUser = new User();
     private UserManager userManager = new UserManager(new DataManager());
-
-
-    public User getCurrentUser() {
-        return currentUser;
-    }
 
     public String getCurrentUserId(){
 
@@ -94,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        this.currentUser = userManager.loadProfile(getCurrentUserId());
     }
 
     @Override

@@ -181,7 +181,10 @@ public class DataManager {
         return items;
     }
 
-    public List<Item> searchItemByUser(String username) {
+    public List<Item> searchItemsByUser(String username) {
+        final List<Item> items = new ArrayList<>();
+        final Task<QuerySnapshot> query = database.collection(USERS_PATH).get();
+
         return new ArrayList<>();
     }
 

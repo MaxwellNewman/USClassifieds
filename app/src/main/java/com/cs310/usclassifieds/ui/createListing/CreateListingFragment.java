@@ -27,6 +27,7 @@ import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.ItemManager;
+import com.cs310.usclassifieds.model.manager.UserManager;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class CreateListingFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ItemManager itemManager = new ItemManager(new DataManager());
+    private UserManager userManager = new UserManager(new DataManager());
 
     public static CreateListingFragment newInstance() {
         return new CreateListingFragment();
@@ -91,7 +93,7 @@ public class CreateListingFragment extends Fragment {
         item.price = priceText.getText().toString().equals("") ? Float.valueOf("0.0") : Float.valueOf(priceText.getText().toString());
         item.imageUri = mImageUri;
         MainActivity activity =(MainActivity) getActivity();
-        User currentUser = activity.getCurrentUser();
+        User currentUser = userManager.loadProfile(activity.getCurrentUserId());
         item.userId = currentUser.userId;
         item.username = currentUser.username;
         // Todo: Add user Id and username to item
