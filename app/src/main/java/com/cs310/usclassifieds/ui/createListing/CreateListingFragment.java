@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cs310.usclassifieds.MainActivity;
@@ -34,22 +35,39 @@ import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.ItemManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class CreateListingFragment extends Fragment {
 
     private CreateListingViewModel mViewModel;
     private EditText titleText;
     private EditText priceText;
-    private EditText locText;
+    private AutocompleteSupportFragment locText;
     private EditText descText;
     private Button uploadButton;
     private Button submitButton;
+    private TextView locationText;
 
     private Uri mImageUri;
+    private Place locationInfo;
+    private static final String API_KEY_PATH = "ApiKey";
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ItemManager itemManager = new ItemManager(new DataManager());
@@ -68,22 +86,49 @@ public class CreateListingFragment extends Fragment {
 
         titleText = view.findViewById(R.id.create_listing_title_input);
         priceText = view.findViewById(R.id.create_listing_price_input);
-        locText = view.findViewById(R.id.create_listing_location_input);
+        locText = (AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.create_listing_location_input);
         descText = view.findViewById(R.id.create_listing_description_input);
         uploadButton = view.findViewById(R.id.upload_photos_button);
         submitButton = view.findViewById(R.id.submit_listing_button);
+        locationText = view.findViewById(R.id.location_text);
+
+        final String apiKey = getApiKey();
+
+        Places.initialize(getContext(), apiKey);
+        Places.createClient(view.getContext());
+
+        locText.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS));
+        locText.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                locationInfo = place;
+                locationText.setText(place.getAddress());
+            }
+
+            @Override
+            public void onError(Status status) {
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectFile();
+                try {
+                    Thread.sleep(1000);
+                    uploadButton.setText("Image Uploaded");
+                    uploadButton.setEnabled(false);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                boolean validInputs = checkInputs(titleText, priceText, locText);
+                boolean validInputs = checkInputs(titleText, priceText);
 
                 if (validInputs) {
                     uploadListing();
@@ -95,7 +140,11 @@ public class CreateListingFragment extends Fragment {
         return view;
     }
 
-    private boolean checkInputs(EditText titleText, EditText priceText, EditText locText) {
+    private String getApiKey() {
+        return "AIzaSyCSTWld6jstN2eosUB6MYCTgjs8qYK-lm8";
+    }
+
+    private boolean checkInputs(EditText titleText, EditText priceText) {
         if (titleText.getText().toString().matches("")) {
             Toast.makeText(getActivity(), "You did not enter an item title", Toast.LENGTH_SHORT).show();
             return false;
@@ -106,11 +155,6 @@ public class CreateListingFragment extends Fragment {
             return false;
         }
 
-        if (locText.getText().toString().matches("")) {
-            Toast.makeText(getActivity(), "You did not enter an item location", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
         return true;
     }
 
@@ -118,7 +162,6 @@ public class CreateListingFragment extends Fragment {
         Item item = new Item();
         item.title = titleText.getText().toString();
         item.description = descText.getText().toString();
-        item.location.address = locText.getText().toString();
         item.price = Float.valueOf(priceText.getText().toString());
         item.imageUri = mImageUri;
         item.imageUrl = null;
@@ -126,6 +169,12 @@ public class CreateListingFragment extends Fragment {
         User currentUser = userManager.loadProfile(activity.getCurrentUserId());
         item.userId = currentUser.userId;
         item.username = currentUser.username;
+        if (locationInfo != null) {
+            item.location.address = locationInfo.getAddress();
+            item.location.latitude = locationInfo.getLatLng().latitude;
+            item.location.longitude = locationInfo.getLatLng().longitude;
+        }
+
         itemManager.createListing(item);
 
         return "success";
