@@ -95,11 +95,43 @@ public class DataManager {
 
     // Create friend request from user1 to user2, returns false if unsuccessful
     boolean createFriendRequest(String user1, String user2) {
+        final List<String> userIds = new ArrayList<>();
+        userIds.add(user1);
+        userIds.add(user2);
+
+        final List<User> users = getUsers(userIds);
+
+        if(users.size() != 2) {
+            return false;
+        }
+
+        users.get(0).addFriendRequest(user2);
+        users.get(1).addFriendRequest(user1);
+
+        modifyUser(users.get(0));
+        modifyUser(users.get(1));
+
         return true;
     }
     
     // Remove friend request from user1 to user2, returns false if unsuccessful
-    boolean resolveFriendRequest(String user1, String user2) {
+    boolean declineFriendRequest(String user1, String user2) {
+        final List<String> userIds = new ArrayList<>();
+        userIds.add(user1);
+        userIds.add(user2);
+
+        final List<User> users = getUsers(userIds);
+
+        if(users.size() != 2) {
+            return false;
+        }
+
+        users.get(0).removeFriendRequest(user2);
+        users.get(1).removeFriendRequest(user1);
+
+        modifyUser(users.get(0));
+        modifyUser(users.get(1));
+
         return true;
     }
 
@@ -117,6 +149,9 @@ public class DataManager {
 
         users.get(0).addFriend(users.get(1).userId);
         users.get(1).addFriend(users.get(0).userId);
+
+        users.get(0).removeFriendRequest(user2);
+        users.get(1).removeFriendRequest(user1);
 
         modifyUser(users.get(0));
         modifyUser(users.get(1));
