@@ -17,13 +17,12 @@ public class UserManager {
 
     // Accepts friend request from u1 to u2
     public void acceptFriendRequest(User u1, User u2) {
-        dataManager.resolveFriendRequest(u1.username, u2.username);
         dataManager.addFriend(u1.username, u2.username);
     }
 
     // Decline friend request from u1 to u2
     public void declineFriendRequest(User u1, User u2) {
-        dataManager.resolveFriendRequest(u1.username, u2.username);
+        dataManager.declineFriendRequest(u1.username, u2.username);
     }
 
     // Returns a profile given a user ID

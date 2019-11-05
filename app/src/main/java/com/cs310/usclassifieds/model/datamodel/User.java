@@ -16,6 +16,7 @@ public class User implements Serializable {
     public String profileDescription;
     public Uri imageUri;
     public String imageUrl;
+    public List<String> friendRequests;
 
     public List<String> friends; // userIDs
 
@@ -29,6 +30,7 @@ public class User implements Serializable {
         this.imageUri = uri;
 
         this.friends = new ArrayList<>();
+        this.friendRequests = new ArrayList<>();
     }
 
     public User(String username, String email, String userId) {
@@ -51,7 +53,29 @@ public class User implements Serializable {
             friends = new ArrayList<>();
         }
 
-        friends.add(friendId);
+        if(!friends.contains(friendId)) {
+            friends.add(friendId);
+        }
+    }
+
+    public void addFriendRequest(String friendId) {
+        if(friendRequests == null) {
+            friendRequests = new ArrayList<>();
+        }
+
+        if(!friendRequests.contains(friendId)) {
+            friendRequests.add(friendId);
+        }
+    }
+
+    public void removeFriendRequest(String friendId) {
+        if(friendRequests == null) {
+            friendRequests = new ArrayList<>();
+        }
+
+        if(friendRequests.contains(friendId)) {
+            friendRequests.remove(friendId);
+        }
     }
 
     // Returns the user as a map, excluding any members that are null
