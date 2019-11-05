@@ -48,6 +48,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -64,6 +65,7 @@ public class CreateListingFragment extends Fragment {
     private Button uploadButton;
     private Button submitButton;
     private TextView locationText;
+    private EditText tagsText;
 
     private Uri mImageUri;
     private Place locationInfo;
@@ -91,6 +93,7 @@ public class CreateListingFragment extends Fragment {
         uploadButton = view.findViewById(R.id.upload_photos_button);
         submitButton = view.findViewById(R.id.submit_listing_button);
         locationText = view.findViewById(R.id.location_text);
+        tagsText = view.findViewById(R.id.tags_input);
 
         final String apiKey = getApiKey();
 
@@ -164,6 +167,18 @@ public class CreateListingFragment extends Fragment {
         return true;
     }
 
+    private List<String> getTags() {
+        List<String> tagsList = new ArrayList<>();
+        String tagsTextString = tagsText.getText().toString().replaceAll("\\s+","");
+        String[] tags = tagsTextString.split(",");
+
+        for (String s : tags) {
+            tagsList.add(s.toLowerCase());
+        }
+
+        return tagsList;
+    }
+
     private Item uploadListing() {
         Item item = new Item();
         item.title = titleText.getText().toString();
@@ -180,6 +195,8 @@ public class CreateListingFragment extends Fragment {
         item.location.address = locationInfo.getAddress();
         item.location.latitude = locationInfo.getLatLng().latitude;
         item.location.longitude = locationInfo.getLatLng().longitude;
+
+        item.tags = getTags();
 
         itemManager.createListing(item);
         return item;
