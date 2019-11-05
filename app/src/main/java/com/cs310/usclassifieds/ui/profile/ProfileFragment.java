@@ -31,14 +31,12 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
-    private MainActivity activity = (MainActivity) getActivity();
-    final User currentUser = activity.getCurrentUser();
-
     private TextView usernameText;
     private TextView emailText;
     private Button findFriendsButton;
     private Button viewFriendsButton;
     private Button listingsButton;
+    private ImageView imageView;
 
     private ProfileViewModel mViewModel;
     private UserManager userManager = new UserManager(new DataManager());
@@ -50,18 +48,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        usernameText = view.findViewById(R.id.username_profile);
-        emailText = view.findViewById(R.id.email_profile);
-        findFriendsButton = view.findViewById(R.id.find_friends_button);
-        viewFriendsButton = view.findViewById(R.id.view_friends_button);
-        listingsButton = view.findViewById(R.id.listings_button);
+        MainActivity activity = (MainActivity) getActivity();
+        final User currentUser = activity.getCurrentUser();
 
-        final User currUser = userManager.loadProfile(currentUser.userId);
-
-        usernameText.setText(currUser.username);
-        emailText.setText(currUser.contactInfo.email);
-
-        List<User> friends = userManager.getFriendsOf(activity.getCurrentUserId());
+        List<User> friends = userManager.getFriendsOf(currentUser.userId);
         if(friends == null) {
             friends = new ArrayList<User>();
         }
@@ -76,13 +66,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        MainActivity activity = (MainActivity) getActivity();
+        final User currentUser = activity.getCurrentUser();
+
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        Button viewFriendsButton = (Button) view.findViewById(R.id.view_friends_button);
+        usernameText = view.findViewById(R.id.username_profile);
+        emailText = view.findViewById(R.id.email_profile);
+        findFriendsButton = view.findViewById(R.id.find_friends_button);
+        viewFriendsButton = view.findViewById(R.id.view_friends_button);
+        listingsButton = view.findViewById(R.id.listings_button);
+
+        usernameText.append(currentUser.username);
+        emailText.append(currentUser.contactInfo.email);
+
         viewFriendsButton.setOnClickListener(this);
 
-        Button listingsButton = (Button) view.findViewById(R.id.listings_button);
         listingsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -93,7 +93,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        Button findFriendsButton = (Button) view.findViewById(R.id.find_friends_button);
         findFriendsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -102,7 +101,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.profile_image_view);
+        imageView = view.findViewById(R.id.profile_image_view);
 
         final String url = currentUser.imageUrl == null ?
                 MainActivity.DEFAULT_URL :
