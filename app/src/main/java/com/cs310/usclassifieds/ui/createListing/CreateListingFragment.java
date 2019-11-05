@@ -123,7 +123,7 @@ public class CreateListingFragment extends Fragment {
         item.imageUri = mImageUri;
         item.imageUrl = null;
         MainActivity activity =(MainActivity) getActivity();
-        User currentUser = userManager.loadProfile(activity.getCurrentUserId());
+        User currentUser = activity.getCurrentUser();
         item.userId = currentUser.userId;
         item.username = currentUser.username;
         itemManager.createListing(item);

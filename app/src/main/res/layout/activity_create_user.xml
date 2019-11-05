@@ -9,6 +9,14 @@
     android:focusableInTouchMode="true"
     tools:context=".CreateUserActivity">
 
+    <Button
+        android:id="@+id/upload_profile_picture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Profile Picture (Optional)"
+        tools:layout_editor_absoluteX="79dp"
+        tools:layout_editor_absoluteY="148dp" />
+
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"

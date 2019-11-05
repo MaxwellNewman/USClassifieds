@@ -2,6 +2,7 @@ package com.cs310.usclassifieds.ui.profile;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
@@ -33,6 +35,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return new ProfileFragment();
     }
 
+
     @Override
     public void onClick(View view) {
         MainActivity activity = (MainActivity) getActivity();
@@ -49,6 +52,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        MainActivity activity = (MainActivity) getActivity();
+        final User currentUser = activity.getCurrentUser();
 
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
@@ -72,6 +78,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Navigation.findNavController(view).navigate(R.id.navigation_find_friends);
             }
         });
+
+        ImageView imageView = (ImageView)view.findViewById(R.id.profile_image_view);
+
+        final String url = currentUser.imageUrl == null ?
+                MainActivity.DEFAULT_URL :
+                currentUser.imageUrl;
+
+        final Drawable drawable = MainActivity.LoadImageFromWebOperations(url);
+        imageView.setImageDrawable(drawable);
+
         return view;
     }
 
