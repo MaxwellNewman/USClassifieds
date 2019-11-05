@@ -30,23 +30,26 @@ public class SearchManager {
         }
     }
 
+    private static Double halversine(double lat1, double lon1, double lat2, double lon2) {
+        double deltaLon = lon1 - lon2;
+        double deltaLat = lat1 - lat2;
+        double a = Math.pow(Math.sin(deltaLat/2.0), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon / 2.0), 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return c * EARTH_RADIUS;
+    }
+
     public List<Item> searchByDistance(double lat, double lon) {
         final List<Item> items = dataManager.getAllItems();
         final List<Item> result = new ArrayList<>();
         List<Pair<Double, Item> > pairs = new ArrayList<>();
-        DistanceComparator comp = new DistanceComparator();
+        DistanceComparator distanceComp = new DistanceComparator();
 
         for(final Item item : items) {
-            double deltaLon = lon - item.location.longitude;
-            double deltaLat = lat - item.location.latitude;
-            double a = Math.pow(Math.sin(deltaLat/2.0), 2) + Math.cos(lat) * Math.cos(item.location.latitude) * Math.pow(Math.sin(deltaLon / 2.0), 2);
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            double d = c * EARTH_RADIUS;
-
-            pairs.add(new Pair<Double, Item>(d, item));
+            double distance = halversine(lat, lon, item.location.latitude, item.location.longitude);
+            pairs.add(new Pair<Double, Item>(distance, item));
         }
 
-        Collections.sort(pairs, comp);
+        Collections.sort(pairs, distanceComp);
 
         for(int i=0; i<pairs.size(); ++i) {
             result.add(pairs.get(i).second);
@@ -70,6 +73,10 @@ public class SearchManager {
     public List<Item> searchByTags(String searchString) {
         final List<String> searchTerms = Arrays.asList(searchString.split("\\s+"));
         return dataManager.searchItemsByTags(searchTerms);
+    }
+
+    public List<Item> searchItemsByUser(String searchString) {
+        return dataManager.searchItemByUser(searchString);
     }
 
     public List<Item> searchItemsByTitle(String searchString) {

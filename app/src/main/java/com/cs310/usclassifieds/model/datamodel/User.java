@@ -15,9 +15,7 @@ public class User {
     public Contact contactInfo;
     public String profileDescription;
 
-    public String profilePicture;
     public List<String> friends; // userIDs
-    public List<Item> items;
 
     public User(String userId, String fullName, String username, String email, String phoneNumber, String profileDescription) {
         this.username = username;
@@ -28,8 +26,6 @@ public class User {
         this.profileDescription = profileDescription;
 
         this.friends = new ArrayList<>();
-        this.items = new ArrayList<>();
-        this.profilePicture = null;
     }
 
     public User(String username, String email, String userId) {
@@ -41,8 +37,6 @@ public class User {
         this.profileDescription = profileDescription;
 
         this.friends = new ArrayList<>();
-        this.items = new ArrayList<>();
-        this.profilePicture = null;
     }
 
     public User() {
@@ -74,9 +68,6 @@ public class User {
         }
         if(friends != null) {
             map.put("friends", friends);
-        }
-        if(items != null) {
-            map.put("items", items);
         }
 
         return map;
