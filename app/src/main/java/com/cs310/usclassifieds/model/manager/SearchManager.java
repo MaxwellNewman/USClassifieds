@@ -88,7 +88,7 @@ public class SearchManager {
             boolean itemAdded = false;
             for(int j=0; j<searchTerms.size() && !itemAdded; ++j) {
                 if (items.get(i).title != null) {
-                    if (items.get(i).title.contains(searchTerms.get(j))) {
+                    if (items.get(i).title.toLowerCase().contains(searchTerms.get(j).toLowerCase())) {
                         results.add(items.get(i));
                         itemAdded = true;
                     }

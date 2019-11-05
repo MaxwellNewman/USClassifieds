@@ -64,8 +64,6 @@ public class DataManager {
 
     // Create friend request from user1 to user2, returns false if unsuccessful
     boolean createFriendRequest(String user1, String user2) {
-
-
         return true;
     }
     
