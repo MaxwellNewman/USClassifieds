@@ -43,7 +43,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         activity.passUsers(friends);
 
-        Navigation.findNavController(view).navigate(R.id.navigation_friend_results);
+//        Navigation.findNavController(view).navigate(R.id.navigation_friend_results);
+        Navigation.findNavController(view).navigate(R.id.action_navigation_profile_to_navigation_friend_results2);
     }
 
     @Override
@@ -62,6 +63,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 // Need to create new fragment for this, view_listing currently views a listing from search
                 //Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+                //TODO load the users listings
+                Navigation.findNavController(view).navigate(R.id.action_navigation_profile_to_navigation_results2);
             }
         });
 
@@ -69,7 +72,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         findFriendsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_find_friends);
+//                Navigation.findNavController(view).navigate(R.id.navigation_find_friends);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_profile_to_navigation_friends);
             }
         });
         return view;

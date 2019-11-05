@@ -45,7 +45,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         MainActivity activity = (MainActivity) getActivity();
         activity.passItems(items);
 
-        Navigation.findNavController(view).navigate(R.id.navigation_results);
+//        Navigation.findNavController(view).navigate(R.id.navigation_results);
+        Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_navigation_results);
     }
 
     @Override
@@ -62,7 +63,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         advancedSearchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_advanced_search);
+//                Navigation.findNavController(view).navigate(R.id.navigation_advanced_search);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_navigation_advanced_search);
             }
         });
 
@@ -70,7 +72,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         mapButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_map);
+//                Navigation.findNavController(view).navigate(R.id.navigation_map);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_navigation_map2);
             }
         });
         return view;

@@ -42,7 +42,8 @@ public class FindFriendsFragment extends Fragment implements View.OnClickListene
         MainActivity activity = (MainActivity) getActivity();
         activity.passUsers(users);
 
-        Navigation.findNavController(view).navigate(R.id.navigation_friend_results);
+//        Navigation.findNavController(view).navigate(R.id.navigation_friend_results);
+        Navigation.findNavController(view).navigate(R.id.action_navigation_friends_to_navigation_friend_results);
     }
 
     @Override
