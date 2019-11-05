@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+// 7d86339d41028efc4b977c769dae6d6220d22163
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
 import com.cs310.usclassifieds.ui.profile.ProfileFragment;
 import com.cs310.usclassifieds.ui.profile.ProfileViewModel;
+// 7d86339d41028efc4b977c769dae6d6220d22163
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -106,11 +108,15 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
         usernameText = view.findViewById(R.id.contact_username_profile);
         emailText = view.findViewById(R.id.contact_email_profile);
+        TextView email = view.findViewById(R.id.email_profile);
+        ImageView profilePicture = view.findViewById(R.id.profile_image_view);
+
 //        findFriendsButton = view.findViewById(R.id.find_friends_button);
         viewFriendsButton = view.findViewById(R.id.contact_find_friends_button);
         listingsButton = view.findViewById(R.id.contact_listings_button);
         sendFriendRequestButton = view.findViewById(R.id.add_friend_button);
-
+        
+        contactNameText.setText(user.fullName);
         usernameText.append(user.username);
         emailText.append(user.contactInfo.email);
 
@@ -135,11 +141,15 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
         imageView = view.findViewById(R.id.contact_profile_image_view);
 
-        final String url = currentUser.imageUrl == null ?
-                MainActivity.DEFAULT_URL :
-                currentUser.imageUrl;
+        // final String url = currentUser.imageUrl == null ?
+        //         MainActivity.DEFAULT_URL :
+        //         currentUser.imageUrl;
 
-        Picasso.with(getContext()).load(url).into(imageView);
+        // Picasso.with(getContext()).load(url).into(imageView);
+        final String url = user.imageUrl == null ?
+                MainActivity.DEFAULT_URL :
+                user.imageUrl;
+        Picasso.with(getContext()).load(url).into(profilePicture);
 
         return view;
     }

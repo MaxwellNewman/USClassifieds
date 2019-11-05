@@ -17,6 +17,7 @@ import android.view.View;
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.Item;
+import com.squareup.picasso.Picasso;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
@@ -82,7 +83,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.itemName.setText(mDataset[position].title);
         holder.itemDescription.setText(mDataset[position].description);
-        holder.itemImage.setImageResource(R.drawable.mystery_item); // Hardcode images for now
+
+        final String url = mDataset[position].imageUrl;
+        if(url == null) {
+            holder.itemImage.setImageResource(R.drawable.mystery_item); // Hardcode images for now
+        } else {
+            Picasso.with(holder.itemView.getContext()).load(url).into(holder.itemImage);
+        }
         holder.item = mDataset[position];
     }
 

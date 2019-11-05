@@ -13,8 +13,7 @@
         android:layout_height="26dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="8dp"
-        android:src="@drawable/mystery_item"
-        android:tint="#000000" />
+        android:src="@drawable/mystery_item" />
 
     <LinearLayout
         android:layout_width="match_parent"
