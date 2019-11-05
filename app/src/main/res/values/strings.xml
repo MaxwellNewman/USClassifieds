@@ -36,4 +36,11 @@
     <string name="username">Username:</string>
     <string name="search_hint">Search</string>
     <string name="map_search_hint">Search by title or category</string>
+
+    <string-array name="advanced_search_options">
+        <item>Search by Cost</item>
+        <item>Search by Distance</item>
+        <item>Search by User</item>
+    </string-array>
+
 </resources>
