@@ -2,6 +2,7 @@ package com.cs310.usclassifieds.model.datamodel;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
@@ -18,5 +19,6 @@ public class Item {
 
     public Item() {
         location = new Location();
+        tags = new ArrayList<>();
     }
 }

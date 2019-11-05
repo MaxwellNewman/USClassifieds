@@ -54,6 +54,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
+    implementation 'androidx.core:core:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

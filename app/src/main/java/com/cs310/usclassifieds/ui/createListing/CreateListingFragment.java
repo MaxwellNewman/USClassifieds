@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
@@ -32,6 +33,7 @@ import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.ItemManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -79,21 +81,39 @@ public class CreateListingFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //TODO call the database and pass data
-                //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
-                uploadListing();
-                Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+                boolean validInputs = checkInputs(titleText, priceText, locText);
+
+                if (validInputs) {
+                    uploadListing();
+                    Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
+                }
             }
         });
 
         return view;
     }
 
+    private boolean checkInputs(EditText titleText, EditText priceText, EditText locText) {
+        if (titleText.getText().toString().matches("")) {
+            Toast.makeText(getActivity(), "You did not enter an item title", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (priceText.getText().toString().matches("")) {
+            Toast.makeText(getActivity(), "You did not enter an item price", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (locText.getText().toString().matches("")) {
+            Toast.makeText(getActivity(), "You did not enter an item location", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
     private void uploadListing() {
         Item item = new Item();
-        item.title = titleText.getText().toString().equals("") ? "Test Title" : titleText.getText().toString();
-        item.description = descText.getText().toString().equals("") ? "Test Description" : descText.getText().toString();
-//        item.location.address = locText.getText().toString();
         // Todo: Allow the user to add tags to their item
         // Todo: allow the user to drop a pin to get latitutde and longitude
 /*        String addressStr = "";
@@ -105,7 +125,10 @@ public class CreateListingFragment extends Fragment {
         Address location=address.get(0);
         location.getLatitude();
         location.getLongitude();*/
-        item.price = priceText.getText().toString().equals("") ? Float.valueOf("0.0") : Float.valueOf(priceText.getText().toString());
+        item.title = titleText.getText().toString();
+        item.description = descText.getText().toString();
+        item.location.address = locText.getText().toString();
+        item.price = Float.valueOf(priceText.getText().toString());
         item.imageUri = mImageUri;
         item.imageUrl = null;
         MainActivity activity =(MainActivity) getActivity();
