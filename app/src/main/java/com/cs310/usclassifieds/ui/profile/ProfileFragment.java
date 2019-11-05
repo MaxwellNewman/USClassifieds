@@ -36,6 +36,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button findFriendsButton;
     private Button viewFriendsButton;
     private Button listingsButton;
+    private Button notificationsButton;
     private ImageView imageView;
 
     private ProfileViewModel mViewModel;
@@ -77,6 +78,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         findFriendsButton = view.findViewById(R.id.find_friends_button);
         viewFriendsButton = view.findViewById(R.id.view_friends_button);
         listingsButton = view.findViewById(R.id.listings_button);
+        notificationsButton = view.findViewById(R.id.notifcations_button);
 
         usernameText.append(currentUser.username);
         emailText.append(currentUser.contactInfo.email);
@@ -98,6 +100,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
 //                Navigation.findNavController(view).navigate(R.id.navigation_find_friends);
                 Navigation.findNavController(view).navigate(R.id.action_navigation_profile_to_navigation_friends);
+            }
+        });
+
+        notificationsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navigation_profile_to_navigation_notifications);
             }
         });
 

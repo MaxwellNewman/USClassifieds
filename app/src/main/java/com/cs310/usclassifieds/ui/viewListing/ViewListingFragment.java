@@ -69,7 +69,6 @@ public class ViewListingFragment extends Fragment implements OnMapReadyCallback{
         TextView itemName = view.findViewById(R.id.viewed_item_name);
         itemName.setText(this.item.title);
 
-
         // Display item on map
         this.mMapView = (MapView) view.findViewById(R.id.map_view_listing);
         this.mMapView.onCreate(savedInstanceState);

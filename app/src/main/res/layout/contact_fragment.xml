@@ -8,17 +8,87 @@
     tools:context=".ui.contact.ContactFragment">
 
     <TextView
-        android:id="@+id/contact_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Patrick"
-        android:textSize="18sp"
-        android:textColor="#000000"
-        android:textStyle="bold"
+        android:id="@+id/contact_name_text"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="64dp"
+        android:text="Real Name Here"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contact_email_profile"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:text="Email: "
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_username_profile" />
+
+    <TextView
+        android:id="@+id/contact_username_profile"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:text="Username: "
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_name_text" />
+
+    <Button
+        android:id="@+id/add_friend_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Send Friend Request"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/contact_find_friends_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Search for Friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_view_friends_button" />
+
+    <Button
+        android:id="@+id/contact_view_friends_button"
+        android:layout_width="140dp"
+        android:layout_height="36dp"
+        android:text="View Friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.268"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_profile_image_view" />
+
+    <Button
+        android:id="@+id/contact_listings_button"
+        android:layout_width="140dp"
+        android:layout_height="39dp"
+        android:text="View Listings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.252"
+        app:layout_constraintStart_toEndOf="@+id/view_friends_button"
+        app:layout_constraintTop_toBottomOf="@+id/contact_profile_image_view" />
+
+    <ImageView
+        android:id="@+id/contact_profile_image_view"
+        android:layout_width="263dp"
+        android:layout_height="238dp"
+        android:layout_marginTop="24dp"
+        android:src="@android:drawable/alert_dark_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_email_profile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

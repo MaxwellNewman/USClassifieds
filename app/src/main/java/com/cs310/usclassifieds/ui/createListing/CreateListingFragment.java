@@ -121,7 +121,6 @@ public class CreateListingFragment extends Fragment {
                 try {
                     Thread.sleep(1000);
                     uploadButton.setText("Image Uploaded");
-                    uploadButton.setEnabled(false);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

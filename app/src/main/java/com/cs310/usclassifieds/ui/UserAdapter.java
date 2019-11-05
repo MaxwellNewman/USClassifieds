@@ -16,6 +16,7 @@ import android.view.View;
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.User;
+import com.squareup.picasso.Picasso;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -80,8 +81,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         holder.userName.setText(mDataset[position].username);
-        holder.userDescription.setText("Example user description");
-        holder.userImage.setImageResource(R.drawable.mystery_item); // Hardcode images for now
+        final String url = mDataset[position].imageUrl;
+        if(url == null) {
+            holder.userImage.setImageResource(R.drawable.mystery_item); // Hardcode images for now
+        } else {
+            Picasso.with(holder.itemView.getContext()).load(url).into(holder.userImage);
+        }
+
+        holder.userDescription.setText(mDataset[position].profileDescription);
         holder.user = mDataset[position];
     }
 

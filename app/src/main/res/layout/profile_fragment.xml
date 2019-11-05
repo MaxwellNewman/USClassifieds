@@ -9,20 +9,28 @@
 
     <TextView
         android:id="@+id/email_profile"
-        android:layout_width="271dp"
+        android:layout_width="0dp"
         android:layout_height="33dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text="Email: "
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_profile" />
 
     <TextView
         android:id="@+id/username_profile"
-        android:layout_width="271dp"
+        android:layout_width="0dp"
         android:layout_height="33dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginTop="92dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text="Username: "
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,55 +42,69 @@
         android:id="@+id/notifcations_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="View Notifications"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/find_friends_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Search for Friends"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listings_button"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintTop_toBottomOf="@+id/listings_button" />
 
     <Button
         android:id="@+id/view_friends_button"
-        android:layout_width="140dp"
+        android:layout_width="0dp"
         android:layout_height="36dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="View Friends"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.268"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image_view" />
 
     <Button
         android:id="@+id/listings_button"
-        android:layout_width="140dp"
+        android:layout_width="0dp"
         android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text="View Listings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.252"
-        app:layout_constraintStart_toEndOf="@+id/view_friends_button"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/profile_image_view" />
+
 
     <ImageView
         android:id="@+id/profile_image_view"
         android:layout_width="263dp"
         android:layout_height="238dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:src="@android:drawable/alert_dark_frame"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_profile" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

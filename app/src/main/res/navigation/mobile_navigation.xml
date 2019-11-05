@@ -209,6 +209,23 @@
         android:id="@+id/navigation_contact"
         android:name="com.cs310.usclassifieds.ui.contact.ContactFragment"
         android:label="@string/title_contact"
-        tools:layout="@layout/contact_fragment" />
+        tools:layout="@layout/contact_fragment" >
+        <action
+            android:id="@+id/action_navigation_contact_to_navigation_results"
+            app:destination="@id/navigation_results"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_contact" />
+        <action
+            android:id="@+id/action_navigation_contact_to_navigation_friend_results"
+            app:destination="@id/navigation_friend_results"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_contact" />
+    </fragment>
 
 </navigation>
