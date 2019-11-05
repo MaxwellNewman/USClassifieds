@@ -80,7 +80,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         holder.userName.setText(mDataset[position].username);
-        holder.userDescription.setText("Example user description");
+        holder.userDescription.setText(mDataset[position].profileDescription);
         holder.userImage.setImageResource(R.drawable.mystery_item); // Hardcode images for now
         holder.user = mDataset[position];
     }

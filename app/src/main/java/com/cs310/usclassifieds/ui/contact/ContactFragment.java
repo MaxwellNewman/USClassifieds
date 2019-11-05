@@ -12,11 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.User;
+import com.squareup.picasso.Picasso;
 
 public class ContactFragment extends Fragment {
 
@@ -37,9 +39,17 @@ public class ContactFragment extends Fragment {
         // User that fragment is looking at
         user = activity.getViewedUser();
         TextView contactName = view.findViewById(R.id.contact_name);
-        Log.v("Contact", user.username);
-        contactName.setText(user.username);
+        TextView username = view.findViewById(R.id.username_profile);
+        TextView email = view.findViewById(R.id.email_profile);
+        ImageView profilePicture = view.findViewById(R.id.profile_image_view);
 
+        contactName.setText(user.fullName);
+        username.append(user.username);
+        email.append(user.contactInfo.email);
+        final String url = user.imageUrl == null ?
+                MainActivity.DEFAULT_URL :
+                user.imageUrl;
+        Picasso.with(getContext()).load(url).into(profilePicture);
 
         return view;
     }

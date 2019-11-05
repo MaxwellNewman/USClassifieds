@@ -11,14 +11,48 @@
         android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Patrick"
-        android:textSize="18sp"
+        android:layout_marginTop="52dp"
         android:textColor="#000000"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/username_profile"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="96dp"
+        android:text="Username: "
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/email_profile"
+        android:layout_width="271dp"
+        android:layout_height="33dp"
+        android:text="Email: "
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_profile" />
+
+    <ImageView
+        android:id="@+id/profile_image_view"
+        android:layout_width="263dp"
+        android:layout_height="238dp"
+        android:layout_marginTop="24dp"
+        android:src="@android:drawable/alert_dark_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_profile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
