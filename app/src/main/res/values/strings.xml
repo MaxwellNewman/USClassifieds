@@ -34,6 +34,7 @@
     <string name="title_contact">Contact</string>
 
     <string name="username">Username:</string>
+    <string name="email">Email:</string>
     <string name="search_hint">Search</string>
     <string name="map_search_hint">Search by title or category</string>
 

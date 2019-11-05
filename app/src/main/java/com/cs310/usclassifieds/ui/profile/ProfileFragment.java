@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
@@ -30,6 +31,15 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+    private MainActivity activity = (MainActivity) getActivity();
+    final User currentUser = activity.getCurrentUser();
+
+    private TextView usernameText;
+    private TextView emailText;
+    private Button findFriendsButton;
+    private Button viewFriendsButton;
+    private Button listingsButton;
+
     private ProfileViewModel mViewModel;
     private UserManager userManager = new UserManager(new DataManager());
     public static ProfileFragment newInstance() {
@@ -39,7 +49,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        MainActivity activity = (MainActivity) getActivity();
+
+        usernameText = view.findViewById(R.id.username_profile);
+        emailText = view.findViewById(R.id.email_profile);
+        findFriendsButton = view.findViewById(R.id.find_friends_button);
+        viewFriendsButton = view.findViewById(R.id.view_friends_button);
+        listingsButton = view.findViewById(R.id.listings_button);
+
+        final User currUser = userManager.loadProfile(currentUser.userId);
+
+        usernameText.setText(currUser.username);
+        emailText.setText(currUser.contactInfo.email);
+
         List<User> friends = userManager.getFriendsOf(activity.getCurrentUserId());
         if(friends == null) {
             friends = new ArrayList<User>();
@@ -54,8 +75,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        MainActivity activity = (MainActivity) getActivity();
-        final User currentUser = activity.getCurrentUser();
 
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);

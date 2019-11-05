@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.view.View.OnClickListener;
 
@@ -57,7 +58,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         View view = inflater.inflate(R.layout.search_fragment, container, false);
-        Button searchButton = (Button) view.findViewById(R.id.search_button);
+        ImageButton searchButton = view.findViewById(R.id.search_button);
         this.searchText = (EditText) view.findViewById(R.id.searchbar2);
         searchButton.setOnClickListener(this);
 
