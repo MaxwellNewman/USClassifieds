@@ -19,6 +19,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthActionCodeException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWebException;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -78,8 +84,7 @@ public class SignInActivity extends AppCompatActivity {
                             Intent mainIntent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(mainIntent);
                         } else {
-                            // If sign in fails, display an error toast to the user.
-                            Toast.makeText(SignInActivity.this, "Username and password incorrect. Try again.",
+                            Toast.makeText(SignInActivity.this, "Your username or password was incorrect",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
