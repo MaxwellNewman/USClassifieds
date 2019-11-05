@@ -1,6 +1,8 @@
 package com.cs310.usclassifieds.model.datamodel;
 
-public class Contact {
+import java.io.Serializable;
+
+public class Contact implements Serializable {
     public String phone;
     public String email;
     public String instagram;

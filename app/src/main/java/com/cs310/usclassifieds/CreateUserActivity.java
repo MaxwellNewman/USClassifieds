@@ -24,6 +24,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 
 public class CreateUserActivity extends AppCompatActivity {
@@ -137,10 +140,21 @@ public class CreateUserActivity extends AppCompatActivity {
 
                             // Go to app (MainActivity)
                             Intent mainIntent = new Intent(CreateUserActivity.this, MainActivity.class);
+                            newUser.imageUri = null;
+                            mainIntent.putExtra(MainActivity.CURRENT_USER, newUser);
                             startActivity(mainIntent);
-                        } else {
+                        } else if(task.getException() instanceof FirebaseAuthUserCollisionException){
                             // If sign in fails, display a message to the user.
                             Toast.makeText(CreateUserActivity.this, "That username already exists.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else if(task.getException() instanceof FirebaseAuthWeakPasswordException){
+                            Toast.makeText(CreateUserActivity.this, "That Password is not strong enough",
+                                    Toast.LENGTH_SHORT).show();
+                        } else if(task.getException() instanceof FirebaseAuthInvalidCredentialsException)
+                            Toast.makeText(CreateUserActivity.this, "Please enter a well-formed username",
+                                    Toast.LENGTH_SHORT).show();
+                        else {
+                            Toast.makeText(CreateUserActivity.this, "Miscellaneous sign in error",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

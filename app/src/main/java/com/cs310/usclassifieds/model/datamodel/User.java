@@ -2,11 +2,12 @@ package com.cs310.usclassifieds.model.datamodel;
 
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     // Input fields for Create Account
     public String userId;
     public String fullName;

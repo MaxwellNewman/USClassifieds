@@ -1,5 +1,6 @@
 package com.cs310.usclassifieds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,12 +23,17 @@ import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity implements DataPassListener {
     public static final String DEFAULT_URL = "https://en.wikipedia.org/wiki/Sublime_Porte#/media/File:Imperial_Gate_Topkapi_Istanbul_2007_002.jpg";
+    public static final String CURRENT_USER = "currentUser";
 
     private final DataManager dataManager = new DataManager();
     private final UserManager userManager = new UserManager(dataManager);
@@ -43,6 +49,11 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
         }
 
         return currentUser;
+    }
+
+    public void setUser(final User user) {
+        user.imageUri = null;
+        this.currentUser = user;
     }
 
     public static Drawable LoadImageFromWebOperations(String url) {
@@ -100,14 +111,41 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     }
 
     private void populateCurrentUser() {
-        /*final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        final User user = database.collection(DataManager.USERS_PATH)*/
+        FirebaseFirestore.getInstance()
+                .collection(DataManager.USERS_PATH)
+                .whereEqualTo(DataManager.USER_ID, getCurrentUserId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            try {
+                                final List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                                currentUser = documents.get(0).toObject(User.class);
+                            } catch (Exception e) {
+                                Log.e("exception get cur user", e.getMessage());
+                                currentUser = null;
+                            }
+                        } else {
+                            Log.e("Error get cur user", "Could not get cur user");
+                        }
+                    }
+                });
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        populateCurrentUser();
+        final Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            currentUser = (User) bundle.getSerializable(CURRENT_USER);
+            currentUser.imageUri = null;
+        }
+
+        if(currentUser == null || currentUser.imageUrl == null) {
+            populateCurrentUser();
+        }
+
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
