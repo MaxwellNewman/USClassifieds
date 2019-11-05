@@ -85,7 +85,8 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
         this.searchText = (EditText) view.findViewById(R.id.advanced_search_bar);
         this.userText = (EditText) view.findViewById(R.id.advanced_user_search);
         this.locationText = (AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.advanced_location);
-
+        this.lowToHighSwitch.setTextOff("Cheapest First");
+        this.lowToHighSwitch.setTextOn("Expensive First");
         locationText.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS));
         locationText.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
