@@ -28,6 +28,7 @@ import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.ItemManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
@@ -78,6 +79,8 @@ public class CreateListingFragment extends Fragment {
                 //TODO call the database and pass data
                 //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
                 uploadListing();
+                MainActivity activity = (MainActivity) getActivity();
+                activity.setViewedItem();
                 Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
             }
         });
@@ -85,7 +88,7 @@ public class CreateListingFragment extends Fragment {
         return view;
     }
 
-    private void uploadListing() {
+    private Item uploadListing() {
         Item item = new Item();
         item.title = titleText.getText().toString().equals("") ? "Test Title" : titleText.getText().toString();
         item.description = descText.getText().toString().equals("") ? "Test Description" : descText.getText().toString();
@@ -98,6 +101,7 @@ public class CreateListingFragment extends Fragment {
         item.userId = currentUser.userId;
         item.username = currentUser.username;
         itemManager.createListing(item);
+        return item;
     }
 
     private void selectFile() {
