@@ -99,7 +99,17 @@ public class SearchManager {
         return results;
     }
 
+    private boolean validateUser(final User user) {
+        return user.username != null &&
+                user.userId != null &&
+                user.fullName != null;
+    }
+
     public List<User> searchUsers(String searchString) {
+        if(searchString == null || searchString.equals("")) {
+            return dataManager.getAllUsers();
+        }
+
         final List<User> users = dataManager.getAllUsers();
         final List<String> searchTerms = Arrays.asList(searchString.split("\\s+"));
         final List<User> results = new ArrayList<>();
@@ -107,10 +117,10 @@ public class SearchManager {
         for(int i=0; i<users.size(); ++i) {
             boolean userAdded = false;
             for(int j=0; j<searchTerms.size() && !userAdded; ++j) {
-                if(users.get(i)
+                if(validateUser(users.get(i)) &&  users.get(i)
                         .username
                         .toLowerCase()
-                        .contains(searchTerms.get(i).toLowerCase())) {
+                        .contains(searchTerms.get(j).toLowerCase())) {
                     results.add(users.get(i));
                     userAdded = true;
                 }
