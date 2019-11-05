@@ -60,6 +60,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
     private TextView usernameText;
     private TextView emailText;
+    private TextView contactNameText;
     private Button viewFriendsButton;
     private Button listingsButton;
     private Button sendFriendRequestButton;
@@ -108,8 +109,9 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
         usernameText = view.findViewById(R.id.contact_username_profile);
         emailText = view.findViewById(R.id.contact_email_profile);
+        contactNameText = view.findViewById(R.id.contact_name_text);
         TextView email = view.findViewById(R.id.email_profile);
-        ImageView profilePicture = view.findViewById(R.id.profile_image_view);
+        ImageView profilePicture = view.findViewById(R.id.contact_profile_image_view);
 
 //        findFriendsButton = view.findViewById(R.id.find_friends_button);
         viewFriendsButton = view.findViewById(R.id.contact_find_friends_button);
@@ -139,7 +141,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        imageView = view.findViewById(R.id.contact_profile_image_view);
+//        imageView = view.findViewById(R.id.contact_profile_image_view);
 
         // final String url = currentUser.imageUrl == null ?
         //         MainActivity.DEFAULT_URL :
