@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/quantum_ic_search_grey600_24"
         android:title="@string/title_search" />
 
     <item
         android:id="@+id/navigation_create_listing"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/edit_icon"
         android:title="@string/title_create_listing" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/profile_icon"
         android:title="@string/title_profile" />
 
 </menu>
