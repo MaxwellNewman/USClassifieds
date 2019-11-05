@@ -40,6 +40,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private List<Item> items;
     private SearchManager searchManager = new SearchManager(new DataManager());
     private EditText searchText;
+    private Marker selectedMarker = null;
     private View view;
 
     public static MapFragment newInstance() {
@@ -50,23 +51,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        // Navigate to the listing clicked
-        for (Item item : items)
-        {
-            // Not necessarily the correct item, but it matches the marker in all fields
-            // Can fix this in case 2 people sell the exact same item with the same description
-            // in the exact same place (seems unlikely)
-            if (marker.getTitle().equals(item.title) && marker.getSnippet().equals(
-                    item.description) && marker.getPosition().latitude ==
-                            item.location.latitude && marker.getPosition().longitude ==
-                            item.location.longitude) {
-                MainActivity activity = (MainActivity) getActivity();
-                activity.setViewedItem(item);
-                Navigation.findNavController(this.view).navigate(R.id.navigation_view_listing);
-                return true;
+        if (selectedMarker == null || !selectedMarker.getPosition().equals(marker.getPosition())) {
+            selectedMarker = marker;
+            marker.showInfoWindow();
+            return false;
+        }
+        else {
+            // Navigate to the listing clicked
+            for (Item item : items) {
+                // Not necessarily the correct item, but it matches the marker in all fields
+                // Can fix this in case 2 people sell the exact same item with the same description
+                // in the exact same place (seems unlikely)
+                Log.v("ITEM:", item.title);
+                if (marker.getTitle().equals(item.title) && marker.getSnippet().equals(
+                        item.description) && marker.getPosition().latitude ==
+                        item.location.latitude && marker.getPosition().longitude ==
+                        item.location.longitude) {
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.setViewedItem(item);
+                    Navigation.findNavController(this.view).navigate(R.id.navigation_view_listing);
+                    return true;
+                }
+
             }
         }
-
         return false;
     }
 
@@ -78,12 +86,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         googleMap.setOnMarkerClickListener(this);
 
         // Place item markers on the map
-        items = searchManager.searchItemsByTitle(searchText);
         for (Item item : items){
             LatLng itemLatLng = new LatLng(item.location.latitude, item.location.longitude);
-            googleMap.addMarker(new MarkerOptions().position(itemLatLng).title(
-                    item.title).snippet(item.description));
-    }
+
+            MarkerOptions options = new MarkerOptions().position(itemLatLng).title(
+                    item.title).snippet(item.description);
+
+            Marker marker = googleMap.addMarker(options);
+            Log.v("MapFragment", "title:" + item.title);
+            Log.v("MapFragment", "snippet:" + item.description);
+        }
 
         // Zoom automatically to usc
         LatLng usc = new LatLng(34.0211917, -118.2863514);
@@ -103,7 +115,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         Log.v("searching for:", searchText.getText().toString());
 
-        //this.items = searchManager.searchItemsByTitle(searchText.getText().toString());
+        this.items = searchManager.searchItemsByTitle(searchText.getText().toString());
 
         this.mMapView = (MapView) view.findViewById(R.id.map_of_listings);
         this.mMapView.onCreate(savedInstanceState);
