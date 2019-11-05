@@ -36,6 +36,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         return new SearchFragment();
     }
 
+
+
     @Override
     public void onClick(View view) {
         //TODO (btw you need to do it for all of them, I'm not about to make a million todos)

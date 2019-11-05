@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.cs310.usclassifieds.MainActivity;
@@ -32,7 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, View.OnClickListener {
 
     private MapViewModel mViewModel;
     private GoogleMap googleMap;
@@ -42,9 +43,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private EditText searchText;
     private Marker selectedMarker = null;
     private View view;
+    private Button searchButton;
 
     public static MapFragment newInstance() {
         return new MapFragment();
+    }
+
+    @Override
+    public void onClick(View view) {
+        //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
+        String searchText = this.searchText.getText().toString();
+        this.items = searchManager.searchItemsByTitle(searchText);
+
+        // Make loading screen
+
+        // Update map results
+        mMapView.getMapAsync(this);
     }
 
     // When a marker is clicked
@@ -84,9 +98,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         String searchText = this.searchText.getText().toString();
         Log.v("Map Search Text", searchText);
         googleMap.setOnMarkerClickListener(this);
-
+        googleMap.clear();
         // Place item markers on the map
         for (Item item : items){
+            Log.println(Log.VERBOSE, "FOUND", "items" + items.size());
             LatLng itemLatLng = new LatLng(item.location.latitude, item.location.longitude);
 
             MarkerOptions options = new MarkerOptions().position(itemLatLng).title(
@@ -110,6 +125,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
         this.view = inflater.inflate(R.layout.map_fragment, container, false);
         this.searchText = (EditText) view.findViewById(R.id.map_search_bar);
+        this.searchButton = (Button) view.findViewById(R.id.map_search_button);
+        this.searchButton.setOnClickListener(this);
 
         // Load items from searchText (should default to load all items)
 
