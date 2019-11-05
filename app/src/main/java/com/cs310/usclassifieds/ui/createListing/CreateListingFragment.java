@@ -128,7 +128,7 @@ public class CreateListingFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                boolean validInputs = checkInputs(titleText, priceText);
+                boolean validInputs = checkInputValidity();
 
                 if (validInputs) {
                     MainActivity activity = (MainActivity) getActivity();
@@ -145,14 +145,19 @@ public class CreateListingFragment extends Fragment {
         return "AIzaSyCSTWld6jstN2eosUB6MYCTgjs8qYK-lm8";
     }
 
-    private boolean checkInputs(EditText titleText, EditText priceText) {
+    private boolean checkInputValidity() {
         if (titleText.getText().toString().matches("")) {
             Toast.makeText(getActivity(), "You did not enter an item title", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (priceText.getText().toString().matches("")) {
-            Toast.makeText(getActivity(), "You did not enter an item price", Toast.LENGTH_SHORT).show();
+        if (mImageUri == null) {
+            Toast.makeText(getActivity(), "You did not select an image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (locationInfo == null) {
+            Toast.makeText(getActivity(), "You did not select a location", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -163,18 +168,18 @@ public class CreateListingFragment extends Fragment {
         Item item = new Item();
         item.title = titleText.getText().toString();
         item.description = descText.getText().toString();
-        item.price = Float.valueOf(priceText.getText().toString());
+        if (!priceText.getText().toString().matches("")) {
+            item.price = Float.valueOf(priceText.getText().toString());
+        }
         item.imageUri = mImageUri;
         item.imageUrl = null;
         MainActivity activity =(MainActivity) getActivity();
         User currentUser = userManager.loadProfile(activity.getCurrentUserId());
         item.userId = currentUser.userId;
         item.username = currentUser.username;
-        if (locationInfo != null) {
-            item.location.address = locationInfo.getAddress();
-            item.location.latitude = locationInfo.getLatLng().latitude;
-            item.location.longitude = locationInfo.getLatLng().longitude;
-        }
+        item.location.address = locationInfo.getAddress();
+        item.location.latitude = locationInfo.getLatLng().latitude;
+        item.location.longitude = locationInfo.getLatLng().longitude;
 
         itemManager.createListing(item);
         return item;
