@@ -55,6 +55,7 @@ public class ResultsFragment extends Fragment {
         // Get item list
         MainActivity activity = (MainActivity) getActivity();
         List<Item> items = activity.getItems();
+        Log.v("ITEMS FOUND:", "" + items.size());
         this.mAdapter = new ItemAdapter(items.toArray(new Item[items.size()]));
         recyclerView.setAdapter(mAdapter);
 

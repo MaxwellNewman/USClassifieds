@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import com.cs310.usclassifieds.R;
 
 import com.cs310.usclassifieds.model.manager.*;
 import com.cs310.usclassifieds.model.datamodel.*;
+import com.cs310.usclassifieds.ui.ItemAdapter;
 
 import java.util.List;
 
@@ -32,6 +35,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private SearchViewModel mViewModel;
     private EditText searchText;
     private SearchManager searchManager = new SearchManager(new DataManager());
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -61,6 +67,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         ImageButton searchButton = view.findViewById(R.id.search_button);
         this.searchText = (EditText) view.findViewById(R.id.searchbar2);
         searchButton.setOnClickListener(this);
+
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.browse_view);
+        this.layoutManager = new LinearLayoutManager((getActivity()));
+        this.recyclerView.setLayoutManager(this.layoutManager);
+
+        MainActivity activity = (MainActivity) getActivity();
+        List<Item> items = searchManager.searchItemsByTitle(this.searchText.getText().toString());
+        activity.passItems(items);
+        Log.v("ITEMS FOUND:", "" + items.size());
+
+        this.mAdapter = new ItemAdapter(items.toArray(new Item[items.size()]));
+        recyclerView.setAdapter(mAdapter);
 
         Button advancedSearchButton = (Button) view.findViewById(R.id.advanced_search_button);
         advancedSearchButton.setOnClickListener(new View.OnClickListener(){
