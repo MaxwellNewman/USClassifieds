@@ -115,12 +115,11 @@ public class CreateListingFragment extends Fragment {
         item.location.address = locText.getText().toString();
         item.price = Float.valueOf(priceText.getText().toString());
         item.imageUri = mImageUri;
+        item.imageUrl = null;
         MainActivity activity =(MainActivity) getActivity();
         User currentUser = userManager.loadProfile(activity.getCurrentUserId());
         item.userId = currentUser.userId;
         item.username = currentUser.username;
-        // Todo: Add user Id and username to item
-
         itemManager.createListing(item);
     }
 

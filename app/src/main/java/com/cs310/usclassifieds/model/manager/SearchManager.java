@@ -87,9 +87,11 @@ public class SearchManager {
         for(int i=0; i<items.size(); ++i) {
             boolean itemAdded = false;
             for(int j=0; j<searchTerms.size() && !itemAdded; ++j) {
-                if(items.get(i).title.contains(searchTerms.get(j))) {
-                    results.add(items.get(i));
-                    itemAdded = true;
+                if (items.get(i).title != null) {
+                    if (items.get(i).title.contains(searchTerms.get(j))) {
+                        results.add(items.get(i));
+                        itemAdded = true;
+                    }
                 }
             }
         }

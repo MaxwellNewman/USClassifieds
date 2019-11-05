@@ -9,7 +9,6 @@ import android.view.View;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.ui.DataPassListener;
 import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.User;
@@ -20,15 +19,12 @@ import java.util.ArrayList;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import com.cs310.usclassifieds.model.manager.UserManager;
-
 public class MainActivity extends AppCompatActivity implements DataPassListener {
 
     private List<Item> items = new ArrayList<Item>();
     private List<User> users = new ArrayList<User>();
     private Item viewedItem = new Item();
     private User viewedUser = new User();
-    private UserManager userManager = new UserManager(new DataManager());
 
     public String getCurrentUserId(){
 
