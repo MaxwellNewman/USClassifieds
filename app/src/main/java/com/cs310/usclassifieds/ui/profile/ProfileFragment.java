@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -21,9 +23,12 @@ import android.widget.TextView;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
+import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
+import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.cs310.usclassifieds.ui.ItemAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,6 +43,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button listingsButton;
     private Button notificationsButton;
     private ImageView imageView;
+
+    private SearchManager searchManager = new SearchManager(new DataManager());
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private ProfileViewModel mViewModel;
     private UserManager userManager = new UserManager(new DataManager());
@@ -82,6 +92,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         usernameText.append(currentUser.username);
         emailText.append(currentUser.contactInfo.email);
+
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.browse_user_listings_view);
+        this.layoutManager = new LinearLayoutManager((getActivity()));
+        this.recyclerView.setLayoutManager(this.layoutManager);
+
+//        MainActivity activity = (MainActivity) getActivity();
+//        List<Item> items = searchManager.searchItemsByTitle(this.searchText.getText().toString());
+        List<Item> items = searchManager.searchItemsByUser(currentUser.username);
+        activity.passItems(items);
+        Log.v("ITEMS FOUND:", "" + items.size());
+
+        this.mAdapter = new ItemAdapter(items.toArray(new Item[items.size()]));
+        recyclerView.setAdapter(mAdapter);
 
         viewFriendsButton.setOnClickListener(this);
 
