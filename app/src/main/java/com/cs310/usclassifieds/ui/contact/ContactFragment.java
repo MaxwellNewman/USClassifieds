@@ -99,7 +99,6 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
 //        findFriendsButton = view.findViewById(R.id.find_friends_button);
         viewFriendsButton = view.findViewById(R.id.contact_view_friends_button);
-        listingsButton = view.findViewById(R.id.contact_listings_button);
 
         // disable sending requests if a request is sent or you are friends
         sendFriendRequestButton = view.findViewById(R.id.add_friend_button);
@@ -130,17 +129,6 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         recyclerView.setAdapter(mAdapter);
 
         viewFriendsButton.setOnClickListener(this);
-
-        listingsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                // Need to create new fragment for this, view_listing currently views a listing from search
-                //Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
-                //TODO load the users listings
-
-                Navigation.findNavController(view).navigate(R.id.action_navigation_contact_to_navigation_results);
-            }
-        });
 
         sendFriendRequestButton.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -90,7 +90,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         emailText = view.findViewById(R.id.email_profile);
         findFriendsButton = view.findViewById(R.id.find_friends_button);
         viewFriendsButton = view.findViewById(R.id.view_friends_button);
-        listingsButton = view.findViewById(R.id.listings_button);
         notificationsButton = view.findViewById(R.id.notifcations_button);
 
         fullNameText.setText(currentUser.fullName);
@@ -110,16 +109,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         recyclerView.setAdapter(mAdapter);
 
         viewFriendsButton.setOnClickListener(this);
-
-        listingsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                // Need to create new fragment for this, view_listing currently views a listing from search
-                //Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
-                //TODO load the users listings
-                Navigation.findNavController(view).navigate(R.id.action_navigation_profile_to_navigation_results2);
-            }
-        });
 
         findFriendsButton.setOnClickListener(new View.OnClickListener(){
             @Override
