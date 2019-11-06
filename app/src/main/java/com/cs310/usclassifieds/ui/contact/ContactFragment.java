@@ -8,7 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +22,13 @@ import android.widget.TextView;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
+import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
+import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
 // 7d86339d41028efc4b977c769dae6d6220d22163
+import com.cs310.usclassifieds.ui.ItemAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,37 +36,19 @@ import java.util.List;
 
 public class ContactFragment extends Fragment implements View.OnClickListener {
 
-//    private ContactViewModel mViewModel;
-//    private User user;
-//
-//    public static ContactFragment newInstance() {
-//        return new ContactFragment();
-//    }
-//
-//    @Override
-//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-//                             @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.contact_fragment, container, false);
-//
-//        MainActivity activity = (MainActivity) getActivity();
-//
-//        // User that fragment is looking at
-////        user = activity.getViewedUser();
-////        TextView contactName = view.findViewById(R.id.contact_name);
-////        Log.v("Contact", user.username);
-////        contactName.setText(user.username);
-//
-//
-//        return view;
-//    }
-
     private TextView usernameText;
     private TextView emailText;
     private TextView contactNameText;
+    private TextView phoneText;
     private Button viewFriendsButton;
     private Button listingsButton;
     private Button sendFriendRequestButton;
     private ImageView imageView;
+
+    private SearchManager searchManager = new SearchManager(new DataManager());
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private User user;
 
@@ -105,6 +93,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
         usernameText = view.findViewById(R.id.contact_username_profile);
         emailText = view.findViewById(R.id.contact_email_profile);
+        phoneText = view.findViewById(R.id.contact_phone_profile);
         contactNameText = view.findViewById(R.id.contact_name_text);
         TextView email = view.findViewById(R.id.email_profile);
         ImageView profilePicture = view.findViewById(R.id.contact_profile_image_view);
@@ -117,6 +106,22 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         contactNameText.setText(user.fullName);
         usernameText.append(user.username);
         emailText.append(user.contactInfo.email);
+        if(user.contactInfo.phone != null) {
+            phoneText.append(user.contactInfo.phone);
+        }
+
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.contact_browse_user_listings_view);
+        this.layoutManager = new LinearLayoutManager((getActivity()));
+        this.recyclerView.setLayoutManager(this.layoutManager);
+
+//        MainActivity activity = (MainActivity) getActivity();
+//        List<Item> items = searchManager.searchItemsByTitle(this.searchText.getText().toString());
+        List<Item> items = searchManager.searchItemsByUser(user.username);
+        activity.passItems(items);
+        Log.v("ITEMS FOUND:", "" + items.size());
+
+        this.mAdapter = new ItemAdapter(items.toArray(new Item[items.size()]));
+        recyclerView.setAdapter(mAdapter);
 
         viewFriendsButton.setOnClickListener(this);
 
