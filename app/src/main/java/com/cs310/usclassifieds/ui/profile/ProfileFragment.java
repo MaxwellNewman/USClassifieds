@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -21,9 +23,12 @@ import android.widget.TextView;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
+import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
+import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.cs310.usclassifieds.ui.ItemAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,6 +36,7 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+    private TextView fullNameText;
     private TextView usernameText;
     private TextView emailText;
     private Button findFriendsButton;
@@ -38,6 +44,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button listingsButton;
     private Button notificationsButton;
     private ImageView imageView;
+
+    private SearchManager searchManager = new SearchManager(new DataManager());
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private ProfileViewModel mViewModel;
     private UserManager userManager = new UserManager(new DataManager());
@@ -73,6 +84,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
+        fullNameText = view.findViewById(R.id.name_text);
         usernameText = view.findViewById(R.id.username_profile);
         emailText = view.findViewById(R.id.email_profile);
         findFriendsButton = view.findViewById(R.id.find_friends_button);
@@ -80,8 +92,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         listingsButton = view.findViewById(R.id.listings_button);
         notificationsButton = view.findViewById(R.id.notifcations_button);
 
+        fullNameText.setText(currentUser.fullName);
+
         usernameText.append(currentUser.username);
         emailText.append(currentUser.contactInfo.email);
+
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.browse_user_listings_view);
+        this.layoutManager = new LinearLayoutManager((getActivity()));
+        this.recyclerView.setLayoutManager(this.layoutManager);
+
+//        MainActivity activity = (MainActivity) getActivity();
+//        List<Item> items = searchManager.searchItemsByTitle(this.searchText.getText().toString());
+        List<Item> items = searchManager.searchItemsByUser(currentUser.username);
+        activity.passItems(items);
+        Log.v("ITEMS FOUND:", "" + items.size());
+
+        this.mAdapter = new ItemAdapter(items.toArray(new Item[items.size()]));
+        recyclerView.setAdapter(mAdapter);
 
         viewFriendsButton.setOnClickListener(this);
 

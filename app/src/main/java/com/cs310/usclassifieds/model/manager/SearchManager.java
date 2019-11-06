@@ -19,7 +19,7 @@ public class SearchManager {
     class DistanceComparator implements Comparator<Pair<Double, Item> > {
         @Override
         public int compare(Pair<Double,Item> first, Pair<Double,Item> second) {
-            return (int) (METERS_PER_MILE *(second.first - first.first));
+            return (int) (METERS_PER_MILE *(first.first - second.first));
         }
     }
 
