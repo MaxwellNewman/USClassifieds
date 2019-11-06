@@ -64,7 +64,6 @@ public class CreateListingFragment extends Fragment {
     private EditText descText;
     private Button uploadButton;
     private Button submitButton;
-    private TextView locationText;
     private EditText tagsText;
 
     private Uri mImageUri;
@@ -92,8 +91,9 @@ public class CreateListingFragment extends Fragment {
         descText = view.findViewById(R.id.create_listing_description_input);
         uploadButton = view.findViewById(R.id.upload_photos_button);
         submitButton = view.findViewById(R.id.submit_listing_button);
-        locationText = view.findViewById(R.id.location_text);
         tagsText = view.findViewById(R.id.tags_input);
+
+        locText.setHint("Location*");
 
         final String apiKey = getApiKey();
 
@@ -105,7 +105,7 @@ public class CreateListingFragment extends Fragment {
             @Override
             public void onPlaceSelected(Place place) {
                 locationInfo = place;
-                locationText.setText(place.getAddress());
+                locText.setHint(place.getAddress());
             }
 
             @Override

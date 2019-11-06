@@ -42,17 +42,12 @@
         app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar"
         tools:layout_editor_absoluteX="139dp" />
 
-    <Switch
+    <Spinner
         android:id="@+id/advanced_low_vs_high"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
-        android:theme="@style/SwitchStyle"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar"
-        tools:layout_editor_absoluteX="186dp"
-        android:textOn="On"
-        android:textOff="Off"
-        app:showText="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar"/>
 
     <EditText
         android:id="@+id/advanced_user_search"
@@ -63,6 +58,13 @@
         android:selectAllOnFocus="true"
         app:layout_constraintTop_toBottomOf="@+id/advanced_location"
         tools:layout_editor_absoluteX="161dp" />
+
+    <TextView
+        android:id="@+id/advanced_address_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/advanced_location"
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar" />
 
     <fragment
         android:id="@+id/advanced_location"
@@ -78,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/advanced_address_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
