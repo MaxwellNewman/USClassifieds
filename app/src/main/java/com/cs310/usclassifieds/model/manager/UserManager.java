@@ -11,18 +11,18 @@ public class UserManager {
     }
 
     // Sends friend request from u1 to u2
-    public void sendFriendReuest(User u1, User u2) {
-        dataManager.createFriendRequest(u1.username, u2.username);
+    public void sendFriendRequest(User u1, User u2) {
+        dataManager.createFriendRequest(u1, u2);
     }
 
     // Accepts friend request from u1 to u2
     public void acceptFriendRequest(User u1, User u2) {
-        dataManager.addFriend(u1.username, u2.username);
+        dataManager.addFriend(u1, u2);
     }
 
     // Decline friend request from u1 to u2
     public void declineFriendRequest(User u1, User u2) {
-        dataManager.declineFriendRequest(u1.username, u2.username);
+        dataManager.declineFriendRequest(u1, u2);
     }
 
     // Returns a profile given a user ID

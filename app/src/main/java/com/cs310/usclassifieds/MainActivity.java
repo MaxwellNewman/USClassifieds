@@ -1,6 +1,7 @@
 package com.cs310.usclassifieds;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,8 +28,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity implements DataPassListener {
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     private Item viewedItem = new Item();
     private User viewedUser = new User();
     private User currentUser = null;
+    private DocumentReference documentReference;
 
     public User getCurrentUser() {
         if (currentUser == null) {
@@ -111,7 +117,22 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     }
 
     private void populateCurrentUser() {
-        FirebaseFirestore.getInstance()
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+        documentReference = database.collection(DataManager.USERS_PATH)
+                .document(getCurrentUserId());
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                try {
+                    currentUser = documentSnapshot.toObject(User.class);
+                } catch (Exception exc) {
+                    Log.e("exception get cur user", exc.getMessage());
+                    currentUser = null;
+                }
+            }
+        });
+
+/*        FirebaseFirestore.getInstance()
                 .collection(DataManager.USERS_PATH)
                 .whereEqualTo(DataManager.USER_ID, getCurrentUserId())
                 .get()
@@ -130,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
                             Log.e("Error get cur user", "Could not get cur user");
                         }
                     }
-                });
+                });*/
     }
 
     @Override
@@ -142,9 +163,7 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
             currentUser.imageUri = null;
         }
 
-        if(currentUser == null || currentUser.imageUrl == null) {
-            populateCurrentUser();
-        }
+        populateCurrentUser();
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
