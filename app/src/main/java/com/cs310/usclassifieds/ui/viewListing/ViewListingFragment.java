@@ -95,9 +95,15 @@ public class ViewListingFragment extends Fragment implements OnMapReadyCallback{
             }
         });
 
-        final String url = item.imageUrl == null ?
-                MainActivity.DEFAULT_URL :
-                item.imageUrl;
+        String url = null;
+        if(item.imageUrl != null) {
+            url = item.imageUrl;
+        } else if(item.imageUri != null) {
+            url = item.imageUri.toString();
+        } else {
+            url = MainActivity.DEFAULT_URL;
+        }
+
         Picasso.with(getContext()).load(url).into(itemImage);
 
         // Display item on map
