@@ -137,6 +137,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                 final MainActivity mainActivity = (MainActivity)getActivity();
                 final User currentUser = mainActivity.getCurrentUser();
                 userManager.sendFriendRequest(currentUser, user);
+                sendFriendRequestButton.setText("Friend Request Sent");
+                sendFriendRequestButton.setEnabled(false);
             }
         });
 

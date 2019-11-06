@@ -35,6 +35,10 @@ public class UserManager {
         return dataManager.getFriendsOf(userId);
     }
 
+    public List<User> getFriendRequestsOf(User user) {
+        return dataManager.getUsers(user.friendRequests);
+    }
+
     // Adds user to the database
     public void addUser(User user) {
         dataManager.addUser(user);

@@ -63,7 +63,11 @@ public class User implements Serializable {
             friendRequests = new ArrayList<>();
         }
 
-        if(!friendRequests.contains(friendId)) {
+        if(friends == null) {
+            friends = new ArrayList<>();
+        }
+
+        if(!friendRequests.contains(friendId) && !friends.contains(friendId)) {
             friendRequests.add(friendId);
         }
     }

@@ -67,7 +67,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        MainActivity activity = (MainActivity) getActivity();
+        final MainActivity activity = (MainActivity) getActivity();
         final User currentUser = activity.getCurrentUser();
 
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
@@ -106,6 +106,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         notificationsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                final List<User> users = userManager.getFriendRequestsOf(activity.getCurrentUser());
+                activity.passUsers(users);
                 Navigation.findNavController(view).navigate(R.id.action_navigation_profile_to_navigation_notifications);
             }
         });
