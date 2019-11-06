@@ -84,10 +84,11 @@ public class CreateUserActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == -1 && data != null
                 && data.getData() != null) {
             mImageUri = data.getData();
+            uploadButton.setText("Profile Picture Selected");
         }
     }
 
-    /** Called when user presses Create User Button **/
+    /** Called when user presses Create User Button */
     public void createUserButtonPressed(View view) {
         String fullName = ((EditText)findViewById(R.id.createName)).getText().toString();
         String username = ((EditText)findViewById(R.id.createUsername)).getText().toString();

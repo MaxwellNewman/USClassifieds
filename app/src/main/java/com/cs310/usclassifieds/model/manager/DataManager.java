@@ -86,7 +86,6 @@ public class DataManager {
                 }
             });
         } else {
-            user.imageUrl = null;
             document.set(user);
         }
 
