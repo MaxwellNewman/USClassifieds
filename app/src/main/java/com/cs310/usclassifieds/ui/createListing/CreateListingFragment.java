@@ -93,6 +93,8 @@ public class CreateListingFragment extends Fragment {
         submitButton = view.findViewById(R.id.submit_listing_button);
         tagsText = view.findViewById(R.id.tags_input);
 
+        locText.setHint("Location*");
+
         final String apiKey = getApiKey();
 
         Places.initialize(getContext(), apiKey);
