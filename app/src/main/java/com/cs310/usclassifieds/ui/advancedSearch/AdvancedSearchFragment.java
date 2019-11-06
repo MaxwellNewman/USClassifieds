@@ -29,6 +29,7 @@ import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
@@ -156,6 +157,13 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
         this.locationText = (AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.advanced_location);
         locationText.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.ADDRESS));
 
+        final String apiKey = getApiKey();
+
+        Places.initialize(getContext(), apiKey);
+        Places.createClient(view.getContext());
+
+        this.locationText.setHint("Filter by location");
+
         locationText.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -186,6 +194,10 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
         advancedSearchButton.setOnClickListener(this);
 
         return view;
+    }
+
+    private String getApiKey() {
+        return "AIzaSyCSTWld6jstN2eosUB6MYCTgjs8qYK-lm8";
     }
 
     @Override

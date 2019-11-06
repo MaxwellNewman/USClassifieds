@@ -107,14 +107,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/contact_profile_image_view" />
 
-    <Button
-        android:id="@+id/contact_listings_button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="View Listings"
-        app:layout_constraintStart_toEndOf="@+id/view_friends_button"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/contact_profile_image_view"
         android:layout_width="96dp"

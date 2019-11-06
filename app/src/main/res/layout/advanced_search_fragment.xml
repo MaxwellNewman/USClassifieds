@@ -7,80 +7,91 @@
     android:layout_height="match_parent"
     tools:context=".ui.advancedSearch.AdvancedSearchFragment">
 
+
     <EditText
         android:id="@+id/advanced_search_bar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_width="fill_parent"
+        android:layout_height="47dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:autofillHints=""
         android:hint="@string/search_hint"
         android:inputType="text"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/submit_advanced_search_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:text="Submit Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search_spinner" />
+
+    <Spinner
+        android:id="@+id/advanced_low_vs_high"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search_spinner" />
 
     <Spinner
         android:id="@+id/advanced_search_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/submit_advanced_search_button"/>
-
-
-    <Button
-        android:id="@+id/submit_advanced_search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
-        android:text="Submit Search"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar"
-        tools:layout_editor_absoluteX="139dp" />
-
-    <Spinner
-        android:id="@+id/advanced_low_vs_high"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar"/>
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar" />
 
     <EditText
         android:id="@+id/advanced_user_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Enter user"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:autofillHints=""
+        android:hint="Search by username"
         android:inputType="text"
         android:selectAllOnFocus="true"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_location"
-        tools:layout_editor_absoluteX="161dp" />
-
-    <TextView
-        android:id="@+id/advanced_address_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/advanced_location"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_search_bar" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search_spinner" />
 
     <fragment
         android:id="@+id/advanced_location"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Location *"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_address_text" />
+        app:layout_constraintTop_toBottomOf="@+id/advanced_search_spinner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
