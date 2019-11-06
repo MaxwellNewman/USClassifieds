@@ -129,7 +129,7 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
             lowToHighSpinner.setVisibility(View.GONE);
             searchByCost = false;
             locationText.getView().setVisibility(View.GONE);
-            searchByDistance = true;
+            searchByDistance = false;
         }
     }
 
