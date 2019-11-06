@@ -44,4 +44,8 @@
         <item>Search by User</item>
     </string-array>
 
+    <string-array name="cost_options">
+        <item>Low to High</item>
+        <item>High to Low</item>
+    </string-array>
 </resources>
