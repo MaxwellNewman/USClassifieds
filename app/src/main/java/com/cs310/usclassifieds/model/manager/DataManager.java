@@ -162,25 +162,6 @@ public class DataManager {
                     }
                 });
 
-/*        final List<String> userIds = new ArrayList<>();
-        userIds.add(user1);
-        userIds.add(user2);
-
-        final List<User> users = getUsers(userIds);
-
-        if(users.size() != 2) {
-            return false;
-        }
-
-        users.get(0).addFriend(users.get(1).userId);
-        users.get(1).addFriend(users.get(0).userId);
-
-        users.get(0).removeFriendRequest(user2);
-        users.get(1).removeFriendRequest(user1);
-
-        modifyUser(users.get(0));
-        modifyUser(users.get(1));*/
-
         return true;
     }
 
@@ -436,7 +417,8 @@ public class DataManager {
         modifyListing(item);
     }
 
-    boolean resolveSale(Item i) {
+    boolean resolveSale(Item item) {
+        database.collection(ITEMS_PATH).document(item.itemId).delete();
         return true;
     }
 

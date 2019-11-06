@@ -10,17 +10,17 @@ public class ItemManager {
     } 
 
     // Puts Item i in the database of available deals
-    public void createListing(Item i) {
-        dataManager.addListing(i);
+    public void createListing(Item item) {
+        dataManager.addListing(item);
     }
 
     // Marks Item i as sold
-    public void markSold(Item i) {
-        dataManager.resolveSale(i);
+    public void markSold(Item item) {
+        dataManager.resolveSale(item);
     }
 
     // Replace current itemId with new Item i
-    public void updateItem(String itemId, Item i) {
-        dataManager.updateItem(itemId, i);
+    public void updateItem(String itemId, Item item) {
+        dataManager.updateItem(itemId, item);
     }
 }

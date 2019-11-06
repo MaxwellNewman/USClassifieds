@@ -29,6 +29,7 @@ import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
 import com.cs310.usclassifieds.ui.ItemAdapter;
+import com.cs310.usclassifieds.ui.ProfileItemAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         activity.passItems(items);
         Log.v("ITEMS FOUND:", "" + items.size());
 
-        this.mAdapter = new ItemAdapter(items.toArray(new Item[items.size()]));
+        this.mAdapter = new ProfileItemAdapter(items.toArray(new Item[items.size()]));
         recyclerView.setAdapter(mAdapter);
 
         viewFriendsButton.setOnClickListener(this);

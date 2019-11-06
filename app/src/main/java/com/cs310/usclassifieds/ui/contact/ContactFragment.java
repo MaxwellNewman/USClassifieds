@@ -100,7 +100,16 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 //        findFriendsButton = view.findViewById(R.id.find_friends_button);
         viewFriendsButton = view.findViewById(R.id.contact_view_friends_button);
         listingsButton = view.findViewById(R.id.contact_listings_button);
+
+        // disable sending requests if a request is sent or you are friends
         sendFriendRequestButton = view.findViewById(R.id.add_friend_button);
+        if(currentUser.isFriend(user.userId)) {
+            sendFriendRequestButton.setEnabled(false);
+            sendFriendRequestButton.setText("You are friends");
+        } else if(user.hasFriendRequest(currentUser.userId)) {
+            sendFriendRequestButton.setEnabled(false);
+            sendFriendRequestButton.setText("Request Sent");
+        }
         
         contactNameText.setText(user.fullName);
         usernameText.append(user.username);
@@ -113,8 +122,6 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         this.layoutManager = new LinearLayoutManager((getActivity()));
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-//        MainActivity activity = (MainActivity) getActivity();
-//        List<Item> items = searchManager.searchItemsByTitle(this.searchText.getText().toString());
         List<Item> items = searchManager.searchItemsByUser(user.username);
         activity.passItems(items);
         Log.v("ITEMS FOUND:", "" + items.size());

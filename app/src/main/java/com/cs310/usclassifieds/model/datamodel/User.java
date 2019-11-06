@@ -104,4 +104,20 @@ public class User implements Serializable {
         return map;
     }
 
+    public boolean isFriend(String userId) {
+        if(friends == null) {
+            friends = new ArrayList<>();
+        }
+
+        return friends.contains(userId);
+    }
+
+    public boolean hasFriendRequest(String userId) {
+        if(friendRequests == null) {
+            friendRequests = new ArrayList<>();
+        }
+
+        return friendRequests.contains(userId);
+    }
+
 }
