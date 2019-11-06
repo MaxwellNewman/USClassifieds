@@ -47,6 +47,7 @@ public class ProfileItemAdapter extends RecyclerView.Adapter<ProfileItemAdapter.
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            final MainActivity mainActivity = (MainActivity) getActivity(itemView);
             this.itemName = itemView.findViewById(R.id.item_title);
             this.itemDescription = itemView.findViewById(R.id.item_description);
             this.itemImage = itemView.findViewById(R.id.item_image);
@@ -56,7 +57,7 @@ public class ProfileItemAdapter extends RecyclerView.Adapter<ProfileItemAdapter.
                 @Override
                 public void onClick(View view) {
                     ItemManager itemManager = new ItemManager(new DataManager());
-                    itemManager.markSold(item);
+                    itemManager.markSold(item, mainActivity.getCurrentUser());
 
                     sellButton.setText("Sold");
                     sellButton.setEnabled(false);

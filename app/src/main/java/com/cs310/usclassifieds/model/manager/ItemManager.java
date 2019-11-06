@@ -1,6 +1,7 @@
 package com.cs310.usclassifieds.model.manager;
 
 import com.cs310.usclassifieds.model.datamodel.Item;
+import com.cs310.usclassifieds.model.datamodel.User;
 
 public class ItemManager {
     private DataManager dataManager;
@@ -15,8 +16,8 @@ public class ItemManager {
     }
 
     // Marks Item i as sold
-    public void markSold(Item item) {
-        dataManager.resolveSale(item);
+    public void markSold(Item item, User user) {
+        dataManager.resolveSale(item, user);
     }
 
     // Replace current itemId with new Item i

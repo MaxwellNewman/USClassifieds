@@ -133,7 +133,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="100dp"
         android:paddingBottom="0dp"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -178,5 +178,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/sales_text"
+        android:layout_width="354dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:text="Number of Sales: "
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.682"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/browse_user_listings_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

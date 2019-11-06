@@ -40,6 +40,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private TextView fullNameText;
     private TextView usernameText;
     private TextView emailText;
+    private TextView salesText;
     private Button findFriendsButton;
     private Button viewFriendsButton;
     private Button listingsButton;
@@ -92,11 +93,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         viewFriendsButton = view.findViewById(R.id.view_friends_button);
         listingsButton = view.findViewById(R.id.listings_button);
         notificationsButton = view.findViewById(R.id.notifcations_button);
+        salesText = view.findViewById(R.id.sales_text);
 
         fullNameText.setText(currentUser.fullName);
 
         usernameText.append(currentUser.username);
         emailText.append(currentUser.contactInfo.email);
+
+        salesText.append(Integer.toString(currentUser.sales));
 
         this.recyclerView = (RecyclerView) view.findViewById(R.id.browse_user_listings_view);
         this.layoutManager = new LinearLayoutManager((getActivity()));

@@ -417,8 +417,11 @@ public class DataManager {
         modifyListing(item);
     }
 
-    boolean resolveSale(Item item) {
+    boolean resolveSale(Item item, User user) {
         database.collection(ITEMS_PATH).document(item.itemId).delete();
+        ++user.sales;
+        modifyUser(user);
+
         return true;
     }
 

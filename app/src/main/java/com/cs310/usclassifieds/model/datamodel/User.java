@@ -17,6 +17,7 @@ public class User implements Serializable {
     public Uri imageUri;
     public String imageUrl;
     public List<String> friendRequests;
+    public int sales;
 
     public List<String> friends; // userIDs
 
@@ -31,6 +32,7 @@ public class User implements Serializable {
 
         this.friends = new ArrayList<>();
         this.friendRequests = new ArrayList<>();
+        sales = 0;
     }
 
     public User(String username, String email, String userId) {
