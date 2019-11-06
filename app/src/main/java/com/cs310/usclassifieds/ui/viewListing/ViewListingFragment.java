@@ -79,9 +79,13 @@ public class ViewListingFragment extends Fragment implements OnMapReadyCallback{
 
         itemName.setText(item.title);
 
+        if (item.price>0) {
         DecimalFormat df = new DecimalFormat("#.00");
         String price = df.format(item.price);
-        itemPrice.setText("Price: $" + price);
+            itemPrice.setText("Price: $" + price);
+        } else {
+            itemPrice.setText("Price: N/A");
+        }
 
         itemDescription.setText(item.description);
         itemListingUser.setText("Username: " + item.username);

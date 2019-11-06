@@ -118,12 +118,7 @@ public class CreateListingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selectFile();
-                try {
-                    Thread.sleep(1000);
-                    uploadButton.setText("Image Uploaded");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                uploadButton.setText("Image Uploaded");
             }
         });
 
