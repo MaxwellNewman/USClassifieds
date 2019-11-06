@@ -9,32 +9,32 @@
 
     <ImageView
         android:id="@+id/item_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="99dp"
+        android:layout_height="94dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="8dp"
         android:src="@drawable/mystery_item" />
 
     <LinearLayout
         android:layout_width="166dp"
-        android:layout_height="wrap_content"
+        android:layout_height="109dp"
         android:orientation="vertical"
         android:padding="8dp">
 
         <TextView
             android:id="@+id/item_title"
-            android:layout_width="301dp"
-            android:layout_height="wrap_content"
+            android:layout_width="147dp"
+            android:layout_height="48dp"
             android:padding="1dp"
-            android:text="Robert"
+            android:text="Robert and his Company"
             android:textColor="#000000"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/item_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="93dp"
             android:padding="1dp"
             android:text="Manhattan"
             android:textColor="#5d5d5d"
@@ -46,7 +46,7 @@
     <Button
         android:id="@+id/sell_item_button"
         android:layout_width="wrap_content"
-        android:layout_height="69dp"
+        android:layout_height="109dp"
         android:layout_weight="1"
         android:text="Mark Item As Sold" />
 
