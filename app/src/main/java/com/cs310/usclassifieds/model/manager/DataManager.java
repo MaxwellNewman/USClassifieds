@@ -118,14 +118,14 @@ public class DataManager {
     // Remove friend request from user1 to user2, returns false if unsuccessful
     boolean declineFriendRequest(final User user1, final User user2) {
         database.collection(USERS_PATH)
-                .document(user2.userId)
+                .document(user1.userId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()) {
                     final User toRemove = task.getResult().toObject(User.class);
-                    toRemove.removeFriendRequest(user1.userId);
+                    toRemove.removeFriendRequest(user2.userId);
                     modifyUser(toRemove);
                 }
             }
