@@ -11,18 +11,75 @@
     <TextView
         android:id="@+id/viewed_item_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/viewed_item_image"
+        android:layout_width="235dp"
+        android:layout_height="207dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="Listing image"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/alert_dark_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewed_item_name" />
+
+    <TextView
+        android:id="@+id/viewed_item_description"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="44dp"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewed_item_image" />
+
+    <TextView
+        android:id="@+id/viewed_item_listingUser"
+        android:layout_width="220dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toTopOf="@+id/item_with_map"/>
+        android:autoSizeTextType="uniform"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewed_item_image" />
+
+    <TextView
+        android:id="@+id/viewed_item_price"
+        android:layout_width="165dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_horizontal"
+        android:autoSizeTextType="uniform"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewed_item_image" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view_listing"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/viewed_item_name" />
+        android:layout_height="238dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewed_item_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
