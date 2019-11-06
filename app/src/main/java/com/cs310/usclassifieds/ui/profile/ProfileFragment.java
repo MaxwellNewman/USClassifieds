@@ -36,6 +36,7 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+    private TextView fullNameText;
     private TextView usernameText;
     private TextView emailText;
     private Button findFriendsButton;
@@ -83,12 +84,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
+        fullNameText = view.findViewById(R.id.name_text);
         usernameText = view.findViewById(R.id.username_profile);
         emailText = view.findViewById(R.id.email_profile);
         findFriendsButton = view.findViewById(R.id.find_friends_button);
         viewFriendsButton = view.findViewById(R.id.view_friends_button);
         listingsButton = view.findViewById(R.id.listings_button);
         notificationsButton = view.findViewById(R.id.notifcations_button);
+
+        fullNameText.setText(currentUser.fullName);
 
         usernameText.append(currentUser.username);
         emailText.append(currentUser.contactInfo.email);
