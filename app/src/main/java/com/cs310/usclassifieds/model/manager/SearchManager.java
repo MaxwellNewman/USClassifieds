@@ -19,7 +19,7 @@ public class SearchManager {
     class DistanceComparator implements Comparator<Pair<Double, Item> > {
         @Override
         public int compare(Pair<Double,Item> first, Pair<Double,Item> second) {
-            return (int) (METERS_PER_MILE *(second.first - first.first));
+            return (int) (METERS_PER_MILE *(first.first - second.first));
         }
     }
 
@@ -70,6 +70,46 @@ public class SearchManager {
 
     public List<Item> searchItemsByUser(String searchString) {
         return dataManager.searchItemsByUser(searchString);
+    }
+
+    private List<Item> filterByTitleAndTags(final List<Item> items, final String searchString) {
+        final List<Item> results = new ArrayList<>();
+        final List<String> searchTerms = Arrays.asList(searchString.split("\\s+"));
+
+        for(int i=0; i<items.size(); ++i) {
+            boolean itemAdded = false;
+            for(int j=0; j<searchTerms.size() && !itemAdded; ++j) {
+                if(items.get(i)
+                        .title
+                        .toLowerCase()
+                        .contains(searchTerms.get(j).toLowerCase())) {
+                    results.add(items.get(i));
+                    itemAdded = true;
+                } else {
+                    for(int k=0; k<items.get(i).tags.size() && !itemAdded; ++k) {
+                        if(items.get(i)
+                                .tags
+                                .get(k)
+                                .equalsIgnoreCase(searchTerms.get(j))) {
+                            results.add(items.get(i));
+                            itemAdded = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return results;
+    }
+
+    public List<Item> searchItemsByUserAndTitle(String username, String searchString) {
+        final List<Item> items = dataManager.searchItemsByUser(username);
+        return filterByTitleAndTags(items, searchString);
+    }
+
+    public List<Item> searchItemsByTitleOrTags(String searchString) {
+        final List<Item> items = dataManager.getAllItems();
+        return filterByTitleAndTags(items, searchString);
     }
 
     public List<Item> searchItemsByTitle(String searchString) {
