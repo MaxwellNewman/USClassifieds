@@ -1,8 +1,6 @@
 package com.cs310.usclassifieds.ui.viewListing;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -15,13 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cs310.usclassifieds.MainActivity;
 import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.Item;
+import com.cs310.usclassifieds.model.datamodel.User;
+import com.cs310.usclassifieds.model.manager.DataManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -41,6 +40,8 @@ public class ViewListingFragment extends Fragment implements OnMapReadyCallback{
     private GoogleMap googleMap;
     private MapView mMapView;
     private Item item;
+
+    private DataManager dataManager = new DataManager();
 
     public static ViewListingFragment newInstance() {
         return new ViewListingFragment();
@@ -66,14 +67,14 @@ public class ViewListingFragment extends Fragment implements OnMapReadyCallback{
         View view = inflater.inflate(R.layout.view_listing_fragment, container, false);
 
         // Item that is being listed
-        MainActivity activity = (MainActivity) getActivity();
+        final MainActivity activity = (MainActivity) getActivity();
         this.item = activity.getViewedItem();
 
         // Display name of item
         TextView itemName = view.findViewById(R.id.viewed_item_name);
         TextView itemPrice = view.findViewById(R.id.viewed_item_price);
         TextView itemDescription = view.findViewById(R.id.viewed_item_description);
-        TextView itemListingUser = view.findViewById(R.id.viewed_item_listingUser);
+        final TextView itemListingUser = view.findViewById(R.id.viewed_item_listingUser);
         ImageView itemImage = view.findViewById(R.id.viewed_item_image);
 
         itemName.setText(item.title);
@@ -84,6 +85,15 @@ public class ViewListingFragment extends Fragment implements OnMapReadyCallback{
 
         itemDescription.setText(item.description);
         itemListingUser.setText("Username: " + item.username);
+
+        itemListingUser.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                User user = dataManager.getUser(item.userId);
+                activity.setViewedUser(user);
+                Navigation.findNavController(view).navigate(R.id.navigation_contact);
+            }
+        });
 
         final String url = item.imageUrl == null ?
                 MainActivity.DEFAULT_URL :
