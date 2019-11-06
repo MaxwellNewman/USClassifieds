@@ -31,8 +31,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="Email: "
+<<<<<<< Updated upstream
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_image_view"
+=======
+        android:gravity="center"
+        android:textSize="24sp"
+>>>>>>> Stashed changes
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_image_view" />
 
@@ -46,8 +51,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="Username: "
+<<<<<<< Updated upstream
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/email_profile"
+=======
+        android:gravity="center"
+        android:textSize="24sp"
+>>>>>>> Stashed changes
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/profile_image_view" />
