@@ -53,7 +53,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onClick(View view) {
         //TODO (btw you need to do it for all of them, I'm not about to make a million todos)
         String searchText = this.searchText.getText().toString();
-        this.items = searchManager.searchItemsByTitle(searchText);
+        this.items = searchManager.searchItemsByTitleOrTags(searchText);
 
         // Make loading screen
 
@@ -133,7 +133,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         Log.v("searching for:", searchText.getText().toString());
 
-        this.items = searchManager.searchItemsByTitle(searchText.getText().toString());
+        this.items = searchManager.searchItemsByTitleOrTags(searchText.getText().toString());
 
         this.mMapView = (MapView) view.findViewById(R.id.map_of_listings);
         this.mMapView.onCreate(savedInstanceState);

@@ -73,7 +73,7 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
                 boolean cheapestFirst = lowToHighSpinner.getSelectedItem().toString(
                 ).equals("Low to High");
 
-                items = searchManager.searchItemsByTitle(search);
+                items = searchManager.searchItemsByTitleOrTags(search);
                 items = searchManager.sortByPrice(cheapestFirst, items);
                 activity.passItems(items);
 
@@ -83,7 +83,7 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
                 activity.passItems(items);
 
             } else if (searchByDistance) {
-                items = searchManager.searchItemsByTitle(search);
+                items = searchManager.searchItemsByTitleOrTags(search);
                 LatLng loc = locationInfo.getLatLng();
                 List<Pair<Double, Item>> distancesAndItems;
                 distancesAndItems = searchManager.sortByDistance(loc.latitude, loc.longitude, items);

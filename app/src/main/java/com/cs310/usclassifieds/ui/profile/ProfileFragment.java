@@ -102,8 +102,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         this.layoutManager = new LinearLayoutManager((getActivity()));
         this.recyclerView.setLayoutManager(this.layoutManager);
 
-//        MainActivity activity = (MainActivity) getActivity();
-//        List<Item> items = searchManager.searchItemsByTitle(this.searchText.getText().toString());
         List<Item> items = searchManager.searchItemsByUser(currentUser.username);
         activity.passItems(items);
         Log.v("ITEMS FOUND:", "" + items.size());
