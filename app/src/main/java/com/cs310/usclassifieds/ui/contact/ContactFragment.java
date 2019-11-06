@@ -1,6 +1,5 @@
 package com.cs310.usclassifieds.ui.contact;
 
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +22,6 @@ import com.cs310.usclassifieds.R;
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
-import com.cs310.usclassifieds.ui.profile.ProfileFragment;
-import com.cs310.usclassifieds.ui.profile.ProfileViewModel;
 // 7d86339d41028efc4b977c769dae6d6220d22163
 import com.squareup.picasso.Picasso;
 
@@ -138,6 +134,9 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
             //TODO this is where you should send the friend request
+                final MainActivity mainActivity = (MainActivity)getActivity();
+                final User currentUser = mainActivity.getCurrentUser();
+                userManager.sendFriendRequest(currentUser, user);
             }
         });
 

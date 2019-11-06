@@ -94,50 +94,76 @@ public class DataManager {
     }
 
     // Create friend request from user1 to user2, returns false if unsuccessful
-    boolean createFriendRequest(String user1, String user2) {
-        final List<String> userIds = new ArrayList<>();
-        userIds.add(user1);
-        userIds.add(user2);
-
-        final List<User> users = getUsers(userIds);
-
-        if(users.size() != 2) {
-            return false;
-        }
-
-        users.get(0).addFriendRequest(user2);
-        users.get(1).addFriendRequest(user1);
-
-        modifyUser(users.get(0));
-        modifyUser(users.get(1));
+    boolean createFriendRequest(final User user1, final User user2) {
+        database.collection(USERS_PATH)
+                .document(user2.userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    try {
+                        final User toRequest = task.getResult().toObject(User.class);
+                        toRequest.addFriendRequest(user1.userId);
+                        modifyUser(toRequest);
+                    } catch (Exception e) {
+                        Log.e("Error adding friend", "unable to add friend " + user2.userId + ", " + e.getMessage());
+                    }
+                }
+            }
+        });
 
         return true;
     }
     
     // Remove friend request from user1 to user2, returns false if unsuccessful
-    boolean declineFriendRequest(String user1, String user2) {
-        final List<String> userIds = new ArrayList<>();
-        userIds.add(user1);
-        userIds.add(user2);
-
-        final List<User> users = getUsers(userIds);
-
-        if(users.size() != 2) {
-            return false;
-        }
-
-        users.get(0).removeFriendRequest(user2);
-        users.get(1).removeFriendRequest(user1);
-
-        modifyUser(users.get(0));
-        modifyUser(users.get(1));
+    boolean declineFriendRequest(final User user1, final User user2) {
+        database.collection(USERS_PATH)
+                .document(user2.userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    final User toRemove = task.getResult().toObject(User.class);
+                    toRemove.removeFriendRequest(user1.userId);
+                    modifyUser(toRemove);
+                }
+            }
+        });
 
         return true;
     }
 
     // Adds user1 to user2's friend list and vice versa, returns false if unsuccessful
-    boolean addFriend(String user1, String user2) {
-        final List<String> userIds = new ArrayList<>();
+    boolean addFriend(final User user1, final User user2) {
+        database.collection(USERS_PATH)
+                .document(user1.userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        final User toAdd = task.getResult().toObject(User.class);
+                        toAdd.addFriend(user2.userId);
+                        toAdd.removeFriendRequest(user2.userId);
+                        modifyUser(toAdd);
+                    }
+                });
+
+        database.collection(USERS_PATH)
+                .document(user2.userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        final User toAdd = task.getResult().toObject(User.class);
+                        toAdd.addFriend(user1.userId);
+                        toAdd.addFriend(user1.userId);
+                        modifyUser(toAdd);
+                    }
+                });
+
+/*        final List<String> userIds = new ArrayList<>();
         userIds.add(user1);
         userIds.add(user2);
 
@@ -154,7 +180,7 @@ public class DataManager {
         users.get(1).removeFriendRequest(user1);
 
         modifyUser(users.get(0));
-        modifyUser(users.get(1));
+        modifyUser(users.get(1));*/
 
         return true;
     }
