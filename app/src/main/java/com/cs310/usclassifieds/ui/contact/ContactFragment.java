@@ -65,13 +65,12 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         MainActivity activity = (MainActivity) getActivity();
         final User currentUser = activity.getCurrentUser();
 
-        List<User> friends = userManager.getFriendsOf(currentUser.userId);
+        List<User> friends = userManager.getFriendsOf(user.userId);
         if(friends == null) {
             friends = new ArrayList<User>();
         }
 
         activity.passUsers(friends);
-
         Navigation.findNavController(view).navigate(R.id.action_navigation_contact_to_navigation_friend_results);
     }
 
@@ -99,7 +98,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         ImageView profilePicture = view.findViewById(R.id.contact_profile_image_view);
 
 //        findFriendsButton = view.findViewById(R.id.find_friends_button);
-        viewFriendsButton = view.findViewById(R.id.contact_find_friends_button);
+        viewFriendsButton = view.findViewById(R.id.contact_view_friends_button);
         listingsButton = view.findViewById(R.id.contact_listings_button);
         sendFriendRequestButton = view.findViewById(R.id.add_friend_button);
         
@@ -131,6 +130,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                 // Need to create new fragment for this, view_listing currently views a listing from search
                 //Navigation.findNavController(view).navigate(R.id.navigation_view_listing);
                 //TODO load the users listings
+
                 Navigation.findNavController(view).navigate(R.id.action_navigation_contact_to_navigation_results);
             }
         });
