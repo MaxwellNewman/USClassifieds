@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.net.Uri;
 
 import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 
@@ -28,7 +30,8 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+@RunWith(AndroidJUnit4.class)
+public class ExampleUnitTest extends InstrumentationTestCase {
     private final String testUserId = "testId";
     private final String testFullName = "test fullname";
     private final String testUsername = "testUsername";
