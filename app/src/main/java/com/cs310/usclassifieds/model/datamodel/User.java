@@ -46,23 +46,36 @@ public class User implements Serializable {
         this.friends = new ArrayList<>();
     }
 
+    // default constructors necessary to be added to firestore
     public User() {
         this.username = null;
     }
 
     public void addFriend(String friendId) {
+        if(friendId == null) {
+            return;
+        }
+
         if(friends == null) {
             friends = new ArrayList<>();
         }
 
-        System.out.println("Adding friend: " + friendId);
+        if(friendRequests == null) {
+            friendRequests = new ArrayList<>();
+        }
 
         if(!friends.contains(friendId)) {
             friends.add(friendId);
         }
+
+        friendRequests.remove(friendId);
     }
 
     public void addFriendRequest(String friendId) {
+        if(friendId == null) {
+            return;
+        }
+
         if(friendRequests == null) {
             friendRequests = new ArrayList<>();
         }

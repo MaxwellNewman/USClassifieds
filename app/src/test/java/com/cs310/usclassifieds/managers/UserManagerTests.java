@@ -1,8 +1,7 @@
-package com.cs310.usclassifieds;
+package com.cs310.usclassifieds.managers;
 
 import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
-import com.cs310.usclassifieds.model.manager.ItemManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
 import com.google.common.collect.ImmutableList;
 
@@ -13,10 +12,6 @@ import java.util.List;
 
 import static com.cs310.usclassifieds.TestData.ALL_USERS;
 import static com.cs310.usclassifieds.TestData.ALL_USER_IDS;
-import static com.cs310.usclassifieds.TestData.USER1_ITEMS;
-import static com.cs310.usclassifieds.TestData.USERNAME_1;
-import static com.cs310.usclassifieds.TestData.USERNAME_2;
-import static com.cs310.usclassifieds.TestData.USERNAME_3;
 import static com.cs310.usclassifieds.TestData.USER_1;
 import static com.cs310.usclassifieds.TestData.USER_2;
 import static com.cs310.usclassifieds.TestData.USER_3;

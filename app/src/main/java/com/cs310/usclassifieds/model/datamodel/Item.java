@@ -17,6 +17,7 @@ public class Item {
     public String username;
     public Location location;
 
+    // default constructors necessary to be written into firestore
     public Item() {
         location = new Location();
         tags = new ArrayList<>();

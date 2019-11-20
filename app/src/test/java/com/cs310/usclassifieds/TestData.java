@@ -17,6 +17,7 @@ public class TestData {
     public static final String USER_ID_1 = "user1";
     public static final String USER_ID_2 = "user2";
     public static final String USER_ID_3 = "user3";
+    public static final String USER_ID_4 = "user4";
     public static final String USERNAME_1 = "username1";
     public static final String USERNAME_2 = "username2";
     public static final String USERNAME_3 = "username3";

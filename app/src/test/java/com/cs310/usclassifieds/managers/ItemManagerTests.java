@@ -1,4 +1,4 @@
-package com.cs310.usclassifieds;
+package com.cs310.usclassifieds.managers;
 
 import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.manager.DataManager;
@@ -11,7 +11,6 @@ import static com.cs310.usclassifieds.TestData.ITEM_4;
 import static com.cs310.usclassifieds.TestData.USER_1;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 import org.junit.Test;

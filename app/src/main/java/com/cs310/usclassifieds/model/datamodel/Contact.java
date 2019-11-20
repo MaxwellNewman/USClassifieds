@@ -22,6 +22,7 @@ public class Contact implements Serializable {
         this.snapchat = null;
     }
 
+    // default constructor necessary to be written into firestore
     public Contact() {
         this.email = null;
         this.phone = null;
