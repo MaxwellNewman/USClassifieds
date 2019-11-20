@@ -11,9 +11,15 @@ import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.ItemManager;
 import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
+import com.google.android.gms.tasks.Task;
 import com.google.common.collect.ImmutableList;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,13 +59,6 @@ public class SearchManagerTests {
 
     private DataManager dataManager = mock(DataManager.class);
     private SearchManager searchManager = new SearchManager(dataManager);
-    private ItemManager itemManager = new ItemManager(dataManager);
-    private UserManager userManager = new UserManager(dataManager);
-
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
 
     private FirebaseApp initializeApp(Context context) {
         System.out.println("in func");

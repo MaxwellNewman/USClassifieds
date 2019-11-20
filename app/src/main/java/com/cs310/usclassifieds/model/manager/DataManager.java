@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import com.cs310.usclassifieds.SignInActivity;
 import com.cs310.usclassifieds.model.datamodel.Item;
@@ -52,6 +53,11 @@ public class DataManager {
     public DataManager() {
         database = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+    }
+
+    public DataManager(FirebaseFirestore database, FirebaseStorage storage) {
+        this.database = database;
+        this.storage = storage;
     }
 
     private boolean modifyUser(final User user) {
@@ -301,9 +307,7 @@ public class DataManager {
         final List<User> users = new ArrayList<>();
         final Task<QuerySnapshot> query = database.collection(USERS_PATH).get();
 
-        while(!query.isComplete()) {
-            // waiting for query
-        }
+        while(!query.isComplete()); // waiting for query to complete
 
         final List<DocumentSnapshot> documents;
         try {
@@ -370,6 +374,10 @@ public class DataManager {
     }
 
     private String modifyListing(final Item item) {
+        if(item == null) {
+            return null;
+        }
+
         for(int i=0; i<item.tags.size(); ++i) {
             item.tags.set(i, item.tags.get(i).toLowerCase());
         }
@@ -420,7 +428,12 @@ public class DataManager {
         modifyListing(item);
     }
 
-    boolean resolveSale(Item item, User user) {
+    @VisibleForTesting
+    public boolean resolveSale(Item item, User user) {
+        if(item == null || user == null) {
+            return false;
+        }
+
         database.collection(ITEMS_PATH).document(item.itemId).delete();
         ++user.sales;
         modifyUser(user);
@@ -428,7 +441,12 @@ public class DataManager {
         return true;
     }
 
-    String updateItem(String itemId, Item item) {
+    @VisibleForTesting
+    public String updateItem(String itemId, Item item) {
+        if(itemId == null || itemId.isEmpty() || item == null) {
+            return null;
+        }
+
         item.itemId = itemId;
         return modifyListing(item);
     }

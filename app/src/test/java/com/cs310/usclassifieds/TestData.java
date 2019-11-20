@@ -6,7 +6,10 @@ import android.provider.ContactsContract;
 import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.Location;
 import com.cs310.usclassifieds.model.datamodel.User;
+import com.google.android.gms.tasks.Task;
 import com.google.common.collect.ImmutableList;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
