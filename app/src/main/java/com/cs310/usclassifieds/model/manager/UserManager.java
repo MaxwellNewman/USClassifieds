@@ -36,6 +36,10 @@ public class UserManager {
     }
 
     public List<User> getFriendRequestsOf(User user) {
+        if(user == null) {
+            return null;
+        }
+
         return dataManager.getUsers(user.friendRequests);
     }
 

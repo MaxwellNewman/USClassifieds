@@ -61,8 +61,9 @@ public class DataManager {
     }
 
     private boolean modifyUser(final User user) {
-        System.out.println("database app: " + database.getApp());
-
+        if(user == null) {
+            return false;
+        }
 
         final DocumentReference document = database.collection(USERS_PATH).document(user.userId);
 
@@ -102,7 +103,12 @@ public class DataManager {
     }
 
     // Create friend request from user1 to user2, returns false if unsuccessful
-    boolean createFriendRequest(final User user1, final User user2) {
+    @VisibleForTesting
+    public boolean createFriendRequest(final User user1, final User user2) {
+        if(user1 == null || user1.userId == null || user2 == null || user2.userId == null) {
+            return false;
+        }
+
         database.collection(USERS_PATH)
                 .document(user2.userId)
                 .get()
@@ -125,7 +131,12 @@ public class DataManager {
     }
     
     // Remove friend request from user1 to user2, returns false if unsuccessful
-    boolean declineFriendRequest(final User user1, final User user2) {
+    @VisibleForTesting
+    public boolean declineFriendRequest(final User user1, final User user2) {
+        if(user1 == null || user1.userId == null || user2 == null || user2.userId == null) {
+            return false;
+        }
+
         database.collection(USERS_PATH)
                 .document(user1.userId)
                 .get()
@@ -144,7 +155,12 @@ public class DataManager {
     }
 
     // Adds user1 to user2's friend list and vice versa, returns false if unsuccessful
-    boolean addFriend(final User user1, final User user2) {
+    @VisibleForTesting
+    public boolean addFriend(final User user1, final User user2) {
+        if(user1 == null || user1.userId == null || user2 == null || user2.userId == null) {
+            return false;
+        }
+
         database.collection(USERS_PATH)
                 .document(user1.userId)
                 .get()
@@ -184,6 +200,10 @@ public class DataManager {
     }
 
     public User getUser(String userId) {
+        if(userId == null || userId.isEmpty()) {
+            return null;
+        }
+
         CollectionReference userRef = database.collection(USERS_PATH);
         Task<QuerySnapshot> query = userRef.whereEqualTo(USER_ID, userId).get();
 
@@ -208,6 +228,10 @@ public class DataManager {
     // Gets a list of users by making queries simultaneously instead of waiting for each
     // query to completely finish before starting the next one
     public List<User> getUsers(List<String> userIds) {
+        if(userIds == null) {
+            return null;
+        }
+
         final List<Task<QuerySnapshot> > queries = new ArrayList<>();
         final List<User> users = new ArrayList<>();
 
@@ -454,6 +478,10 @@ public class DataManager {
     // Returns a list of Users that are friends of the userId passed in
     // If there is an error retrieving an individual user, that user will be returned as null
     public List<User> getFriendsOf(String userId) {
+        if(userId == null) {
+            return null;
+        }
+
         try {
             final User user = getUser(userId);
             return getUsers(user.friends);

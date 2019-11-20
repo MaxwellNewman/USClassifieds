@@ -193,6 +193,12 @@ public class TestData {
             USER_3
     );
 
+    public static final List<String> ALL_USER_IDS = ImmutableList.of(
+            USER_ID_1,
+            USER_ID_2,
+            USER_ID_3
+    );
+
     public static final List<Item> ALL_ITEMS = ImmutableList.of(
             ITEM_1,
             ITEM_2,

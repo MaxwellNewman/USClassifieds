@@ -55,6 +55,8 @@ public class User implements Serializable {
             friends = new ArrayList<>();
         }
 
+        System.out.println("Adding friend: " + friendId);
+
         if(!friends.contains(friendId)) {
             friends.add(friendId);
         }
