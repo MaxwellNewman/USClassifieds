@@ -21,4 +21,26 @@ public class Item {
         location = new Location();
         tags = new ArrayList<>();
     }
+
+    public Item(String title,
+                String description,
+                double price,
+                Uri imageUri,
+                String imageUrl,
+                List<String> tags,
+                String userId,
+                String itemId,
+                String username,
+                Location location) {
+
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.imageUri = imageUri;
+        this.tags = tags;
+        this.userId = userId;
+        this.itemId = itemId;
+        this.username = username;
+        this.location = location;
+    }
 }

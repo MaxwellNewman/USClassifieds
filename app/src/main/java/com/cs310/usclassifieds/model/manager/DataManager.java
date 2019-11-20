@@ -55,6 +55,9 @@ public class DataManager {
     }
 
     private boolean modifyUser(final User user) {
+        System.out.println("database app: " + database.getApp());
+
+
         final DocumentReference document = database.collection(USERS_PATH).document(user.userId);
 
         if(user.imageUri != null) {

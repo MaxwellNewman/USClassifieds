@@ -3,8 +3,6 @@ package com.cs310.usclassifieds.model.manager;
 import android.util.Pair;
 
 import com.cs310.usclassifieds.model.datamodel.*;
-import com.google.firebase.firestore.CollectionReference;
-
 import java.util.*;
 
 public class SearchManager {
@@ -39,6 +37,10 @@ public class SearchManager {
     }
 
     public List<Pair<Double, Item> > sortByDistance(double lat, double lon, List<Item> items) {
+        if(items == null) {
+            return new ArrayList<>();
+        }
+
         final List<Item> result = new ArrayList<>();
         List<Pair<Double, Item> > pairs = new ArrayList<>();
         DistanceComparator distanceComp = new DistanceComparator();
@@ -53,14 +55,20 @@ public class SearchManager {
     }
 
     public List<Item> sortByPrice(boolean cheapestFirst, List<Item> items) {
-        final PriceComparator priceComp = new PriceComparator();
-
-        Collections.sort(items, priceComp);
-        if(!cheapestFirst) {
-            Collections.reverse(items);
+        if(items == null) {
+            return new ArrayList<>();
         }
 
-        return items;
+        final PriceComparator priceComp = new PriceComparator();
+        List<Item> itemsToSort = new ArrayList<>();
+        itemsToSort.addAll(items);
+
+        Collections.sort(itemsToSort, priceComp);
+        if(!cheapestFirst) {
+            Collections.reverse(itemsToSort);
+        }
+
+        return itemsToSort;
     }
 
     public List<Item> searchByTags(String searchString) {
@@ -73,6 +81,10 @@ public class SearchManager {
     }
 
     private List<Item> filterByTitleAndTags(final List<Item> items, final String searchString) {
+        if(searchString == null) {
+            return items;
+        }
+
         final List<Item> results = new ArrayList<>();
         final List<String> searchTerms = Arrays.asList(searchString.split("\\s+"));
 
