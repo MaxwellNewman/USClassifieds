@@ -455,6 +455,9 @@ public class DataManager {
                     }
                 }
             });
+        } else {
+            item.imageUrl = null;
+            document.set(item);
         }
 
         return document.getId();

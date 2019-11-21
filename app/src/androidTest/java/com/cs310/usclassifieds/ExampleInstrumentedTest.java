@@ -29,6 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,8 +107,6 @@ public class ExampleInstrumentedTest {
         userManager.addUser(USER_1);
         final List<User> users = searchManager.searchUsers(USER_1.username);
         assertEquals(1, users.size());
-
-        // database.collection(DataManager.USERS_PATH).document(USER_ID_1).delete();
     }
 
     @Test
@@ -117,11 +116,13 @@ public class ExampleInstrumentedTest {
         }
 
         final String searchString = "bike tag1 red";
-
-        final List<Item> items = searchManager.searchItemsByUserAndTitle(USER_1.userId, searchString);
+        final List<Item> items = searchManager.searchItemsByUserAndTitle(USER_1.username, searchString);
 
         assertEquals(2, items.size());
-        assertTrue(items.contains(ITEM_1));
-        assertTrue(items.contains(ITEM_4));
+        for(final Item item : items) {
+            assertTrue(item.equals(ITEM_1) || item.equals(ITEM_4));
+        }
+
+        System.out.println("Search Items By Title and Tags passed");
     }
 }

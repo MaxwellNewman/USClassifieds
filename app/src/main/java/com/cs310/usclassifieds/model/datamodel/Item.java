@@ -44,4 +44,20 @@ public class Item {
         this.username = username;
         this.location = location;
     }
+
+    public boolean equals(Item other) {
+        boolean equivalent = true;
+        equivalent &= (userId.equals(other.userId));
+        equivalent &= (username.equals(other.username));
+        equivalent &= (price == other.price);
+        equivalent &= (description.equalsIgnoreCase(other.description));
+        equivalent &= (tags.equals(other.tags));
+        equivalent &= (location.address.equalsIgnoreCase(other.location.address));
+        equivalent &= (location.latitude == other.location.latitude);
+        equivalent &= (location.longitude == other.location.longitude);
+        equivalent &= (itemId.equalsIgnoreCase(other.itemId));
+        equivalent &= (title.equalsIgnoreCase(other.title));
+
+        return  equivalent;
+    }
 }
