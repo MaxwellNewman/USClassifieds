@@ -21,6 +21,18 @@ public class User implements Serializable {
 
     public List<String> friends; // userIDs
 
+    public boolean equals(User other) {
+        boolean equivalent = true;
+
+        equivalent &= (userId.equalsIgnoreCase(other.userId));
+        equivalent &= (fullName.equalsIgnoreCase(other.fullName));
+        equivalent &= (username.equalsIgnoreCase(other.username));
+        equivalent &= (profileDescription.equalsIgnoreCase(other.profileDescription));
+        equivalent &= (contactInfo.email.equalsIgnoreCase(other.contactInfo.email));
+
+        return equivalent;
+    }
+
     public User(String userId, String fullName, String username, String email, String phoneNumber, String profileDescription, Uri uri) {
         this.username = username;
         this.userId = userId;

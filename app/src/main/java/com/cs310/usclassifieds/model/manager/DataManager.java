@@ -309,6 +309,10 @@ public class DataManager {
     }
 
     public List<Item> searchItemsByUser(String username) {
+        if(username == null || username.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         final List<Item> items = new ArrayList<>();
         final Task<QuerySnapshot> query = database.collection(ITEMS_PATH)
                 .whereEqualTo(USERNAME, username.toLowerCase())
@@ -455,6 +459,9 @@ public class DataManager {
                     }
                 }
             });
+        } else {
+            item.imageUrl = null;
+            document.set(item);
         }
 
         return document.getId();

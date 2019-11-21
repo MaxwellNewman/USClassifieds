@@ -6,10 +6,6 @@ import android.provider.ContactsContract;
 import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.Location;
 import com.cs310.usclassifieds.model.datamodel.User;
-import com.google.android.gms.tasks.Task;
-import com.google.common.collect.ImmutableList;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,23 +51,23 @@ public class TestData {
     public static final String ITEM_DESC_3 = "item description 3";
     public static final String ITEM_DESC_4 = "item description 4";
 
-    public static final List<String> TAGS_1 = ImmutableList.of(
-            TAG_1
-    );
-    public static final List<String> TAGS_2 = ImmutableList.of(
-            TAG_1,
-            TAG_3,
-            TAG_4
-    );
-    public static final List<String> TAGS_3 = ImmutableList.of(
-            TAG_1,
-            TAG_2,
-            TAG_3
-    );
-    public static final List<String> TAGS_4 = ImmutableList.of(
-            TAG_1,
-            TAG_4
-    );
+    public static final List<String> TAGS_1 = new ArrayList<String>() {{
+        add(TAG_1);
+    }};
+    public static final List<String> TAGS_2 = new ArrayList<String>() {{
+        add(TAG_1);
+        add(TAG_2);
+        add(TAG_4);
+    }};
+    public static final List<String> TAGS_3 = new ArrayList<String>() {{
+        add(TAG_1);
+        add(TAG_2);
+        add(TAG_3);
+    }};
+    public static final List<String> TAGS_4 = new ArrayList<String>() {{
+        add(TAG_1);
+        add(TAG_2);
+    }};
 
     public static final double PRICE_1 = 100.45;
     public static final double PRICE_2 = 13.49;
@@ -195,11 +191,11 @@ public class TestData {
         add(USER_3);
     }};
 
-    public static final List<String> ALL_USER_IDS = ImmutableList.of(
-            USER_ID_1,
-            USER_ID_2,
-            USER_ID_3
-    );
+    public static final List<String> ALL_USER_IDS = new ArrayList<String>() {{
+        add(USER_ID_1);
+        add(USER_ID_2);
+        add(USER_ID_3);
+    }};
 
     public static final List<Item> ALL_ITEMS = new ArrayList<Item>(){{
             add(ITEM_1);
