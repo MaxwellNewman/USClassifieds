@@ -42,10 +42,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class DataManager {
-    public static final String USERS_PATH = "users";
+    public static String USERS_PATH = "users";
     public static final String USER_ID = "userId";
     public static final String USERNAME = "username";
-    public static final String ITEMS_PATH = "items";
+    public static String ITEMS_PATH = "items";
     public static final String TAGS = "tags";
     private FirebaseFirestore database;
     private FirebaseStorage storage;
@@ -58,6 +58,16 @@ public class DataManager {
     public DataManager(FirebaseFirestore database, FirebaseStorage storage) {
         this.database = database;
         this.storage = storage;
+    }
+
+    public static void useTestingPaths() {
+        USERS_PATH = "testUsers";
+        ITEMS_PATH = "testItems";
+    }
+
+    public static void useProductionPaths() {
+        USERS_PATH = "users";
+        ITEMS_PATH = "items";
     }
 
     private boolean modifyUser(final User user) {
@@ -416,33 +426,36 @@ public class DataManager {
             document = database.collection(ITEMS_PATH).document(item.itemId);
         }
 
-        final StorageReference storageRef = storage.getReference();
-        final Uri imageUri = item.imageUri;
-        final StorageReference imageRef = storageRef.child(imageUri.getLastPathSegment());
-        final UploadTask uploadTask = imageRef.putFile(imageUri);
+        // added this if statement
+        if(item.imageUri != null){
+            final StorageReference storageRef = storage.getReference();
+            final Uri imageUri = item.imageUri;
+            final StorageReference imageRef = storageRef.child(imageUri.getLastPathSegment());
+            final UploadTask uploadTask = imageRef.putFile(imageUri);
 
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
 
-                // Continue with the task to get the download URL
-                return imageRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    item.imageUrl = task.getResult().toString();
-                    item.imageUri = null;
-                    document.set(item);
-                } else {
-                    Log.e("error adding item: " + item.itemId, "exception");
+                    // Continue with the task to get the download URL
+                    return imageRef.getDownloadUrl();
                 }
-            }
-        });
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        item.imageUrl = task.getResult().toString();
+                        item.imageUri = null;
+                        document.set(item);
+                    } else {
+                        Log.e("error adding item: " + item.itemId, "exception");
+                    }
+                }
+            });
+        }
 
         return document.getId();
     }
