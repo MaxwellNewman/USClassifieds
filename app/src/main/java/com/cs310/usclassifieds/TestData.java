@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestData {
@@ -188,11 +189,11 @@ public class TestData {
             TEST_URI
     );
 
-    public static final List<User> ALL_USERS = ImmutableList.of(
-            USER_1,
-            USER_2,
-            USER_3
-    );
+    public static final List<User> ALL_USERS = new ArrayList<User>() {{
+        add(USER_1);
+        add(USER_2);
+        add(USER_3);
+    }};
 
     public static final List<String> ALL_USER_IDS = ImmutableList.of(
             USER_ID_1,
@@ -200,20 +201,20 @@ public class TestData {
             USER_ID_3
     );
 
-    public static final List<Item> ALL_ITEMS = ImmutableList.of(
-            ITEM_1,
-            ITEM_2,
-            ITEM_3,
-            ITEM_4
-    );
+    public static final List<Item> ALL_ITEMS = new ArrayList<Item>(){{
+            add(ITEM_1);
+            add(ITEM_2);
+            add(ITEM_3);
+            add(ITEM_4);
+    }};
 
-    public static final List<Item> USER1_ITEMS = ImmutableList.of(
-            ITEM_1,
-            ITEM_4
-    );
+    public static final List<Item> USER1_ITEMS = new ArrayList<Item>() {{
+        add(ITEM_1);
+        add(ITEM_4);
+    }};
 
-    public static final List<Item> ITEMS_1_2 = ImmutableList.of(
-            ITEM_1,
-            ITEM_2
-    );
+    public static final List<Item> ITEMS_1_2 = new ArrayList<Item>() {{
+        add(ITEM_1);
+        add(ITEM_2);
+    }};
 }
