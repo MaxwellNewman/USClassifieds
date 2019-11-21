@@ -81,7 +81,7 @@ public class SearchManager {
     }
 
     private List<Item> filterByTitleAndTags(final List<Item> items, final String searchString) {
-        if(searchString == null) {
+        if(searchString == null || searchString.isEmpty()) {
             return items;
         }
 
@@ -115,6 +115,10 @@ public class SearchManager {
     }
 
     public List<Item> searchItemsByUserAndTitle(String username, String searchString) {
+        if(username == null) {
+            return new ArrayList<>();
+        }
+
         final List<Item> items = dataManager.searchItemsByUser(username);
         return filterByTitleAndTags(items, searchString);
     }
