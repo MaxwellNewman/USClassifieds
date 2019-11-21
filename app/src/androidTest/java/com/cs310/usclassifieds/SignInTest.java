@@ -42,10 +42,10 @@ public class SignInTest {
         onView(withId(R.id.password)).perform(replaceText(PASSWORD));
         onView(withId(R.id.login)).perform(click());
 
-        //current implementation just sleeps for 20s while we do firebase calls
+        //current implementation just sleeps for 15s while we do firebase calls
         //we could use idle resources but idk how (or if its worth figuring out how)
-        //20 seconds is the an arbitrary time, I figure the google auth should be done by now and the next page will have loaded
-        Thread.sleep(20000);
+        //15 seconds is the an arbitrary time, I figure the google auth should be done by now and the next page will have loaded
+        Thread.sleep(15000);
 
         //change page to profile
         onView(withId(R.id.navigation_profile)).perform(click());
