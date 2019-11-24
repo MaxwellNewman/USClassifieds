@@ -5,7 +5,9 @@ import android.provider.ContactsContract;
 
 import com.cs310.usclassifieds.model.datamodel.Item;
 import com.cs310.usclassifieds.model.datamodel.Location;
+import com.cs310.usclassifieds.model.datamodel.SearchQuery;
 import com.cs310.usclassifieds.model.datamodel.User;
+import com.cs310.usclassifieds.ui.map.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +104,11 @@ public class TestData {
     public static final double LONGITUDE_USC_HOTEL = -118.281367;
     public static final String ADDRESS_USC_HOTEL = "3540 S Figueroa St, Los Angeles, CA 90007";
     public static final Location LOCATION_USC_HOTEL = new Location(ADDRESS_USC_HOTEL, LATITUDE_USC_HOTEL, LONGITUDE_USC_HOTEL);
+
+    public static final SearchQuery SEARCH_QUERY_1 = new SearchQuery();
+    public static final SearchQuery SEARCH_QUERY_2 = new SearchQuery();
+
+    public static final MapFragment MAP_FRAGMENT = null;
 
     public static final Item ITEM_1 = new Item(
             TITLE_1,
@@ -212,5 +219,10 @@ public class TestData {
     public static final List<Item> ITEMS_1_2 = new ArrayList<Item>() {{
         add(ITEM_1);
         add(ITEM_2);
+    }};
+
+    public static final List<SearchQuery> ALL_SEARCH_QUERIES = new ArrayList<SearchQuery>() {{
+        add(SEARCH_QUERY_1);
+        add(SEARCH_QUERY_2);
     }};
 }
