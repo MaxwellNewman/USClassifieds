@@ -12,3 +12,11 @@ used Q (Android 10.0) with Google Play APIs enabled.  For best results, we recom
 
 ### Run instructions
 To run the app, press the green play button in the top of Android Studio.  
+
+### Testing instructions
+
+To run the black box tests, on the left hand side of android studio, select the
+`1: Project` tab.  Go to app>src>androidTest and right click on `java` and select "Run tests in Java".
+
+Similarly, to run the white box tests go to app>src>test and right click on `java` and select "Run tests in Java".
+

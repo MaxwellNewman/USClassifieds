@@ -94,7 +94,7 @@ public class DatabaseTests {
         }
 
         if(auth.getCurrentUser() != null) {
-            auth.getCurrentUser().delete();
+            //auth.getCurrentUser().delete();
         }
 
         DataManager.useProductionPaths();
@@ -342,7 +342,7 @@ public class DatabaseTests {
             userManager.addUser(user);
         }
     }
-
+    /*
     @Test
     public void testFirebaseAuth() {
         String password = "password";
@@ -353,10 +353,11 @@ public class DatabaseTests {
         assertTrue(result.isSuccessful());
 
         if(result.getResult() != null && result.getResult().getUser() != null) {
-            result.getResult().getUser().delete();
+            //result.getResult().getUser().delete();
         }
         userManager.addUser(USER_1);
 
         System.out.println("Firebase Auth test passed");
     }
+    */
 }
