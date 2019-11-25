@@ -121,6 +121,10 @@ dependencies {
 
     //I'm just trying to fix a build error on espresso tests
 //    androidTestImplementation 'org.checkerframework:checker-compat-qual:2.5.3'
+
+    //UI Automator for the Google Map
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
