@@ -105,8 +105,11 @@ public class UserTests {
     @Test
     public void testRemoveFriendRequestNullPointer() {
         assertTrue(USER_1.friendRequests.isEmpty());
-        USER_1.removeFriendRequest(null);
 
+        USER_1.addFriendRequest(USER_2.userId);
+        USER_1.removeFriendRequest(null);
+        assertEquals(1, USER_1.friendRequests.size());
+        USER_1.removeFriendRequest(USER_2.userId);
         assertTrue(USER_1.friendRequests.isEmpty());
 
         System.out.println("Remove Friend Request (null pointer) passed");
@@ -114,6 +117,9 @@ public class UserTests {
 
     @Test
     public void testIsFriend() {
+        assertFalse(USER_1.isFriend(USER_2.userId));
+        assertFalse(USER_1.isFriend(USER_3.userId));
+        USER_1.addFriendRequest(USER_2.userId);
         assertFalse(USER_1.isFriend(USER_2.userId));
         assertFalse(USER_1.isFriend(USER_3.userId));
         USER_1.addFriend(USER_2.userId);
