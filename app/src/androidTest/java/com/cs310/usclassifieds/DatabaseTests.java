@@ -216,7 +216,7 @@ public class DatabaseTests {
         assertEquals(ALL_ITEMS.size(), nullResult.size());
 
         final List<Item> emptyResult = searchManager.searchItemsByTitleOrTags("");
-        assertEquals(ALL_ITEMS.size(), nullResult.size());
+        assertEquals(ALL_ITEMS.size(), emptyResult.size());
 
         System.out.println("Search Items By Title or Tag passed");
     }

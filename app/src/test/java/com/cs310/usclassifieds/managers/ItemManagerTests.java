@@ -66,9 +66,7 @@ public class ItemManagerTests {
     @Test
     public void testMarkSoldNullPointer() {
         itemManager.markSold(null, null);
-
         verify(dataManager, times(1)).resolveSale(null, null);
-
         System.out.println("Mark as sold (null pointers) passed");
     }
 

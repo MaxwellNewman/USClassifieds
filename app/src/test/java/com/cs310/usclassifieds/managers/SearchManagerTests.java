@@ -382,7 +382,7 @@ public class SearchManagerTests {
     @Test
     public void testSortByDistanceNullPointer() {
         final List<Pair<Double, Item> > sortedItems = searchManager.sortByDistance(LATITUDE_USC_HOTEL, LONGITUDE_USC_HOTEL, null);
-        assertEquals(0, sortedItems.size());
+        assertTrue(sortedItems.isEmpty());
 
         System.out.println("Sort Items By Distance (Null Pointer) passed");
     }
@@ -423,114 +423,4 @@ public class SearchManagerTests {
 
         System.out.println("Sort Items By Price (most expensive first) passed");
     }
-/*
-    @Test
-    public void createUserTest() {
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        System.out.println("first");
-
-        FirebaseApp r = FirebaseApp.initializeApp(getContext());
-
-        System.out.println(r);
-
-        // initializeApp(getContext());
-        FirebaseApp.initializeApp(
-                context,
-                new FirebaseOptions.Builder()
-                        .setApplicationId("1:268970013919:android:a77bd05f271e76e08be56a")
-                        .setApiKey("AIzaSyA2BvfVabweO3MS2fGEyjTBmMaEF58OjnY")
-                        .setProjectId("usclassifieds-4ae04")
-                        .setStorageBucket("usclassifieds-4ae04.appspot.com")
-                        .setDatabaseUrl("https://usclassifieds-4ae04.firebaseio.com")
-                        .build()
-        );
-
-        FirebaseApp p = FirebaseApp.getInstance();
-
-        System.out.println(p.toString());
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-
-        auth.signInAnonymously();
-
-        auth.signInWithEmailAndPassword("mt1@usclassifieds.com", "password");
-        System.out.println("after sign in ");
-
-        auth.createUserWithEmailAndPassword(testUsername, testPassword);
-
-        System.out.println(auth.getCurrentUser());
-
-        System.out.println("second");
-        // FirebaseApp app = getAppInstance(getContext());
-        // FirebaseApp app = getAppInstance(getContext());
-        System.out.println("third");
-
-        final Map<String, String> map = new HashMap<>();
-        map.put("first", "second");
-
-        FirebaseFirestore ff = FirebaseFirestore.getInstance();
-
-        System.out.println(ff.getFirestoreSettings());
-
-        ff.setFirestoreSettings(new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build());
-
-        ff.collection(DataManager.USERS_PATH)
-                .add(map)
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("FAILURE");
-                    }
-                });
-
-        System.out.println("in between");
-
-        System.out.println(ff.getApp());
-        System.out.println(ff.collection(DataManager.USERS_PATH).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                System.out.println("READING DONE");
-            }
-        }));
-*//*
-        FirebaseFirestore ff = FirebaseFirestore.getInstance("https://usclassifieds-4ae04.firebaseio.com");
-*//*
-
-        InstrumentationRegistry.getInstrumentation();
-
-        System.out.println("between after");
-
-        // FirebaseApp app = getAppInstance(InstrumentationRegistry.getContext());
-
-        // Configure Firestore and disable persistence
-        FirebaseFirestore store = FirebaseFirestore.getInstance(app);
-
-        store.setFirestoreSettings(new FirebaseFirestoreSettings.Builder()
-                        .setPersistenceEnabled(false)
-                        .build());
-
-        final UserManager userManager = new UserManager(new DataManager());
-        final User user = populateUser();
-        System.out.println("fourth");
-        userManager.addUser(user);
-        System.out.println("fifth");
-
-        final SearchManager searchManager = new SearchManager(new DataManager());
-        System.out.println("sixth");
-        final List<User> ALL_USERS = searchManager.searchUsers(testUsername);
-        System.out.println("seventh");
-
-        assertTrue(ALL_USERS.size() >= 1);
-        assertEquals(testUsername, ALL_USERS.get(0).username);
-        assertEquals(testUserId, ALL_USERS.get(0).userId);
-
-        System.out.println("eighth");
-        // clean test user from database
-        final FirebaseFirestore database = FirebaseFirestore.getInstance();
-        System.out.println("ninth");
-        database.collection(DataManager.USERS_PATH).document(testUserId).delete();
-        System.out.println("tenth");
-    }*/
 }
