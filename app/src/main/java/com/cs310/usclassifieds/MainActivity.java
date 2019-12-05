@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     private User viewedUser = new User();
     private User currentUser = null;
     private DocumentReference documentReference;
+    private String currentUserIdFirebase = null;
 
     public User getCurrentUser() {
         if (currentUser == null) {
@@ -73,7 +74,10 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
     }
 
     public String getCurrentUserId(){
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if  (currentUserIdFirebase == null ) {
+            currentUserIdFirebase = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        return currentUserIdFirebase;
     }
 
     @Override
@@ -163,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements DataPassListener 
             currentUser.imageUri = null;
         }
 
+        currentUserIdFirebase = FirebaseAuth.getInstance().getCurrentUser().getUid();
         populateCurrentUser();
 
         setContentView(R.layout.activity_main);

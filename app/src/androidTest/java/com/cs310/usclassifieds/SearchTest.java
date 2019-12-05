@@ -9,6 +9,10 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
 
 import com.cs310.usclassifieds.ui.search.SearchFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +33,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static com.google.common.base.Verify.verify;
+import static junit.framework.TestCase.assertTrue;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -41,6 +47,11 @@ public class SearchTest {
     private static final String PASSWORD = "password";
     private static final String ACCOUNT_NAME = "Espresso Test Account";
     private static final String EMAIL = "espressotest@usc.edu";
+
+    private static final String MARKER_DESCRIPTION1 = "Max's used water bottle";
+    private static final String MARKER_DESCRIPTION2 = "Red Schwinn Bike";
+
+    private static final String ITEM_DESCRIPTION = "it is completely empty, no water included";
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -106,5 +117,42 @@ public class SearchTest {
         onView(withId(R.id.viewed_item_description)).check(matches(isDisplayed()));
         onView(withId(R.id.viewed_item_listingUser)).check(matches(isDisplayed()));
         onView(withId(R.id.viewed_item_price)).check(matches(isDisplayed()));
+    }
+
+    // tests that map markers can be selected
+    @Test
+    public void testMarkerClick() throws UiObjectNotFoundException {
+        onView(withId(R.id.map_button)).perform(click());
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiObject marker1 = device.findObject(new UiSelector().descriptionContains(MARKER_DESCRIPTION1));
+        UiObject marker2 = device.findObject(new UiSelector().descriptionContains(MARKER_DESCRIPTION2));
+
+        // Ensure that can click the markers
+        marker1.click();
+        marker2.click();
+
+        marker1.click();
+        marker2.click();
+
+        // Should not redirect
+        onView(withId(R.id.map_of_listings)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testMarkerRedirect() throws UiObjectNotFoundException, InterruptedException {
+        onView(withId(R.id.map_button)).perform(click());
+
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiObject marker = device.findObject(new UiSelector().descriptionContains(MARKER_DESCRIPTION1));
+        marker.click();
+        Thread.sleep(100);
+        marker.click();
+        Thread.sleep(2000);
+
+        // Check if new window opens
+        device = UiDevice.getInstance(getInstrumentation());
+        UiObject description = device.findObject(new UiSelector().descriptionContains(ITEM_DESCRIPTION));
+        assertTrue(description.exists());
+
     }
 }
