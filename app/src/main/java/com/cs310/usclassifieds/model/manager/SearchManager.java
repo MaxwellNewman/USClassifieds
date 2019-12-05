@@ -123,6 +123,11 @@ public class SearchManager {
         return filterByTitleAndTags(items, searchString);
     }
 
+    public List<Item> searchItemsByFriendsAndTitleOrTags(User currentUser, String searchString) {
+        final List<Item> items = dataManager.searchItemsByFriends(currentUser.friends);
+        return filterByTitleAndTags(items, searchString);
+    }
+
     public List<Item> searchItemsByTitleOrTags(String searchString) {
         final List<Item> items = dataManager.getAllItems();
         return filterByTitleAndTags(items, searchString);

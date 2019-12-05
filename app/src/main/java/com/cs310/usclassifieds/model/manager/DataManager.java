@@ -308,6 +308,51 @@ public class DataManager {
         return items;
     }
 
+    public List<Item> searchItemsByFriends(List<String> userIds) {
+        if(userIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        final List<Task<QuerySnapshot> > queries = new ArrayList<>();
+        final Set<String> itemsIncluded = new HashSet<>();
+        final List<Item> items = new ArrayList<>();
+
+        // start the queries for all user ids
+        for(int i=0; i<userIds.size(); ++i) {
+            queries.add(database.collection(ITEMS_PATH)
+                    .whereEqualTo(USER_ID, userIds.get(i))
+                    .get()
+            );
+        }
+
+        for(final Task<QuerySnapshot> query : queries) {
+            while (!query.isComplete()) {
+                // waiting for query to complete
+            }
+
+            List<DocumentSnapshot> documents = new ArrayList<>();
+            try {
+                documents = query.getResult().getDocuments();
+            } catch (Exception e) {
+                Log.e("error getting items", e.getMessage());
+                return null;
+            }
+
+            for (final DocumentSnapshot doc : documents) {
+                try {
+                    if (!itemsIncluded.contains(doc.getId())) {
+                        items.add(doc.toObject(Item.class));
+                        itemsIncluded.add(doc.getId());
+                    }
+                } catch (Exception e) {
+                    Log.e("Error getting item: " + doc.getId(), e.getMessage());
+                }
+            }
+        }
+
+        return items;
+    }
+
     public List<Item> searchItemsByUser(String username) {
         if(username == null || username.isEmpty()) {
             return new ArrayList<>();
