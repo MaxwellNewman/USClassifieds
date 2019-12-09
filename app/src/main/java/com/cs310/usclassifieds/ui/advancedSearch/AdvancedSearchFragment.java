@@ -55,6 +55,7 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
     private boolean searchByUser = false;
     private boolean searchByCost = false;
     private boolean searchByDistance = false;
+    private boolean searchByFriends = false;
 
     @Override
     public void onClick(View view) {
@@ -98,6 +99,13 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
                 activity.passItems(items);
                 //activity.passDistances(distances);
             }
+            else if (searchByFriends) {
+                // Replace with searchItemsByFriendsandTitleorTags
+                MainActivity mainActivity = (MainActivity) getActivity();
+                items = searchManager.searchItemsByFriendsAndTitleOrTags(mainActivity.getCurrentUser(), search);
+
+                activity.passItems(items);
+            }
 
             Navigation.findNavController(view).navigate(R.id.navigation_results);
         }
@@ -116,6 +124,7 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
             searchByCost = false;
             locationText.getView().setVisibility(View.VISIBLE);
             searchByDistance = true;
+            searchByFriends = false;
         } else if (optionChosen.equals("Search by Cost")) {
             // Select between low-to-high and high-to-low
             userText.setVisibility(View.GONE);
@@ -124,13 +133,24 @@ public class AdvancedSearchFragment extends Fragment implements AdapterView.OnIt
             searchByCost = true;
             locationText.getView().setVisibility(View.GONE);
             searchByDistance = false;
-        } else { // Search by User
+            searchByFriends = false;
+        } else if (optionChosen.equals("Search by User")){
             userText.setVisibility(View.VISIBLE);
             searchByUser = true;
             lowToHighSpinner.setVisibility(View.GONE);
             searchByCost = false;
             locationText.getView().setVisibility(View.GONE);
             searchByDistance = false;
+            searchByFriends = false;
+        } else { // Search by friends
+            userText.setVisibility(View.GONE);
+            searchByUser = false;
+            lowToHighSpinner.setVisibility(View.GONE);
+            searchByCost = false;
+            locationText.getView().setVisibility(View.GONE);
+            searchByDistance = false;
+
+            searchByFriends = true;
         }
     }
 

@@ -42,6 +42,7 @@
         <item>Search by Cost</item>
         <item>Search by Distance</item>
         <item>Search by User</item>
+        <item>See only Friends Items</item>
     </string-array>
 
     <string-array name="cost_options">

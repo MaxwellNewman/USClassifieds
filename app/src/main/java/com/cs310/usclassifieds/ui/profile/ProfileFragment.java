@@ -2,7 +2,8 @@ package com.cs310.usclassifieds.ui.profile;
 
 import androidx.lifecycle.ViewModelProviders;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +28,11 @@ import com.cs310.usclassifieds.model.datamodel.User;
 import com.cs310.usclassifieds.model.manager.DataManager;
 import com.cs310.usclassifieds.model.manager.SearchManager;
 import com.cs310.usclassifieds.model.manager.UserManager;
-import com.cs310.usclassifieds.ui.ItemAdapter;
 import com.cs310.usclassifieds.ui.ProfileItemAdapter;
 import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button viewFriendsButton;
     private Button listingsButton;
     private Button notificationsButton;
-    private ImageView imageView;
+    private ImageView profileImage;
+    private ImageView badgeImage;
+    private TextView badgeText;
+    private TextView descriptionText;
 
     private SearchManager searchManager = new SearchManager(new DataManager());
     private RecyclerView recyclerView;
@@ -93,11 +97,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         viewFriendsButton = view.findViewById(R.id.view_friends_button);
         notificationsButton = view.findViewById(R.id.notifcations_button);
         salesText = view.findViewById(R.id.sales_text);
+        descriptionText = view.findViewById(R.id.profile_description);
 
         fullNameText.setText(currentUser.fullName);
 
         usernameText.append(currentUser.username);
         emailText.append(currentUser.contactInfo.email);
+
+        descriptionText.append((currentUser.profileDescription));
 
         salesText.append(Integer.toString(currentUser.sales));
 
@@ -131,13 +138,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        imageView = view.findViewById(R.id.profile_image_view);
+        profileImage = view.findViewById(R.id.profile_image_view);
 
         final String url = currentUser.imageUrl == null ?
                 MainActivity.DEFAULT_URL :
                 currentUser.imageUrl;
 
-        Picasso.with(getContext()).load(url).into(imageView);
+        Picasso.with(getContext()).load(url).into(profileImage);
+
+        String badgeUrl = "https://static.turbosquid.com/Preview/2019/08/05__03_59_25/01.jpg0D2E9299-EC9C-49D0-B56B-B6F2454D8006Zoom.jpg";
+        badgeImage = view.findViewById(R.id.profile_badge);
+        badgeText = view.findViewById(R.id.badgeText);
+        if (currentUser.sales >= 3) {
+            Picasso.with(getContext()).load(badgeUrl).into(badgeImage);
+            badgeText.setText("Top Seller");
+        }
 
         return view;
     }
