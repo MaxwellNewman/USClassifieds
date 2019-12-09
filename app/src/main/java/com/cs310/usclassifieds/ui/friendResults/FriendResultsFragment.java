@@ -52,10 +52,12 @@ public class FriendResultsFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         List<User> users = activity.getUsers();
 
-        for(User user : users) {
-            if(user.userId.equalsIgnoreCase(activity.getCurrentUser().userId)) {
-                users.remove(user);
-                break;
+        if(users != null) {
+            for(User user : users) {
+                if(user.userId.equalsIgnoreCase(activity.getCurrentUser().userId)) {
+                    users.remove(user);
+                    break;
+                }
             }
         }
 
