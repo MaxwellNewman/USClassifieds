@@ -51,6 +51,14 @@ public class FriendResultsFragment extends Fragment {
         // Get item list
         MainActivity activity = (MainActivity) getActivity();
         List<User> users = activity.getUsers();
+
+        for(User user : users) {
+            if(user.userId.equalsIgnoreCase(activity.getCurrentUser().userId)) {
+                users.remove(user);
+                break;
+            }
+        }
+
         Log.v("FriendResultsFragment", users.toString());
         this.mAdapter = new UserAdapter(users.toArray(new User[users.size()]));
         recyclerView.setAdapter(mAdapter);
