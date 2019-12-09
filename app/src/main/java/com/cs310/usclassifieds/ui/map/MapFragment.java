@@ -65,7 +65,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        if (selectedMarker == null || !selectedMarker.getPosition().equals(marker.getPosition())) {
+        if (selectedMarker == null || !selectedMarker.getPosition().equals(marker.getPosition()) ||
+                !selectedMarker.getSnippet().equals(marker.getSnippet())) {
             selectedMarker = marker;
             marker.showInfoWindow();
             return false;
